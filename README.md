@@ -13,7 +13,7 @@ The booterizer VM provides the following services:
 * TFTP server (via tftpd-hpa)
 * RSH server (via rsh-server)
 
-NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/booterizer. 
+NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. 
 
 ## Requirements
 
