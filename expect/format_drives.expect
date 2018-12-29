@@ -1,0 +1,27 @@
+#!/usr/bin/expect -f
+
+spawn screen /dev/ttyUSB0 9600
+send -- "\r"
+
+
+NOTE need to  admin mkfs
+
+
+expect "*Option?*" { send -- "5\r" }
+expect "*> " { send -- "setenv netaddr 192.168.0.77\r" }
+expect "*> " { send -- "bootp():/disc1/stand/fx.ARCS -x\r" }
+expect "*(no) " { send -- "\r" }
+expect "*device-name*" { send -- "dksc\r" }
+expect "*ctlr#*" { send -- "0\r" }
+expect "*drive#* " { send -- "1\r" }
+expect "fx> " { send -- "r\r" }
+expect "fx/repartition> " { send -- "ro\r" }
+expect "*type of data partition*" { send -- "xfs\r" }
+expect "*Continue?*" { send --  "yes\r" }
+expect "fx/repartition> " { send --  "..\r" }
+expect "fx> " { send -- "l\r" }
+expect "fx/label> " { send -- "c\r" }
+expect "fx/label/create> " { send -- "a\r" }
+expect "fx/label/create> " { send -- "..\r" }
+expect "fx/label> " { send -- "sy\r" }
+expect "fx/label> " { send --  "/exit\r" }

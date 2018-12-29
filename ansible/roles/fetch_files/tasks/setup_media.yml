@@ -1,0 +1,69 @@
+- name: Fetch foundation
+  get_url:
+    url: "{{ item }}"
+    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
+  with_items:
+    - "{{ foundation.splitlines() }}"
+- name: Fetch overlay
+  get_url:
+    url: "{{ item }}"
+    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
+  with_items:
+    - "{{ overlay.splitlines() }}"
+- name: Fetch devel
+  get_url:
+    url: "{{ item }}"
+    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
+  with_items:
+    - "{{ devel.splitlines() }}"
+- name: Fetch extras
+  get_url:
+    url: "{{ item }}"
+    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
+  with_items:
+    - "{{ extras.splitlines() }}"
+- name: Fetch bootstrap
+  get_url:
+    url: "{{ item }}"
+    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
+  with_items:
+    - "{{ bootstrap.splitlines() }}"
+
+- name: Listing tarballs
+  shell: ls /vagrant/irix/*.tar.gz
+  register: tarballs
+  changed_when: false
+
+- name: Listing tarballs
+  shell: ls /vagrant/irix/*.tar
+  register: tars
+  changed_when: false
+
+- name: Listing bundles
+  shell: ls /vagrant/irix/*.tardist.gz
+  register: bundles
+  changed_when: false
+
+- name: Extracting tarballs
+  unarchive:
+    src: "{{ item }}"
+    dest: /vagrant/irix/
+    copy: no
+    creates: "{{ item.split('.tar.gz')[0] }}"
+  with_items: '{{ tarballs.stdout_lines }}'
+
+- name: Extracting tars
+  unarchive:
+    src: "{{ item }}"
+    dest: /vagrant/irix/
+    copy: no
+    creates: "{{ item.split('.tar')[0] }}"
+  with_items: '{{ tars.stdout_lines }}'
+
+- name: Extracting bundles
+  unarchive:
+    src: "{{ item }}"
+    dest: /vagrant/irix/
+    copy: no
+    creates: "{{ item.split('.tardist')[0] }}"
+  with_items: '{{ bundles.stdout_lines }}'

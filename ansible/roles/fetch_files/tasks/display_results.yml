@@ -1,0 +1,9 @@
+- name: Copy file
+  copy:
+    src: files/display_results.sh
+    dest: /irix/display_results.sh
+    owner: vagrant
+    group: vagrant
+    mode: 0755
+- name: Display results
+  command: /irix/display_results.sh

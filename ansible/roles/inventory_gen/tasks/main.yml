@@ -1,0 +1,4 @@
+- name: generate inventory.ini from template
+  template:
+    src: templates/inventory.ini.j2
+    dest: /tmp/inventory.ini

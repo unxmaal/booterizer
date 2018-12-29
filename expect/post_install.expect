@@ -1,0 +1,29 @@
+# Post EZSetup
+
+>>> NOTE obviously not done here
+
+expect login:
+send root
+expect vt100)
+send \r
+expect #
+send "echo domain devonshire.local > /etc/resolv.conf"
+expect #
+send "echo nameserver 8.8.8.8 >> /etc/resolv.conf"
+expect #
+send "echo $ROUTE $QUIET add -net default 192.168.0.1 >> /etc/config/static-route.options"
+expect #
+send "chkconfig routed off"
+send cd /usr/nekoware
+expect #
+send ./nekodeps.pl --config
+
+
+
+install python
+
+set up sshd config
+sshd::23:sshd
+/usr/sysadm/privbin/addUserAccount -l sshd -u 23 -g 23
+chkconfig -f neko_sshd on
+/etc/init.d/neko_sshd start

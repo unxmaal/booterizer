@@ -1,0 +1,14 @@
+[default]
+{{ clientname }} ansible_host={{ clientip }} become-method=su 
+
+[all:vars]
+ansible_python_interpreter=/usr/nekoware/bin/python
+irixversion="{{ irixversion }}"
+installmirror="{{ installmirror }}"
+clientname='{{ clientname }}'
+clientdomain="{{ clientdomain }}"
+clientip="{{ clientip }}"
+clientether="{{ clientether }}"
+netmask="{{ netmask }}"
+hostip="{{ hostip }}"
+

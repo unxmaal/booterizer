@@ -1,0 +1,16 @@
+- name: clear irix_ansible repo
+  file:
+    dest: /home/vagrant/irix_ansible
+    state: absent
+- name: Clone irix_ansible repo
+  git:
+    repo: 'https://github.com/unxmaal/irix_ansible.git'
+    dest: /home/vagrant/irix_ansible
+    update: yes
+- name: copy inventory.ini
+  copy:
+    src: /tmp/inventory.ini
+    dest: /home/vagrant/irix_ansible/inventory.ini
+    remote_src: yes
+    owner: vagrant
+    group: vagrant

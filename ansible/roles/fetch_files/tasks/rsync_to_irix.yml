@@ -1,0 +1,11 @@
+- name: rsync from /vagrant/irix to /irix
+  synchronize:
+    src: /vagrant/irix/
+    dest: /irix/
+  delegate_to: default
+- name: Fix /irix permissions
+  file: 
+    dest: /irix 
+    owner: guest 
+    group: guest
+    recurse: yes

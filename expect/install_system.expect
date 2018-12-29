@@ -1,0 +1,140 @@
+#!/usr/bin/expect -f
+set timeout 60
+spawn screen /dev/ttyUSB0 9600
+send -- "\r"
+
+expect "*Option?" { send -- "2\r" }
+expect "*to start:" { send -- "2\r" }
+expect "*remote host:" { send -- "irixboot\r" }
+expect "Enter the remote directory:" { send -- "/disc1/dist\r" }
+expect "*<enter> to start:" { send -- "\r" }
+
+
+expect "your machine?" { send -- "octane\r" }
+expect "address of octane?" { send -- "192.168.0.77\r" }
+expect "IP class default*:" { send -- "\r" }
+
+# Destroy existing data here
+expect "Inst>" { send -- "13\r" }
+expect "more?" { send -- "\r" }
+expect "Admin>" { send -- "mkfs\r" }
+
+#expect {
+#    "help)" { send -- "q\r" ; exp_continue }
+#    "Admin>" { send -- "mkfs\r" }
+#}
+
+#expect {
+#    "help)" { send -- "q\r" ; exp_continue }
+#    "Admin>" { send -- "mkfs\r" }
+#}
+
+expect "(h)elp }:" { send -- "y\r" }
+expect "/dev/dsk/realroot?" { send -- "yes\r" }
+expect "Admin>" { send -- "..\r" }
+
+# start install
+expect "Inst>" { send -- "1\r" }
+expect "*Install software from:" { send -- "irixboot:Foundation1/dist\r" }
+expect {
+    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+    "What is the network address*" { send -- "192.168.0.1\r"  ; exp_continue }
+    "Inst>" { send -- "2\r" }
+}
+
+expect "Install software from:*" { send -- "irixboot:Foundation2/dist\r" }
+expect {
+    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+    "(y/n)*" { send -- "n\r" ; exp_continue }
+    "Inst>" { send -- "2\r" }
+}
+
+expect "Install software from:*" { send -- "irixboot:onc3nfs/dist\r" }
+expect {
+    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+    "(y/n)*" { send -- "n\r"  ; exp_continue }
+    "Inst>" { send -- "2\r" }
+}
+
+expect { 
+    "Install software from:*" { send -- "irixboot:disc1/dist\r"  ; exp_continue }
+    "again ? (y/n)*" { send -- "n\r" }
+}
+
+expect {
+    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+    "(y/n)*" { send -- "n\r"  ; exp_continue }
+    "Inst>" { send -- "2\r" }
+}
+
+expect "Install software from:*" { send -- "irixboot:disc2/dist\r" }
+expect {
+    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+    "(y/n)*" { send -- "n\r"  ; exp_continue }
+    "Inst>" { send -- "2\r" }
+}
+
+expect "Install software from:*" { send -- "irixboot:disc3/dist\r" }
+expect {
+    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+    "(y/n)*" { send -- "n\r"  ; exp_continue }
+    "Inst>" { send -- "2\r" }
+}
+
+expect "Install software from:*" { send -- "irixboot:apps/dist\r" }
+expect {
+    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+    "(y/n)*" { send -- "n\r"  ; exp_continue }
+    "Inst>" { send -- "2\r" }
+}
+
+#expect "Install software from:*" { send -- "irixboot:30-Complementary_Applications/dist\r" }
+#expect {
+#    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+#    "(y/n)*" { send -- "n\r"  ; exp_continue }
+#    "Inst>" { send -- "2\r" }
+#}
+
+#-------------- Dev
+#   default: irixboot:mipspro_c/CDROM/dist
+#   default: irixboot:mipspro_c/dist
+#   default: irixboot:prodev/dist
+#   default: irixboot:developmentlibraries/dist
+#   default: irixboot:MipsPro-7.4.3m/dist
+#   default: irixboot:perfcopilot/dist
+#   default: irixboot:mipsproap/dist
+#   default: irixboot:mipspro_cee/dist
+#   default: irixboot:disc2/dist
+#   default: irixboot:disc3/dist
+#   default: irixboot:devf_13/dist
+#   default: irixboot:apps/dist
+#   default: irixboot:mipspro_cpp/dist
+
+expect "Install software from:*" { send -- "irixboot:nekodeps\r" }
+expect {
+    "more? (h=help)" { send -- "q\r"  ; exp_continue }
+    "(y/n)*" { send -- "n\r"  ; exp_continue }
+    "Inst>" { send -- "2\r" }
+}
+expect "Install software from:*" { send -- "done\r" }
+
+#------------ Conflicts
+expect "Inst>" { send -- "keep *\r" }
+expect "Inst>" { send -- "install default\r" }
+expect "Inst>" { send -- "conflicts\r" }
+expect "more? (h=help)" { send -- "q\r" }
+#expect "Please enter a choice*" { send -- "1\r" }
+expect "Inst>" { send -- "conflicts 1a 2a 3a 4a 5a 6a 7a 8a 9a 10a 11a 12a 13a 14a 15a 16a 17a 18a 19a 20a 21a 22a 23a 24a 25a 26a 27a 28a 29a 30a 31a 32a 33a 34a 35a 36a 37a 38a 39a 40a 41a 42a 43a 44a 45a 46a 47a 48a 49a 50a 51a 52a 53a 54a 55a
+\r" }
+expect "Inst>" { send -- "conflicts 1a 2a\r" }
+expect "Inst>" { send -- "conflicts 1a 2a 3a\r" }
+expect "Inst>" { send -- "conflicts 1a 2a\r" }
+
+#----------- go
+expect "Inst>" { send -- "go\r" }
+
+expect "Inst>" { send -- "quit\r" }
+expect "*Restart?*" { send -- "y\r" }
+
+
+

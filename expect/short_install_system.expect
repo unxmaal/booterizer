@@ -1,0 +1,54 @@
+#!/usr/bin/expect -f
+set timeout 60
+spawn screen /dev/ttyUSB0 9600
+send -- "\r"
+
+expect "*Option?" { send -- "2\r" }
+expect "*to start:" { send -- "2\r" }
+expect "*remote host:" { send -- "irixboot\r" }
+expect "Enter the remote directory:" { send -- "/disc1/dist\r" }
+expect "*<enter> to start:" { send -- "\r" }
+
+
+expect "your machine?" { send -- "octane\r" }
+expect "address of octane?" { send -- "192.168.0.77\r" }
+expect "IP class default*:" { send -- "\r" }
+
+# Destroy existing data here
+expect "Inst>" { send -- "13\r" }
+expect "more?" { send -- "\r" }
+expect "Admin>" { send -- "load irixboot:selections\r" }
+
+Please enter a choice [1]: 2
+
+
+expect "Install software from:*" { send -- "done\r" }
+
+Admin> return
+Inst> conflicts
+Inst> 1a
+Inst> 1b
+
+
+
+
+#------------ Conflicts
+expect "Inst>" { send -- "keep *\r" }
+expect "Inst>" { send -- "install default\r" }
+expect "Inst>" { send -- "conflicts\r" }
+expect "more? (h=help)" { send -- "q\r" }
+#expect "Please enter a choice*" { send -- "1\r" }
+expect "Inst>" { send -- "conflicts 1a 2a 3a 4a 5a 6a 7a 8a 9a 10a 11a 12a 13a 14a 15a 16a 17a 18a 19a 20a 21a 22a 23a 24a 25a 26a 27a 28a 29a 30a 31a 32a 33a 34a 35a 36a 37a 38a 39a 40a 41a 42a 43a 44a 45a 46a 47a 48a 49a 50a 51a 52a 53a 54a 55a
+\r" }
+expect "Inst>" { send -- "conflicts 1a 2a\r" }
+expect "Inst>" { send -- "conflicts 1a 2a 3a\r" }
+expect "Inst>" { send -- "conflicts 1a 2a\r" }
+
+#----------- go
+expect "Inst>" { send -- "go\r" }
+
+expect "Inst>" { send -- "quit\r" }
+expect "*Restart?*" { send -- "y\r" }
+
+
+

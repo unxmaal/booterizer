@@ -1,0 +1,79 @@
+- name: Configure isc-dhcp-server
+  copy:
+    src: files/isc-dhcp-server
+    dest: /etc/default/isc-dhcp-server
+    owner: root
+    group: root
+
+- name: Configure dnsmasq.conf
+  copy:
+    src: files/dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    owner: root
+    group: root
+
+- name: Configure tftpd-hpa
+  copy:
+    src: files/tftpd-hpa
+    dest: /etc/default/tftpd-hpa
+    owner: root
+    group: root
+
+- name: generate hosts
+  template:
+    src: templates/hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0744
+
+- name: generate .rhosts
+  template:
+    src: templates/rhosts.j2
+    dest: /irix/.rhosts
+    owner: root
+    group: root
+    mode: 0744
+
+- name: generate hosts.equiv
+  template:
+    src: templates/hosts.equiv.j2
+    dest: /etc/hosts.equiv
+    owner: root
+    group: root
+    mode: 0744
+
+- name: generate dhcpd.conf
+  template:
+    src: templates/dhcpd.conf.j2
+    dest: /etc/dhcp/dhcpd.conf
+    owner: root
+    group: root
+    mode: 0744
+
+- name: Add the guest user
+  user:
+    name: guest
+    shell: /bin/ksh
+    home: /irix
+
+#---- Restart services
+- name: Restart service openbsd-inetd
+  service:
+    name: openbsd-inetd
+    state: restarted
+
+- name: Restart service isc-dhcp-server
+  service:
+    name: isc-dhcp-server
+    state: restarted
+
+- name: Restart service tftpd-hpa
+  service:
+    name: tftpd-hpa
+    state: restarted
+
+- name: Restart service dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted
