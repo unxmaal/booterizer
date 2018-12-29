@@ -1,7 +1,7 @@
 # Setup the virt OS
 - name: Set hostname
   hostname: 
-    name: irixboot
+    name: booterizer
 
 - name: Restart service rsyslog
   service:

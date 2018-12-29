@@ -1,4 +1,4 @@
-# irixboot
+# booterizer
 # vagrant configuration
 # LICENSE: MIT
 
@@ -82,7 +82,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "debian/contrib-jessie64"
   config.vm.box_version = "8.11.0"
   #config.vm.network "public_network"
-  config.vm.post_up_message = [ "irixboot configuration stage" ]
+  config.vm.post_up_message = [ "booterizer configuration stage" ]
   
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
@@ -124,6 +124,6 @@ Vagrant.configure("2") do |config|
   config.vm.box = "debian/contrib-jessie64"
   config.vm.box_version = "8.11.0"
   config.vm.network "public_network", ip: hostip, bridge: bridgenic
-  config.vm.post_up_message = [ "irixboot running at ", hostip ]
+  config.vm.post_up_message = [ "booterizer running at ", hostip ]
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 end
