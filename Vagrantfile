@@ -95,9 +95,14 @@ Vagrant.configure("2") do |config|
   end
 end
 
+# Provision the new box with Ansible plays
 Vagrant.configure("2") do |config|
-  config.vm.provision "ansible" do |ansible|
-    ansible.verbose = "v"
+  if Vagrant::Util::Platform.windows?
+   config.vm.provision :shell do |shell|
+      shell.inline = "sudo apt-get -y install wget curl"
+    end 
+    config.vm.provision :guest_ansible do |ansible|
+      ansible.verbose = "v"
     ansible.playbook = "ansible/irix_ansible_setup.yml"
     ansible.extra_vars = {
         installmethod: installmethod,
@@ -117,8 +122,34 @@ Vagrant.configure("2") do |config|
         network: network,
         hostip: hostip
     }
+    end
+  else
+    config.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+    ansible.playbook = "ansible/irix_ansible_setup.yml"
+    ansible.extra_vars = {
+        installmethod: installmethod,
+        irixversion: irixversion,
+        foundation: foundation,
+        overlay: overlay,
+        extras: extras,
+        nekodeps: nekodeps,
+        bootstrap: bootstrap,
+        devel: devel,
+        installmirror: installmirror,
+        clientname: clientname,
+        clientdomain: clientdomain,
+        clientip: clientip,
+        clientether: clientether,
+        netmask: netmask,
+        network: network,
+        hostip: hostip
+    }
+    end
   end
 end
+
+
 
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/contrib-jessie64"
