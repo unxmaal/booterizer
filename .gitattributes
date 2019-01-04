@@ -1,0 +1,4 @@
+# fix windows CRLF back to unix
+# http://www.edwardthomson.com/blog/git_for_windows_line_endings.html
+
+* text=auto
