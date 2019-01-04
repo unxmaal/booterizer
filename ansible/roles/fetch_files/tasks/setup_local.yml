@@ -1,11 +1,4 @@
-- name: Check if NFS is already setup
-    delegate_to:  localhost
-    become:       false
-    stat:         
-      path:       "{{ current_dir }}/irix"
-    register:     irix_path_exists
-
 - name: setup local machine
-  local_action: command /bin/mkdir {{ current_dir }}/irix
+  local_action: command /bin/mkdir -p {{ current_dir }}/irix
   become:       false
-  when:         NOT irix_path_exists.stat.exists
+#  when:         NOT irix_path_exists.stat.exists
