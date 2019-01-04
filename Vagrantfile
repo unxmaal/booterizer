@@ -15,19 +15,19 @@ installmirror = "us.irisware.net"
 # your SGI box's hostname
 clientname = 'sgi'
 # whatever domain that you make up
-clientdomain = 'devonshire.local'
+clientdomain = 'dillera.org'
 
 # Internal network your SGI will be on
-network = '192.168.0.0' 
+network = '192.168.251.0' 
 # Internal network's netmask
 netmask = '255.255.255.0'
 # your host pc will get this IP
-hostip = '192.168.0.1'
+hostip = '192.168.251.95'
 # your sgi box's IP address that you make up
-clientip = '192.168.0.77'
-# your sgi box's physical hardware address, from printenv at PROM
+clientip = '192.168.251.35'
+# your sgi box's physical hardwaxe address, from printenv at PROM
 # my O2 clientether = '08:00:69:0e:af:65'
-clientether = '08:00:69:0e:af:65'
+clientether = '08:00:69:0a:9f:52'
 # my O300 clientether = '08:00:69:13:dd:42'
 
 # This is the name of the interface on your physical machine that's connected to your SGI box
@@ -64,9 +64,9 @@ http://us.irisware.net/sgi-irix/extras/sgipostscriptfonts.tar.gz"
 nekodeps="nekodeps_custom.0.0.1.tardist"
 
 ## Bootstrap
-bootstrap="http://ftp.irisware.net/pub/projects/irixboot/openssh_bundle-0.0.1.tardist.gz
-http://ftp.irisware.net/pub/projects/irixboot/python_bundle-0.0.1.tardist.gz
-http://ftp.irisware.net/pub/projects/irixboot/wget_bundle-0.0.1.tardist.gz"
+bootstrap="ftp://nonfree.irix.fun/pub/misc/openssh_bundle-0.0.1.tardist.gz
+ftp://nonfree.irix.fun/pub/misc/python_bundle-0.0.1.tardist.gz
+ftp://nonfree.irix.fun/pub/misc/wget_bundle-0.0.1.tardist.gz"
 
 
 ##### 
@@ -120,7 +120,8 @@ Vagrant.configure("2") do |config|
         clientether: clientether,
         netmask: netmask,
         network: network,
-        hostip: hostip
+        hostip: hostip,
+        current_dir: current_dir
     }
     end
   else
@@ -143,7 +144,8 @@ Vagrant.configure("2") do |config|
         clientether: clientether,
         netmask: netmask,
         network: network,
-        hostip: hostip
+        hostip: hostip,
+        current_dir: current_dir
     }
     end
   end

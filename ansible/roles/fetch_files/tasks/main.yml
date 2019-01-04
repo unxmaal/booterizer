@@ -1,3 +1,6 @@
+# Setup the local system as needed
+- import_tasks: setup_local.yml
+
 # Setup the virt OS
 - import_tasks: setup_virt_os.yml
 # Tune OS
