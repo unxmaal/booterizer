@@ -1,0 +1,4 @@
+- name: setup local machine
+  local_action: command /bin/mkdir -p {{ current_dir }}/irix
+  become:       false
+#  when:         NOT irix_path_exists.stat.exists
