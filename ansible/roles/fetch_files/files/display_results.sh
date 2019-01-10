@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Display some useful info about the IRIX files
-cd /vagrant/irix
+cd /irix
 
 echo "__________________  Partitioners found __________________"
 find . -name "fx.*" -type f | sed 's#./#bootp():/#' | sort 
