@@ -3,31 +3,31 @@
     url: "{{ item }}"
     dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
   with_items:
-    - "{{ foundation.splitlines() }}"
+    - "{{ foundation }}"
 - name: Fetch overlay
   get_url:
     url: "{{ item }}"
     dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
   with_items:
-    - "{{ overlay.splitlines() }}"
+    - "{{ overlay }}"
 - name: Fetch devel
   get_url:
     url: "{{ item }}"
     dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
   with_items:
-    - "{{ devel.splitlines() }}"
+    - "{{ devel }}"
 - name: Fetch extras
   get_url:
     url: "{{ item }}"
     dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
   with_items:
-    - "{{ extras.splitlines() }}"
+    - "{{ extras }}"
 - name: Fetch bootstrap
   get_url:
     url: "{{ item }}"
     dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
   with_items:
-    - "{{ bootstrap.splitlines() }}"
+    - "{{ bootstrap }}"
 
 - name: Listing tarballs
   shell: ls /vagrant/irix/*.tar.gz

@@ -48,61 +48,62 @@ By default, this vagrant VM will fetch proper 6.5.30 installation packages from 
 
 ## Settings
 
-These settings are found at the top of `Vagrantfile`. Edit them to suit your environment.
+These settings are found in `settings.yml`. Edit them to suit your environment.
 
-Set this to the version of IRIX you are installing. You must create a subdirectory in the `irix` directory with the same name:
+
+Set this to the version of IRIX you are installing.
 ```
-irixversion = '6.5'
+irixversion: "6.5.30"
 ```
 
-Currently installmethod is only ftp. cd is no longer supported on this fork.
+Currently installmethod is only ftp. cd is no longer supported.
 ```
-installmethod = "ftp"
+installmethod: "ftp"
 ```
 
 Pick your install mirror
 ```
-installmirror = "ftp.irisware.com"
+installmirror: "ftp.irisware.com"
 ```
 
 your SGI box's hostname
 ```
-clientname = 'sgi'
+clientname: 'sgi'
 ```
 
 whatever domain that you make up
 ```
-clientdomain = 'devonshire.local'
+clientdomain: 'devonshire.local'
 ```
 
 Internal network your SGI will be on. Note this is the actual "network", in the technical subnetting sense of the term.
 ```
-network = '192.168.0.0' 
+network: '192.168.0.0' 
 ```
 
 Internal network's netmask
 ```
-netmask = '255.255.255.0'
+netmask: '255.255.255.0'
 ```
 
 booterizer's host IP. This is the VM's IP on its internal point to point link to the target SGI client machine.
 ```
-hostip = '192.168.0.1'
+hostip: '192.168.0.1'
 ```
 
 The SGI client box's IP address
 ```
-clientip = '192.168.0.2'
+clientip: '192.168.0.2'
 ```
 
 The sgi box's physical hardware address, from printenv at PROM
 ```
-clientether = '08:00:69:0e:af:65'
+clientether: '08:00:69:0e:af:65'
 ```
 
 This is the name of the interface on your physical machine that's connected to your SGI box. In my case, it's the ethernet adapter, which is en0. 
 ```
-bridgenic = 'en0'
+bridgenic: 'en0'
 ```
 
 ## Networking overview
