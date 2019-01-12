@@ -15,19 +15,19 @@ installmirror = "us.irisware.net"
 # your SGI box's hostname
 clientname = 'sgi'
 # whatever domain that you make up
-clientdomain = 'dillera.org'
+clientdomain = 'devonshire.org'
 
 # Internal network your SGI will be on
-network = '192.168.251.0' 
+network = '192.168.0.0' 
 # Internal network's netmask
 netmask = '255.255.255.0'
 # your host pc will get this IP
-hostip = '192.168.251.95'
+hostip = '192.168.0.1'
 # your sgi box's IP address that you make up
-clientip = '192.168.251.35'
+clientip = '192.168.0.78'
 # your sgi box's physical hardwaxe address, from printenv at PROM
 # my O2 clientether = '08:00:69:0e:af:65'
-clientether = '08:00:69:0a:9f:52'
+clientether = '08:00:69:0e:af:65'
 # my O300 clientether = '08:00:69:13:dd:42'
 
 # This is the name of the interface on your physical machine that's connected to your SGI box
