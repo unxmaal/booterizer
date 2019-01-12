@@ -1,77 +1,61 @@
 # booterizer
 # vagrant configuration
 # LICENSE: MIT
+require 'yaml'
 
 #####
-# Change these settings to match your environment
+# Change settings in 'settings.yml' to match your environment
 #####
+settings = YAML.load_file 'settings.yml'
 
-irixversion = '6.5'
-
+irixversion = settings['booterizer']['irixversion']
 # installmethod can be via CD images or FTP
-installmethod = "ftp"
-installmirror = "us.irisware.net"
+installmethod = settings['booterizer']['installmethod']
+installmirror = settings['booterizer']['installmirror']
 
 # your SGI box's hostname
-clientname = 'sgi'
+clientname = settings['booterizer']['clientname']
 # whatever domain that you make up
-clientdomain = 'devonshire.org'
+clientdomain = settings['booterizer']['clientdomain']
 
 # Internal network your SGI will be on
-network = '192.168.0.0' 
+network = settings['booterizer']['network']
 # Internal network's netmask
-netmask = '255.255.255.0'
+netmask = settings['booterizer']['netmask']
 # your host pc will get this IP
-hostip = '192.168.0.1'
+hostip = settings['booterizer']['hostip']
 # your sgi box's IP address that you make up
-clientip = '192.168.0.78'
+clientip = settings['booterizer']['clientip']
 # your sgi box's physical hardwaxe address, from printenv at PROM
 # my O2 clientether = '08:00:69:0e:af:65'
-clientether = '08:00:69:0e:af:65'
+clientether = settings['booterizer']['clientether']
 # my O300 clientether = '08:00:69:13:dd:42'
 
 # This is the name of the interface on your physical machine that's connected to your SGI box
 #   In my case, it's the ethernet adapter, which is en0 
-bridgenic = 'en0'
+bridgenic = settings['booterizer']['bridgenic']
 
 # FTP urls
 
-## IRIX foundation
-foundation="http://us.irisware.net/sgi-irix/irix-6.5/network-installs/foundation1.tar.gz
-http://us.irisware.net/sgi-irix/irix-6.5/network-installs/foundation2.tar.gz
-http://us.irisware.net/sgi-irix/irix-6.5/network-installs/onc3nfs.tar.gz"
-## 6.5.30 overlays
-overlay="http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/apps.tar.gz
-http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc1.tar.gz
-http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc2.tar.gz
-http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc3.tar.gz"
+if irixversion == "6.5.30"
+  ftpurls = YAML.load_file 'irix.6.5.30.yml'
+elsif irixversion == "6.5.22"
+  ftpurls = YAML.load_file 'irix.6.5.22.yml'
+end
 
-## Dev
-devel="http://us.irisware.net/sgi-irix/development/developmentlibraries.tar.gz
-http://us.irisware.net/sgi-irix/development/mipspro-74/devf_13.tar.gz
-http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro-7.4.3m.tar
-http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro744update.tar.gz
-http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro_c.tar.gz
-http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro_cee.tar.gz
-http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro_cpp.tar.gz
-http://us.irisware.net/sgi-irix/development/mipspro-74/mipsproap.tar.gz
-http://us.irisware.net/sgi-irix/development/mipspro-74/prodev.tar.gz"
-## Extras
-extras="http://us.irisware.net/sgi-irix/extras/perfcopilot.tar.gz
-http://us.irisware.net/sgi-irix/extras/sgipostscriptfonts.tar.gz"
-
-## Nekodeps
-nekodeps="nekodeps_custom.0.0.1.tardist"
-
-## Bootstrap
-bootstrap="ftp://nonfree.irix.fun/pub/misc/openssh_bundle-0.0.1.tardist.gz
-ftp://nonfree.irix.fun/pub/misc/python_bundle-0.0.1.tardist.gz
-ftp://nonfree.irix.fun/pub/misc/wget_bundle-0.0.1.tardist.gz"
-
+foundation = ftpurls['ftpurls']['foundation']
+overlay = ftpurls['ftpurls']['overlay']
+devel = ftpurls['ftpurls']['devel']
+extras = ftpurls['ftpurls']['extras']
+nekodeps = ftpurls['ftpurls']['nekodeps']
+bootstrap = ftpurls['ftpurls']['bootstrap']
 
 ##### 
 # end of settings
 #####
+
+
+
 
 current_dir = File.dirname(File.expand_path(__FILE__))     
 disk_prefix = 'installdisk'

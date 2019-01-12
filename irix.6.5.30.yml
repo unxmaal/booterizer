@@ -1,0 +1,28 @@
+ftpurls:
+  foundation: 
+    - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/foundation1.tar.gz
+    - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/foundation2.tar.gz
+    - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/onc3nfs.tar.gz
+  overlay: 
+    - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/apps.tar.gz
+    - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc1.tar.gz
+    - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc2.tar.gz
+    - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc3.tar.gz
+  devel: 
+    - http://us.irisware.net/sgi-irix/development/developmentlibraries.tar.gz
+    - http://us.irisware.net/sgi-irix/development/mipspro-74/devf_13.tar.gz
+    - http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro-7.4.3m.tar
+    - http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro744update.tar.gz
+    - http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro_c.tar.gz
+    - http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro_cee.tar.gz
+    - http://us.irisware.net/sgi-irix/development/mipspro-74/mipspro_cpp.tar.gz
+    - http://us.irisware.net/sgi-irix/development/mipspro-74/mipsproap.tar.gz
+    - http://us.irisware.net/sgi-irix/development/mipspro-74/prodev.tar.gz
+  extras: http://us.irisware.net/sgi-irix/extras/perfcopilot.tar.gz
+    - http://us.irisware.net/sgi-irix/extras/sgipostscriptfonts.tar.gz
+  nekodeps: 
+    - nekodeps_custom.0.0.1.tardist
+  bootstrap: 
+    - ftp://nonfree.irix.fun/pub/misc/openssh_bundle-0.0.1.tardist.gz
+    - ftp://nonfree.irix.fun/pub/misc/python_bundle-0.0.1.tardist.gz
+    - ftp://nonfree.irix.fun/pub/misc/wget_bundle-0.0.1.tardist.gz
