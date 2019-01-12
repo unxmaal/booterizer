@@ -1,0 +1,16 @@
+- name: Install irix_ansible
+  git:
+    repo: 'https://github.com/unxmaal/irix_ansible.git'
+    dest: /home/vagrant/
+    update: yes
+    clone: yes
+- name: Fix repo perms
+  shell: chown -R vagrant:vagrant /home/vagrant/irix_ansible
+  become: true
+- name: Fix up inventory.yml
+  template:
+    src: templates/inventory.yml.j2
+    dest: /home/vagrant/irix_ansible/inventory.yml
+    owner: vagrant
+    group: vagrant
+    mode: 644

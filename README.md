@@ -145,12 +145,32 @@ The installer can be reached through the monitor GUI as follows:
 * This should load the miniroot over the network and boot into the installer.
 * To access the other distributions you extracted, use `open booterizer:<directory>/dist`.
 
+# Provisioning your IRIX host with irix_ansible
+https://github.com/unxmaal/irix_ansible/
+
+booterizer automatically installs irix_ansible, which allows for easy configuration of your IRIX system.
+
+irix_ansible performs the following tasks, and more:
+  * install wget, python, and openssh
+  * start sshd
+  * installs nekodeps
+  * installs base packages
+  * performs security hardening
+
+irix_ansible should be run immediately after your IRIX host has been installed, and has booted for the first time:
+* Connect your IRIX host to your home LAN
+* vagrant ssh
+* sudo -i
+* ifdown eth0 (this disables the point to point link originally used by booterizer)
+* Follow the irix_ansible README to create your own ansible vault
+  * group_vars/default/vault.yml
+* Place your vault password in /home/vagrant/.vault_pass.txt
+* Continue with the irix_ansible README
+
+
+
 ## PRO TIP
 Take a look in the expect/ directory for my own personal install scripts, written in expect. You can use them as a guide for what to select during an installation -- or if you're really brave/foolish, follow the enclosed README to run those scripts over serial console.
-
-## TODO
-* Make the download phase provide more feedback.
-* Confirm if the download phase really downloads every time, or is smart enough to skip already-downloaded items.
 
 ## License
 

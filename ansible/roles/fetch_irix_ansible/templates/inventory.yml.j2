@@ -1,0 +1,11 @@
+---
+ungrouped:
+  hosts:
+    {{ clientname }}:
+      ansible_host:   {{ clientip }}
+      become-method:  su
+      default_gw:     {{ hostip }}
+      nameserver:     8.8.8.8
+      domain:         {{ clientdomain }}
+  vars:
+    ansible_python_interpreter: /usr/nekoware/bin/python
