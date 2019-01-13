@@ -3,33 +3,32 @@
 # LICENSE: MIT
 require 'yaml'
 
-#####
+#################################################################
 # Change settings in 'settings.yml' to match your environment
-#####
-settings = YAML.load_file 'settings.yml'
+#################################################################
+settings =      YAML.load_file 'settings.yml'
 
-irixversion = settings['booterizer']['irixversion']
-# installmethod can be via CD images or FTP
+# irixversion install 6.5.30, 6.5.22 or 5.3
+irixversion =   settings['booterizer']['irixversion']
+# installmethod can be via CD images or remote fetch from Internet
 installmethod = settings['booterizer']['installmethod']
 installmirror = settings['booterizer']['installmirror']
 
 # your SGI box's hostname
-clientname = settings['booterizer']['clientname']
+clientname =    settings['booterizer']['clientname']
 # whatever domain that you make up
-clientdomain = settings['booterizer']['clientdomain']
+clientdomain =  settings['booterizer']['clientdomain']
 
-# Internal network your SGI will be on
-network = settings['booterizer']['network']
+# Internal network your SGI, Virtual Machine will be on
+network =       settings['booterizer']['network']
 # Internal network's netmask
-netmask = settings['booterizer']['netmask']
-# your host pc will get this IP
-hostip = settings['booterizer']['hostip']
-# your sgi box's IP address that you make up
-clientip = settings['booterizer']['clientip']
-# your sgi box's physical hardwaxe address, from printenv at PROM
-# my O2 clientether = '08:00:69:0e:af:65'
-clientether = settings['booterizer']['clientether']
-# my O300 clientether = '08:00:69:13:dd:42'
+netmask =       settings['booterizer']['netmask']
+# your virtual machine (bootp/tftp server]) will get this IP
+hostip =        settings['booterizer']['hostip']
+# your SGI box's IP address that you make up and set in prom via setenv netaddr
+clientip =      settings['booterizer']['clientip']
+# your SGI box's physical hardware address, from printenv at PROM - or eaddr for older PROM
+clientether =   settings['booterizer']['clientether']
 
 # This is the name of the interface on your physical machine that's connected to your SGI box
 #   In my case, it's the ethernet adapter, which is en0 
@@ -41,18 +40,20 @@ if irixversion == "6.5.30"
   ftpurls = YAML.load_file 'irix.6.5.30.yml'
 elsif irixversion == "6.5.22"
   ftpurls = YAML.load_file 'irix.6.5.22.yml'
+elsif irixversion == "5.3"
+  ftpurls = YAML.load_file 'irix.5.3.yml'
 end
 
-foundation = ftpurls['ftpurls']['foundation']
-overlay = ftpurls['ftpurls']['overlay']
-devel = ftpurls['ftpurls']['devel']
-extras = ftpurls['ftpurls']['extras']
-nekodeps = ftpurls['ftpurls']['nekodeps']
-bootstrap = ftpurls['ftpurls']['bootstrap']
+foundation =  ftpurls['ftpurls']['foundation']
+overlay =     ftpurls['ftpurls']['overlay']
+devel =       ftpurls['ftpurls']['devel']
+extras =      ftpurls['ftpurls']['extras']
+nekodeps =    ftpurls['ftpurls']['nekodeps']
+bootstrap =   ftpurls['ftpurls']['bootstrap']
 
-##### 
+#################################################################
 # end of settings
-#####
+#################################################################
 
 
 
