@@ -27,7 +27,9 @@ hostip = '192.168.251.95'
 clientip = '192.168.251.35'
 # your sgi box's physical hardwaxe address, from printenv at PROM
 # my O2 clientether = '08:00:69:0e:af:65'
-clientether = '08:00:69:0a:9f:52'
+
+# O2
+clientether = '08:00:69:0c:41:ea'
 # my O300 clientether = '08:00:69:13:dd:42'
 
 # This is the name of the interface on your physical machine that's connected to your SGI box
@@ -40,11 +42,18 @@ bridgenic = 'en0'
 foundation="http://us.irisware.net/sgi-irix/irix-6.5/network-installs/foundation1.tar.gz
 http://us.irisware.net/sgi-irix/irix-6.5/network-installs/foundation2.tar.gz
 http://us.irisware.net/sgi-irix/irix-6.5/network-installs/onc3nfs.tar.gz"
+
 ## 6.5.30 overlays
+# overlay="http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.22/apps.tar.gz
+# http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.22/disc1.tar.gz
+# http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.22/disc2.tar.gz
+# http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.22/disc3.tar.gz"
+
 overlay="http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/apps.tar.gz
 http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc1.tar.gz
 http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc2.tar.gz
 http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc3.tar.gz"
+
 
 ## Dev
 devel="http://us.irisware.net/sgi-irix/development/developmentlibraries.tar.gz
