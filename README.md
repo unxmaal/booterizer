@@ -5,6 +5,10 @@ booterizer is designed to quickly configure a disposable VM to boot a specific v
 
 By default booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs in the included Vagrantfile.
 
+booterizer also works with IRIX 6.5.22 for older SGI systems that can run 6.5
+booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x
+
+
 booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. I recommend only attaching the network interface to an isolated network for this purpose and then `vagrant halt` or `vagrant destroy` the VM when you are done installing.
 
 The booterizer VM provides the following services:
@@ -22,6 +26,17 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 	* vagrant plugin install vagrant-guest_ansible
 * VM host with TWO network interfaces
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
+
+
+### Installation for Host system (what will run the VM)
+* Apple OSX has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
+** Install Brew following directions at their website here: https://brew.sh/
+
+* If you have brew installed you can install Vagrant and VB:
+```
+$  brew cask install vagrant
+$  brew cask install virtualbox
+```
 
 
 I am not sure what range of IRIX versions this will work with or what SGI machines are compatible. Personal testing and user reports show the following (at minimum) should be compatible:
