@@ -5,6 +5,7 @@ ftpurls:
     - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/onc3nfs.tar.gz
   overlay: 
     - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/apps.tar.gz
+    - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/capps.tar.gz
     - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc1.tar.gz
     - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc2.tar.gz
     - http://us.irisware.net/sgi-irix/irix-6.5/network-installs/irix-6.5.30/disc3.tar.gz
