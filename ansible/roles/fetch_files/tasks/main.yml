@@ -13,9 +13,9 @@
 - import_tasks: setup_internal_ansible.yml
 #-------- Setup Media
 - import_tasks: setup_media.yml
-# #-------- rsync media to /irix
-# - import_tasks: rsync_to_irix.yml
-# #--------- Generate selections
-# - import_tasks: generate_selections.yml
-# #--------- Display  useful info
-# - import_tasks: display_results.yml
+#-------- rsync media to /irix
+- import_tasks: rsync_to_irix.yml
+#--------- Generate selections
+- import_tasks: generate_selections.yml
+#--------- Display  useful info
+- import_tasks: display_results.yml
