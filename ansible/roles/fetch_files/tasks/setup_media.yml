@@ -21,6 +21,7 @@
     - "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee"
     - "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp"
     - "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap"
+    - "/vagrant/irix/{{ irixversion }}/Development/prodev"
     - "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot"
     - "/vagrant/irix/{{ irixversion }}/Extras/sgifonts"
     - "/vagrant/irix/{{ irixversion }}/Bootstrap/"
