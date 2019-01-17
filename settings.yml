@@ -1,7 +1,7 @@
 booterizer:
   irixversion: "6.5.30"
   installmethod: "ftp"
-  installmirror: "us.irisware.net"
+  installmirror: "http://us.irisware.net"
   clientname: "sgi"
   clientdomain: "devonshire.org"
   network: "192.168.0.0" 

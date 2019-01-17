@@ -1,69 +1,286 @@
-- name: Fetch foundation
-  get_url:
-    url: "{{ item }}"
-    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
   with_items:
-    - "{{ foundation }}"
-- name: Fetch overlay
-  get_url:
-    url: "{{ item }}"
-    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
-  with_items:
-    - "{{ overlay }}"
-- name: Fetch devel
-  get_url:
-    url: "{{ item }}"
-    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
-  with_items:
-    - "{{ devel }}"
-- name: Fetch extras
-  get_url:
-    url: "{{ item }}"
-    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
-  with_items:
-    - "{{ extras }}"
-- name: Fetch bootstrap
-  get_url:
-    url: "{{ item }}"
-    dest: "/vagrant/irix/{{  item | urlsplit('path') | basename }}"
-  with_items:
-    - "{{ bootstrap }}"
+    - "/vagrant/irix/{{ irixversion }}/Foundation/disc1"
+    - "/vagrant/irix/{{ irixversion }}/Foundation/disc2"
+    - "/vagrant/irix/{{ irixversion }}/Foundation/nfs"
+    - "/vagrant/irix/{{ irixversion }}/Overlay/disc1"
+    - "/vagrant/irix/{{ irixversion }}/Overlay/disc2"
+    - "/vagrant/irix/{{ irixversion }}/Overlay/disc3"
+    - "/vagrant/irix/{{ irixversion }}/Overlay/apps"
+    - "/vagrant/irix/{{ irixversion }}/Overlay/capps"
+    - "/vagrant/irix/{{ irixversion }}/Development/devlibs"
+    - "/vagrant/irix/{{ irixversion }}/Development/devfoundations"
+    - "/vagrant/irix/{{ irixversion }}/Development/mipspro"
+    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_update"
+    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_update"
+    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_c"
+    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee"
+    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp"
+    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap"
+    - "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot"
+    - "/vagrant/irix/{{ irixversion }}/Extras/sgifonts"
+    - "/vagrant/irix/{{ irixversion }}/Bootstrap/openssh"
+    - "/vagrant/irix/{{ irixversion }}/Bootstrap/python"
+    - "/vagrant/irix/{{ irixversion }}/Bootstrap/wget"
 
-- name: Listing tarballs
-  shell: ls /vagrant/irix/*.tar.gz
-  register: tarballs
-  changed_when: false
 
-- name: Listing tarballs
-  shell: ls /vagrant/irix/*.tar
-  register: tars
-  changed_when: false
+- name: Fetch foundation disc 1
+  get_url:
+    url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc1/{{ foundation_disc1 }}"  
 
-- name: Listing bundles
-  shell: ls /vagrant/irix/*.tardist.gz
-  register: bundles
-  changed_when: false
+- name: Fetch foundation disc 2
+  get_url:
+    url: "{{ foundation_baseurl }}{{ foundation_disc2 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/{{ foundation_disc2 }}"  
 
-- name: Extracting tarballs
+- name: Fetch foundation NFS
+  get_url:
+    url: "{{ foundation_baseurl }}{{ foundation_nfs }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/nfs/{{ foundation_nfs }}"  
+
+- name: Fetch overlay disc 1
+  get_url:
+    url: "{{ overlay_baseurl }}{{ overlay_disc1 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/{{ overlay_disc1 }}"  
+
+- name: Fetch overlay disc 2
+  get_url:
+    url: "{{ overlay_baseurl }}{{ overlay_disc2 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/{{ overlay_disc2 }}"  
+
+- name: Fetch overlay disc 3
+  get_url:
+    url: "{{ overlay_baseurl }}{{ overlay_disc3 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"  
+
+- name: Fetch overlay apps
+  get_url:
+    url: "{{ overlay_baseurl }}{{ overlay_apps }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/apps/{{ overlay_apps }}"  
+
+- name: Fetch overlay complementary apps
+  get_url:
+    url: "{{ overlay_baseurl }}{{ overlay_capps }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/capps/{{ overlay_capps }}"
+
+- name: Fetch development libraries
+  get_url:
+    url: "{{ devel_baseurl }}{{ devel_devlibs }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/devlibs/{{ devel_devlibs }}"
+
+- name: Fetch development foundations
+  get_url:
+    url: "{{ devel_baseurl }}mipspro-74/{{ devel_devfoundations }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/devfoundations/{{ devel_devfoundations }}"
+
+- name: Fetch MIPSPro 7.4.3m
+  get_url:
+    url: "{{ devel_baseurl }}mipspro-74/{{ devel_mipspro }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro/{{ devel_mipspro }}"
+
+- name: Fetch MIPSPro 7.4.4 update
+  get_url:
+    url: "{{ devel_baseurl }}mipspro-74/{{ devel_update }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_update/{{ devel_update }}"
+
+- name: Fetch MIPSPro c
+  get_url:
+    url: "{{ devel_baseurl }}mipspro-74/{{ devel_c }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_c/{{ devel_c }}"
+
+- name: Fetch MIPSPro cee
+  get_url:
+    url: "{{ devel_baseurl }}mipspro-74/{{ devel_cee }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee/{{ devel_cee }}"
+
+- name: Fetch MIPSPro cpp
+  get_url:
+    url: "{{ devel_baseurl }}mipspro-74/{{ devel_cpp }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp/{{ devel_cpp }}"
+
+- name: Fetch MIPSPro ap
+  get_url:
+    url: "{{ devel_baseurl }}mipspro-74/{{ devel_ap }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/{{ devel_ap }}"
+
+- name: Fetch perfcopilot
+  get_url:
+    url: "{{ extras_baseurl }}{{ extras_perfcopilot }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot/{{ extras_perfcopilot }}"
+
+- name: Fetch SGI Fonts
+  get_url:
+    url: "{{ extras_baseurl }}{{ extras_sgifonts }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Extras/sgifonts/{{ extras_sgifonts }}"
+
+- name: Fetch OpenSSH Bundle for Bootstrap
+  get_url:
+    url: "{{ bootstrap_baseurl }}{{ bootstrap_openssh }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Bootstrap/{{ bootstrap_openssh }}"
+
+- name: Fetch Python Bundle for Bootstrap
+  get_url:
+    url: "{{ bootstrap_baseurl }}{{ bootstrap_python }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Bootstrap/{{ bootstrap_python }}"
+
+- name: Fetch wget Bundle for Bootstrap
+  get_url:
+    url: "{{ bootstrap_baseurl }}{{ bootstrap_wget }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Bootstrap/{{ bootstrap_wget }}"
+
+- name: Extracting foundation disc 1
   unarchive:
-    src: "{{ item }}"
-    dest: /vagrant/irix/
+    src: "/vagrant/irix/{{ irixversion }}/Foundation/disc1/{{ foundation_disc1 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc1/"
     copy: no
-    creates: "{{ item.split('.tar.gz')[0] }}"
-  with_items: '{{ tarballs.stdout_lines }}'
+    extra_opts:
+    - --strip-components=1
 
-- name: Extracting tars
+- name: Extracting foundation disc 2
   unarchive:
-    src: "{{ item }}"
-    dest: /vagrant/irix/
+    src: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/{{ foundation_disc2 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/"
     copy: no
-    creates: "{{ item.split('.tar')[0] }}"
-  with_items: '{{ tars.stdout_lines }}'
+    extra_opts:
+    - --strip-components=1
+  
+- name: Extracting foundation disc 3
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Foundation/disc3/{{ foundation_disc3 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc3/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
 
-- name: Extracting bundles
+- name: Extracting foundation NFS
   unarchive:
-    src: "{{ item }}"
-    dest: /vagrant/irix/
+    src: "/vagrant/irix/{{ irixversion }}/Foundation/nfs/{{ foundation_nfs }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/nfs/"
     copy: no
-    creates: "{{ item.split('.tardist')[0] }}"
-  with_items: '{{ bundles.stdout_lines }}'
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting overlay disc 1
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/{{ overlay_disc1 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting overlay disc 2
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/{{ overlay_disc2 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting overlay disc 3
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting overlay apps
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Overlay/apps/{{ overlay_apps }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/apps/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting overlay complimentary apps
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Overlay/capps/{{ overlay_capps }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/capps/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting development libraries
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/devlibs/{{ devel_devlibs }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/devlibs/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting development foundations
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/devfoundations/{{ devel_devfoundations }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/devfoundations/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting MIPSPro 7.4.3m
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro/{{ devel_mipspro }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting MIPSPro 7.4.4 update
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_update/{{ devel_update }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_update/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting MIPSPro c
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_c/{{ devel_c }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_c/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting MIPSPro cee
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee/{{ devel_cee }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting MIPSPro cpp
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp/{{ devel_cpp }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting MIPSPro ap
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro/{{ devel_ap }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting perfcopilot
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot/{{ extras_perfcopilot }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting SGI Fonts
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Extras/sgifonts/{{ extras_sgifonts }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Extras/sgifonts/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
