@@ -23,9 +23,7 @@
     - "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap"
     - "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot"
     - "/vagrant/irix/{{ irixversion }}/Extras/sgifonts"
-    - "/vagrant/irix/{{ irixversion }}/Bootstrap/openssh"
-    - "/vagrant/irix/{{ irixversion }}/Bootstrap/python"
-    - "/vagrant/irix/{{ irixversion }}/Bootstrap/wget"
+    - "/vagrant/irix/{{ irixversion }}/Bootstrap/"
 
 
 - name: Fetch foundation disc 1
@@ -108,6 +106,11 @@
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_ap }}"
     dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/{{ devel_ap }}"
 
+- name: Fetch prodev
+  get_url:
+    url: "{{ devel_baseurl }}mipspro-74/{{ devel_prodev }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/prodev/{{ devel_prodev }}"
+
 - name: Fetch perfcopilot
   get_url:
     url: "{{ extras_baseurl }}{{ extras_perfcopilot }}"
@@ -145,14 +148,6 @@
   unarchive:
     src: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/{{ foundation_disc2 }}"
     dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/"
-    copy: no
-    extra_opts:
-    - --strip-components=1
-  
-- name: Extracting foundation disc 3
-  unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Foundation/disc3/{{ foundation_disc3 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc3/"
     copy: no
     extra_opts:
     - --strip-components=1
@@ -263,8 +258,16 @@
 
 - name: Extracting MIPSPro ap
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro/{{ devel_ap }}"
+    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/{{ devel_ap }}"
     dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+
+- name: Extracting prodev
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/prodev/{{ devel_prodev }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/prodev/"
     copy: no
     extra_opts:
     - --strip-components=1

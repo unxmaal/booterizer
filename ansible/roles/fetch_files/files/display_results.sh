@@ -7,7 +7,7 @@ echo "__________________  Partitioners found __________________"
 find . -name "fx.*" -type f | sed 's#./#bootp():/#' | sort 
 
 echo "__________________ Paths for Inst __________________"
-find . -name dist -type d | sed 's#./#booterizer:#' | sort
+sed 's/from //g' selections
 
 echo "__________________ Paths for extra bundles __________________"
 find . -name "*.tardist" | sed 's#./#booterizer:#' | sort
