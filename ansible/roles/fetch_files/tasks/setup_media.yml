@@ -171,7 +171,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/CDrelnotes"
+    creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/stand/fx.ARCS"
 
 - name: Extracting overlay disc 2
   unarchive:
@@ -216,7 +216,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/devlibs/CDrelnotes"
+    creates: "/vagrant/irix/{{ irixversion }}/Development/devlibs/RELEASE.info"
 
 - name: Extracting development foundations
   unarchive:
@@ -297,7 +297,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/perfcopilot/docs/CDrelnotes"
+    creates: "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot/docs/CDrelnotes"
 
 - name: Extracting SGI Fonts
   unarchive:
@@ -306,4 +306,4 @@
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/sgifonts/Text/SGI-Text.ttf"
+    creates: "/vagrant/irix/{{ irixversion }}/Extras/sgifonts/Text/SGI-Text.ttf"
