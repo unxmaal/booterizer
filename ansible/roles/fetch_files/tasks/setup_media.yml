@@ -144,6 +144,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Foundation/disc1/RELEASE.info"
 
 - name: Extracting foundation disc 2
   unarchive:
@@ -152,6 +153,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/RELEASE.info"
 
 - name: Extracting foundation NFS
   unarchive:
@@ -160,6 +162,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Foundation/nfs/RELEASE.info"
 
 - name: Extracting overlay disc 1
   unarchive:
@@ -168,6 +171,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/CDrelnotes"
 
 - name: Extracting overlay disc 2
   unarchive:
@@ -176,6 +180,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/CDrelnotes"
 
 - name: Extracting overlay disc 3
   unarchive:
@@ -184,6 +189,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/CDrelnotes"
 
 - name: Extracting overlay apps
   unarchive:
@@ -192,6 +198,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Overlay/apps/CDrelnotes"
 
 - name: Extracting overlay complimentary apps
   unarchive:
@@ -200,6 +207,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Overlay/capps/CDrelnotes"
 
 - name: Extracting development libraries
   unarchive:
@@ -208,6 +216,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/devlibs/CDrelnotes"
 
 - name: Extracting development foundations
   unarchive:
@@ -216,6 +225,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/devfoundations/CDrelnotes"
 
 - name: Extracting MIPSPro 7.4.3m
   unarchive:
@@ -224,6 +234,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro/CDrelnotes"
 
 - name: Extracting MIPSPro 7.4.4 update
   unarchive:
@@ -232,6 +243,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_update/inst.README"
 
 - name: Extracting MIPSPro c
   unarchive:
@@ -240,6 +252,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_c/CDrelnotes"
 
 - name: Extracting MIPSPro cee
   unarchive:
@@ -248,6 +261,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee/CDrelnotes"
 
 - name: Extracting MIPSPro cpp
   unarchive:
@@ -256,6 +270,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp/CDrelnotes"
 
 - name: Extracting MIPSPro ap
   unarchive:
@@ -264,6 +279,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/CDrelnotes"
 
 - name: Extracting prodev
   unarchive:
@@ -272,6 +288,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/prodev/CDrelnotes"
 
 - name: Extracting perfcopilot
   unarchive:
@@ -280,6 +297,7 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/perfcopilot/docs/CDrelnotes"
 
 - name: Extracting SGI Fonts
   unarchive:
@@ -288,3 +306,4 @@
     copy: no
     extra_opts:
     - --strip-components=1
+  creates: "/vagrant/irix/{{ irixversion }}/Development/sgifonts/Text/SGI-Text.ttf"
