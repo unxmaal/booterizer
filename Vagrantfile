@@ -44,12 +44,34 @@ elsif irixversion == "5.3"
   ftpurls = YAML.load_file 'irix.5.3.yml'
 end
 
-foundation =  ftpurls['ftpurls']['foundation']
-overlay =     ftpurls['ftpurls']['overlay']
-devel =       ftpurls['ftpurls']['devel']
-extras =      ftpurls['ftpurls']['extras']
-nekodeps =    ftpurls['ftpurls']['nekodeps']
-bootstrap =   ftpurls['ftpurls']['bootstrap']
+foundation_baseurl    = ftpurls['ftpurls']['foundation']['baseurl']
+foundation_disc1      = ftpurls['ftpurls']['foundation']['disc1']
+foundation_disc2      = ftpurls['ftpurls']['foundation']['disc2']
+foundation_nfs        = ftpurls['ftpurls']['foundation']['nfs']
+overlay_baseurl       = ftpurls['ftpurls']['overlay']['baseurl']
+overlay_apps          = ftpurls['ftpurls']['overlay']['apps']
+overlay_capps         = ftpurls['ftpurls']['overlay']['capps']
+overlay_disc1         = ftpurls['ftpurls']['overlay']['disc1']
+overlay_disc2         = ftpurls['ftpurls']['overlay']['disc2']
+overlay_disc3         = ftpurls['ftpurls']['overlay']['disc3']
+devel_baseurl         = ftpurls['ftpurls']['devel']['baseurl']
+devel_devlibs         = ftpurls['ftpurls']['devel']['devlibs']
+devel_devfoundations  = ftpurls['ftpurls']['devel']['devfoundations']
+devel_mipspro         = ftpurls['ftpurls']['devel']['mipspro']
+devel_update          = ftpurls['ftpurls']['devel']['update']
+devel_c               = ftpurls['ftpurls']['devel']['c']
+devel_cee             = ftpurls['ftpurls']['devel']['cee']
+devel_cpp             = ftpurls['ftpurls']['devel']['cpp']
+devel_ap              = ftpurls['ftpurls']['devel']['ap']
+devel_prodev          = ftpurls['ftpurls']['devel']['prodev']
+extras_baseurl        = ftpurls['ftpurls']['extras']['baseurl']
+extras_perfcopilot    = ftpurls['ftpurls']['extras']['perfcopilot']
+extras_sgifonts       = ftpurls['ftpurls']['extras']['sgifonts']
+nekodeps              = ftpurls['ftpurls']['nekodeps']
+bootstrap_baseurl     = ftpurls['ftpurls']['bootstrap']['baseurl']
+bootstrap_openssh     = ftpurls['ftpurls']['bootstrap']['openssh']
+bootstrap_python      = ftpurls['ftpurls']['bootstrap']['python']
+bootstrap_wget        = ftpurls['ftpurls']['bootstrap']['wget']
 
 #################################################################
 # end of settings
@@ -92,12 +114,6 @@ Vagrant.configure("2") do |config|
     ansible.extra_vars = {
         installmethod: installmethod,
         irixversion: irixversion,
-        foundation: foundation,
-        overlay: overlay,
-        extras: extras,
-        nekodeps: nekodeps,
-        bootstrap: bootstrap,
-        devel: devel,
         installmirror: installmirror,
         clientname: clientname,
         clientdomain: clientdomain,
@@ -106,7 +122,35 @@ Vagrant.configure("2") do |config|
         netmask: netmask,
         network: network,
         hostip: hostip,
-        current_dir: current_dir
+        current_dir: current_dir,
+        foundation_baseurl: foundation_baseurl,
+        foundation_disc1: foundation_disc1,
+        foundation_disc2: foundation_disc2,
+        foundation_nfs: foundation_nfs,
+        overlay_baseurl: overlay_baseurl,
+        overlay_apps: overlay_apps,
+        overlay_capps: overlay_capps,
+        overlay_disc1: overlay_disc1,
+        overlay_disc2: overlay_disc2,
+        overlay_disc3: overlay_disc3,
+        devel_baseurl: devel_baseurl,
+        devel_devlibs: devel_devlibs,
+        devel_devfoundations: devel_devfoundations,
+        devel_mipspro: devel_mipspro,
+        devel_update: devel_update,
+        devel_c: devel_c,
+        devel_cee: devel_cee,
+        devel_cpp: devel_cpp,
+        devel_ap: devel_ap,
+        devel_prodev: devel_prodev,
+        extras_baseurl: extras_baseurl,
+        extras_perfcopilot: extras_perfcopilot,
+        extras_sgifonts: extras_sgifonts,
+        nekodeps: nekodeps,
+        bootstrap_baseurl: bootstrap_baseurl,
+        bootstrap_openssh: bootstrap_openssh,
+        bootstrap_python: bootstrap_python,
+        bootstrap_wget: bootstrap_wget
     }
     end
   else
@@ -116,12 +160,6 @@ Vagrant.configure("2") do |config|
     ansible.extra_vars = {
         installmethod: installmethod,
         irixversion: irixversion,
-        foundation: foundation,
-        overlay: overlay,
-        extras: extras,
-        nekodeps: nekodeps,
-        bootstrap: bootstrap,
-        devel: devel,
         installmirror: installmirror,
         clientname: clientname,
         clientdomain: clientdomain,
@@ -130,7 +168,35 @@ Vagrant.configure("2") do |config|
         netmask: netmask,
         network: network,
         hostip: hostip,
-        current_dir: current_dir
+        current_dir: current_dir,
+        foundation_baseurl: foundation_baseurl,
+        foundation_disc1: foundation_disc1,
+        foundation_disc2: foundation_disc2,
+        foundation_nfs: foundation_nfs,
+        overlay_baseurl: overlay_baseurl,
+        overlay_apps: overlay_apps,
+        overlay_capps: overlay_capps,
+        overlay_disc1: overlay_disc1,
+        overlay_disc2: overlay_disc2,
+        overlay_disc3: overlay_disc3,
+        devel_baseurl: devel_baseurl,
+        devel_devlibs: devel_devlibs,
+        devel_devfoundations: devel_devfoundations,
+        devel_mipspro: devel_mipspro,
+        devel_update: devel_update,
+        devel_c: devel_c,
+        devel_cee: devel_cee,
+        devel_cpp: devel_cpp,
+        devel_ap: devel_ap,
+        devel_prodev: devel_prodev,
+        extras_baseurl: extras_baseurl,
+        extras_perfcopilot: extras_perfcopilot,
+        extras_sgifonts: extras_sgifonts,
+        nekodeps: nekodeps,
+        bootstrap_baseurl: bootstrap_baseurl,
+        bootstrap_openssh: bootstrap_openssh,
+        bootstrap_python: bootstrap_python,
+        bootstrap_wget: bootstrap_wget
     }
     end
   end

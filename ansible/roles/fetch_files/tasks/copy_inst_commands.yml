@@ -1,0 +1,7 @@
+- name: Copy inst commands file
+  file:
+    src: files/commands
+    dest: /irix/commands
+    owner: vagrant
+    group: vagrant
+    mode: 0744

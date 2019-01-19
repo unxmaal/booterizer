@@ -1,9 +1,7 @@
-- name: Copy file
-  copy:
-    src: files/generate_selections.sh
-    dest: /irix/generate_selections.sh
+- name: Generate selections
+  template:
+    src: templates/selections.j2
+    dest: /irix/selections
     owner: vagrant
     group: vagrant
-    mode: 0755
-- name: Display results
-  command: /irix/generate_selections.sh
+    mode: 0744
