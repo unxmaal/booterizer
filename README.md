@@ -143,9 +143,9 @@ Vagrant will automatically create a vagrant/irix directory on your host machine 
 
 If you need to boot `fx` to label/partition your disk, open the command monitor and issue a command similar to this:
 
-`bootp():/disc1/stand/fx.ARCS`
+`bootp():/6.5.30/Overlay/disc1/stand/fx.ARCS`
 
-where `/disc1/stand/fx.ARCS` is a path relative to your selected IRIX version in the directory structure from above. When installing IRIX 6.5.x you'll want to use the partitioner included with the overlay set (first disc), but prior versions of IRIX usually locate the partitioner on the first install disc.
+where `/6.5.30/Overlay/disc1/stand/fx.ARCS` is a path relative to your selected IRIX version in the directory structure from above. When installing IRIX 6.5.x you'll want to use the partitioner included with the overlay set (first disc), but prior versions of IRIX usually locate the partitioner on the first install disc.
 
  Use `fx.ARCS` for R4xxx machines (like the O2) and `fx.64` for R5000+ machines (and others for older machines, I assume). Once `booterizer` finishes setup it lists any detected partitioners to help you find the correct path.
 
@@ -157,9 +157,35 @@ The installer can be reached through the monitor GUI as follows:
 * At the maintenance boot screen, select "Install Software"
 * If it prompts you for an IP address, enter the same address you entered into the Vagrantfile config for `clientip`.
 * Use `booterizer` as the install server hostname.
-* For the installation path, this depends on your directory structure. If you use the structure example from above, you would use the path `disc1/dist`. Notice the lack of leading `/`.
+* For the installation path, this depends on your directory structure. If you use the structure example from above, you would use the path `6.5.30/Overlay/disc1/dist`. Notice the lack of leading `/`.
 * This should load the miniroot over the network and boot into the installer.
-* To access the other distributions you extracted, use `open booterizer:<directory>/dist`.
+* From inst, choose Option 13, Admin menu
+  * booterizer generates a 'selections' file that contains all of the media paths for inst to load
+  * ```load booterizer:selections```
+  * You can press q to skip the readmes for each media item
+  * Choose 'feature stream' when asked
+  * When inst is done loading media, it will prompt for the next location. Type 
+  * ```done```
+* From inst, Admin menu
+  * booterizer generates a 'commands' file that contains all of the commands for inst to run
+  * ```source booterizer:commands```
+  * NOTE: I've not yet confirmed these work. They appear to, but just in case, they are:
+    ```
+    return
+    keep *
+    install standard
+    keep incompleteoverlays
+    remove java_dev*
+    remove java2_plugin*
+    conflicts
+    # there should be no conflicts
+    go
+    # go for a walk
+    quit
+    # go for another walk
+    # the system will prompt to reboot
+    ```
+
 
 # Provisioning your IRIX host with irix_ansible
 https://github.com/unxmaal/irix_ansible/
