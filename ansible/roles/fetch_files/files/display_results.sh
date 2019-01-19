@@ -8,8 +8,6 @@ find . -name "fx.*" -type f | sed 's#./#bootp():/#' | sort
 
 echo "__________________ Paths for Inst __________________"
 sed 's/from //g' selections
-
-echo "__________________ Paths for extra bundles __________________"
-find . -name "*.tardist" | sed 's#./#booterizer:#' | sort
+echo ""
 
 exit 0

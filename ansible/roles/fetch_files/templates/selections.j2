@@ -1,15 +1,19 @@
-# Foundation
-from booterizer:{{ irixversion }}/Foundation/disc1/
-from booterizer:{{ irixversion }}/Foundation/disc2/
-from booterizer:{{ irixversion }}/Foundation/nfs/
 # Overlay
 from booterizer:{{ irixversion }}/Overlay/disc1/
 from booterizer:{{ irixversion }}/Overlay/disc2/
 from booterizer:{{ irixversion }}/Overlay/disc3/
-from booterizer:{{ irixversion }}/Overlay/apps/
-from booterizer:{{ irixversion }}/Overlay/capps/
+# Foundation
+from booterizer:{{ irixversion }}/Foundation/disc1/
+from booterizer:{{ irixversion }}/Foundation/disc2/
 # Development
 from booterizer:{{ irixversion }}/Development/devfoundations/
+from booterizer:{{ irixversion }}/Development/devlibs/
+# NFS
+from booterizer:{{ irixversion }}/Foundation/nfs/
+# Apps
+from booterizer:{{ irixversion }}/Overlay/apps/
+from booterizer:{{ irixversion }}/Overlay/capps/
+# MIPSpro 
 from booterizer:{{ irixversion }}/Development/prodev/
 from booterizer:{{ irixversion }}/Development/mipspro/
 from booterizer:{{ irixversion }}/Development/mipspro_update/
@@ -19,4 +23,3 @@ from booterizer:{{ irixversion }}/Development/mipspro_cpp/
 from booterizer:{{ irixversion }}/Development/mipspro_ap/
 # Extras
 from booterizer:{{ irixversion }}/Extras/perfcopilot/
-from booterizer:{{ irixversion }}/Extras/sgifonts/
