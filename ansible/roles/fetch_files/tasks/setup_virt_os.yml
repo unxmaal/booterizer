@@ -33,4 +33,5 @@
     - rsync 
     - tcpdump
     - ansible
-    - git 
+    - git
+    - curl 

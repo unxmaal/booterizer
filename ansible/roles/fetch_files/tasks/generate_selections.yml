@@ -4,4 +4,4 @@
     dest: /irix/selections
     owner: vagrant
     group: vagrant
-    mode: 0755
+    mode: 0744
