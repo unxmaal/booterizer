@@ -10,5 +10,5 @@ booterizer:
   clientip:       "192.168.0.78"
   clientether:    "08:00:69:0e:af:65"
   bridgenic:      "en0"
-  myuser:         "edodd"
+  myuser:         "testuser"
   myshell:        "/usr/nekoware/bin/bash"
