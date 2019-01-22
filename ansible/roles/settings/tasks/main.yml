@@ -1,0 +1,6 @@
+- name: Generate settings.yml into the VM
+  template:
+    src: templates/settings.yml.j2
+    dest: /tmp/settings.yml
+    owner: vagrant
+    group: vagrant
