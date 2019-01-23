@@ -3,6 +3,7 @@ ftpurls:
     baseurl:        "{{ installmirror }}/irix-6.5/network-installs/"
     disc1:          foundation1.tar.gz
     disc2:          foundation2.tar.gz
+    nfs:            onc3nfs.tar.gz
   overlay:
     baseurl:        "{{ installmirror }}/irix-6.5/network-installs/irix-6.5.22/"
     apps:           apps.tar.gz

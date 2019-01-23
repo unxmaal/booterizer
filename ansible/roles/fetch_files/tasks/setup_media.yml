@@ -4,43 +4,48 @@
     state: directory
     recurse: yes
   with_items:
-    - "/vagrant/irix/{{ irixversion }}/Foundation/disc1"
-    - "/vagrant/irix/{{ irixversion }}/Foundation/disc2"
-    - "/vagrant/irix/{{ irixversion }}/Foundation/nfs"
     - "/vagrant/irix/{{ irixversion }}/Overlay/disc1"
     - "/vagrant/irix/{{ irixversion }}/Overlay/disc2"
     - "/vagrant/irix/{{ irixversion }}/Overlay/disc3"
     - "/vagrant/irix/{{ irixversion }}/Overlay/apps"
     - "/vagrant/irix/{{ irixversion }}/Overlay/capps"
-    - "/vagrant/irix/{{ irixversion }}/Development/devlibs"
-    - "/vagrant/irix/{{ irixversion }}/Development/devfoundations"
-    - "/vagrant/irix/{{ irixversion }}/Development/mipspro"
-    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_update"
-    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_update"
-    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_c"
-    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee"
-    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp"
-    - "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap"
-    - "/vagrant/irix/{{ irixversion }}/Development/prodev"
-    - "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot"
-    - "/vagrant/irix/{{ irixversion }}/Extras/sgifonts"
-    - "/vagrant/irix/{{ irixversion }}/Bootstrap/"
+    - "/vagrant/irix/Foundation/disc1"
+    - "/vagrant/irix/Foundation/disc2"
+    - "/vagrant/irix/Foundation/nfs"
+    - "/vagrant/irix/Development/devlibs"
+    - "/vagrant/irix/Development/devfoundations"
+    - "/vagrant/irix/Development/mipspro"
+    - "/vagrant/irix/Development/mipspro_update"
+    - "/vagrant/irix/Development/mipspro_update"
+    - "/vagrant/irix/Development/mipspro_c"
+    - "/vagrant/irix/Development/mipspro_cee"
+    - "/vagrant/irix/Development/mipspro_cpp"
+    - "/vagrant/irix/Development/mipspro_ap"
+    - "/vagrant/irix/Development/prodev"
+    - "/vagrant/irix/Extras/perfcopilot"
+    - "/vagrant/irix/Extras/sgifonts"
+    - "/vagrant/irix/Bootstrap/"
 
+
+# these are common across .30 and .22
 
 - name: Fetch foundation disc 1
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc1/{{ foundation_disc1 }}"  
+    dest: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"  
 
 - name: Fetch foundation disc 2
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc2 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/{{ foundation_disc2 }}"  
+    dest: "/vagrant/irix/Foundation/disc2/{{ foundation_disc2 }}"  
 
 - name: Fetch foundation NFS
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_nfs }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Foundation/nfs/{{ foundation_nfs }}"  
+    dest: "/vagrant/irix/Foundation/nfs/{{ foundation_nfs }}"  
+
+
+# these are specific and go into their own dirs for .30 and .22
 
 - name: Fetch overlay disc 1
   get_url:
@@ -69,102 +74,108 @@
   when:
       - irixversion == "6.5.30"
 
+
+# these are common across .30 and .22
+
 - name: Fetch development libraries
   get_url:
     url: "{{ devel_baseurl }}{{ devel_devlibs }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/devlibs/{{ devel_devlibs }}"
+    dest: "/vagrant/irix/Development/devlibs/{{ devel_devlibs }}"
 
 - name: Fetch development foundations
   get_url:
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_devfoundations }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/devfoundations/{{ devel_devfoundations }}"
+    dest: "/vagrant/irix/Development/devfoundations/{{ devel_devfoundations }}"
 
 - name: Fetch MIPSPro 7.4.3m
   get_url:
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_mipspro }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro/{{ devel_mipspro }}"
+    dest: "/vagrant/irix/Development/mipspro/{{ devel_mipspro }}"
 
 - name: Fetch MIPSPro 7.4.4 update
   get_url:
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_update }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_update/{{ devel_update }}"
+    dest: "/vagrant/irix/Development/mipspro_update/{{ devel_update }}"
 
 - name: Fetch MIPSPro c
   get_url:
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_c }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_c/{{ devel_c }}"
+    dest: "/vagrant/irix/Development/mipspro_c/{{ devel_c }}"
 
 - name: Fetch MIPSPro cee
   get_url:
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_cee }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee/{{ devel_cee }}"
+    dest: "/vagrant/irix/Development/mipspro_cee/{{ devel_cee }}"
 
 - name: Fetch MIPSPro cpp
   get_url:
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_cpp }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp/{{ devel_cpp }}"
+    dest: "/vagrant/irix/Development/mipspro_cpp/{{ devel_cpp }}"
 
 - name: Fetch MIPSPro ap
   get_url:
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_ap }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/{{ devel_ap }}"
+    dest: "/vagrant/irix//Development/mipspro_ap/{{ devel_ap }}"
 
 - name: Fetch prodev
   get_url:
     url: "{{ devel_baseurl }}mipspro-74/{{ devel_prodev }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/prodev/{{ devel_prodev }}"
+    dest: "/vagrant/irix//Development/prodev/{{ devel_prodev }}"
 
 - name: Fetch perfcopilot
   get_url:
     url: "{{ extras_baseurl }}{{ extras_perfcopilot }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot/{{ extras_perfcopilot }}"
+    dest: "/vagrant/irix//Extras/perfcopilot/{{ extras_perfcopilot }}"
 
 - name: Fetch SGI Fonts
   get_url:
     url: "{{ extras_baseurl }}{{ extras_sgifonts }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Extras/sgifonts/{{ extras_sgifonts }}"
+    dest: "/vagrant/irix//Extras/sgifonts/{{ extras_sgifonts }}"
 
 - name: Fetch OpenSSH Bundle for Bootstrap
   get_url:
     url: "{{ bootstrap_baseurl }}{{ bootstrap_openssh }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Bootstrap/{{ bootstrap_openssh }}"
+    dest: "/vagrant/irix//Bootstrap/{{ bootstrap_openssh }}"
 
 - name: Fetch Python Bundle for Bootstrap
   get_url:
     url: "{{ bootstrap_baseurl }}{{ bootstrap_python }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Bootstrap/{{ bootstrap_python }}"
+    dest: "/vagrant/irix//Bootstrap/{{ bootstrap_python }}"
 
 - name: Fetch wget Bundle for Bootstrap
   get_url:
     url: "{{ bootstrap_baseurl }}{{ bootstrap_wget }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Bootstrap/{{ bootstrap_wget }}"
+    dest: "/vagrant/irix//Bootstrap/{{ bootstrap_wget }}"
 
 - name: Extracting foundation disc 1
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Foundation/disc1/{{ foundation_disc1 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc1/"
+    src: "/vagrant/irix//Foundation/disc1/{{ foundation_disc1 }}"
+    dest: "/vagrant/irix//Foundation/disc1/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Foundation/disc1/RELEASE.info"
+    creates: "/vagrant/irix//Foundation/disc1/RELEASE.info"
 
 - name: Extracting foundation disc 2
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/{{ foundation_disc2 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/"
+    src: "/vagrant/irix//Foundation/disc2/{{ foundation_disc2 }}"
+    dest: "/vagrant/irix/Foundation/disc2/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Foundation/disc2/RELEASE.info"
+    creates: "/vagrant/irix/Foundation/disc2/RELEASE.info"
 
 - name: Extracting foundation NFS
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Foundation/nfs/{{ foundation_nfs }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Foundation/nfs/"
+    src: "/vagrant/irix/Foundation/nfs/{{ foundation_nfs }}"
+    dest: "/vagrant/irix/Foundation/nfs/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Foundation/nfs/RELEASE.info"
+    creates: "/vagrant/irix/Foundation/nfs/RELEASE.info"
+
+
+# these are specific and go into their own dirs for .30 and .22
 
 - name: Extracting overlay disc 1
   unarchive:
@@ -213,101 +224,104 @@
   when:
       - irixversion == "6.5.30"
 
+
+# these are common across .30 and .22
+
 - name: Extracting development libraries
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/devlibs/{{ devel_devlibs }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/devlibs/"
+    src: "/vagrant/irix/Development/devlibs/{{ devel_devlibs }}"
+    dest: "/vagrant/irix/Development/devlibs/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/devlibs/RELEASE.info"
+    creates: "/vagrant/irix/Development/devlibs/RELEASE.info"
 
 - name: Extracting development foundations
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/devfoundations/{{ devel_devfoundations }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/devfoundations/"
+    src: "/vagrant/irix/Development/devfoundations/{{ devel_devfoundations }}"
+    dest: "/vagrant/irix/Development/devfoundations/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/devfoundations/CDrelnotes"
+    creates: "/vagrant/irix/Development/devfoundations/CDrelnotes"
 
 - name: Extracting MIPSPro 7.4.3m
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro/{{ devel_mipspro }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro/"
+    src: "/vagrant/irix/Development/mipspro/{{ devel_mipspro }}"
+    dest: "/vagrant/irix/Development/mipspro/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro/CDrelnotes"
+    creates: "/vagrant/irix/Development/mipspro/CDrelnotes"
 
 - name: Extracting MIPSPro 7.4.4 update
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_update/{{ devel_update }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_update/"
+    src: "/vagrant/irix/Development/mipspro_update/{{ devel_update }}"
+    dest: "/vagrant/irix/Development/mipspro_update/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_update/inst.README"
+    creates: "/vagrant/irix/Development/mipspro_update/inst.README"
 
 - name: Extracting MIPSPro c
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_c/{{ devel_c }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_c/"
+    src: "/vagrant/irix/Development/mipspro_c/{{ devel_c }}"
+    dest: "/vagrant/irix/Development/mipspro_c/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_c/CDrelnotes"
+    creates: "/vagrant/irix/Development/mipspro_c/CDrelnotes"
 
 - name: Extracting MIPSPro cee
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee/{{ devel_cee }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee/"
+    src: "/vagrant/irix/Development/mipspro_cee/{{ devel_cee }}"
+    dest: "/vagrant/irix/Development/mipspro_cee/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cee/CDrelnotes"
+    creates: "/vagrant/irix/Development/mipspro_cee/CDrelnotes"
 
 - name: Extracting MIPSPro cpp
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp/{{ devel_cpp }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp/"
+    src: "/vagrant/irix/Development/mipspro_cpp/{{ devel_cpp }}"
+    dest: "/vagrant/irix/Development/mipspro_cpp/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_cpp/CDrelnotes"
+    creates: "/vagrant/irix/Development/mipspro_cpp/CDrelnotes"
 
 - name: Extracting MIPSPro ap
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/{{ devel_ap }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/"
+    src: "/vagrant/irix/Development/mipspro_ap/{{ devel_ap }}"
+    dest: "/vagrant/irix/Development/mipspro_ap/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/mipspro_ap/CDrelnotes"
+    creates: "/vagrant/irix/Development/mipspro_ap/CDrelnotes"
 
 - name: Extracting prodev
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Development/prodev/{{ devel_prodev }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Development/prodev/"
+    src: "/vagrant/irix/Development/prodev/{{ devel_prodev }}"
+    dest: "/vagrant/irix/Development/prodev/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Development/prodev/CDrelnotes"
+    creates: "/vagrant/irix/Development/prodev/CDrelnotes"
 
 - name: Extracting perfcopilot
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot/{{ extras_perfcopilot }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot/"
+    src: "/vagrant/irix/Extras/perfcopilot/{{ extras_perfcopilot }}"
+    dest: "/vagrant/irix/Extras/perfcopilot/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Extras/perfcopilot/docs/CDrelnotes"
+    creates: "/vagrant/irix/Extras/perfcopilot/docs/CDrelnotes"
 
 - name: Extracting SGI Fonts
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Extras/sgifonts/{{ extras_sgifonts }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Extras/sgifonts/"
+    src: "/vagrant/irix/Extras/sgifonts/{{ extras_sgifonts }}"
+    dest: "/vagrant/irix/Extras/sgifonts/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix/{{ irixversion }}/Extras/sgifonts/Text/SGI-Text.ttf"
+    creates: "/vagrant/irix/Extras/sgifonts/Text/SGI-Text.ttf"
