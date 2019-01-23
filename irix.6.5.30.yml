@@ -6,7 +6,7 @@ ftpurls:
     nfs: onc3nfs.tar.gz
   overlay:
     baseurl: "{{ installmirror }}/sgi-irix/irix-6.5/network-installs/irix-6.5.30/"
-    apps: apps.tar.gz
+    apps:  apps.tar.gz
     capps: capps.tar.gz
     disc1: disc1.tar.gz
     disc2: disc2.tar.gz

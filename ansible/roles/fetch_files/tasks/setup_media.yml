@@ -55,7 +55,7 @@
 - name: Fetch overlay disc 3
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc3 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"  
+    dest: "/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"  
 
 - name: Fetch overlay apps
   get_url:
@@ -66,6 +66,8 @@
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_capps }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/capps/{{ overlay_capps }}"
+  when:
+      - irixversion == "6.5.30"
 
 - name: Fetch development libraries
   get_url:
@@ -184,12 +186,14 @@
 
 - name: Extracting overlay disc 3
   unarchive:
-    src: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/"
+    src: "/vagrant/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"
+    dest: "/vagrant/{{ irixversion }}/Overlay/disc3/"
     copy: no
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/CDrelnotes"
+    register: extrac3
+- debug: var=extrac3.stdout_lines
 
 - name: Extracting overlay apps
   unarchive:
@@ -208,6 +212,8 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/{{ irixversion }}/Overlay/capps/CDrelnotes"
+  when:
+      - irixversion == "6.5.30"
 
 - name: Extracting development libraries
   unarchive:
