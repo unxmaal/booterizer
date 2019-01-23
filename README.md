@@ -30,7 +30,7 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 
 ### Installation of Prerequisite sofware for OSX (Host)
 * Apple OSX has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
-** Install Brew following directions at their website here: https://brew.sh/
+* Install Brew following directions at their website here: https://brew.sh/
 
 * If you have brew installed you can install Vagrant and VB:
 ```
@@ -39,10 +39,10 @@ $  brew cask install virtualbox
 ```
 
 ### Installation of Prerequisite sofware for Ubuntu (Host)
-* installing recent vagrant must be done manually on older versions of ubuntu, the procedure below will validate the package using its checksums.
-* we need to install virtualbox (to run the virtual linux server for the SGI installation medai)
-* we need to install vagrant 2.2.3 to configure and kick of provisioning of the new VM
-* we need to install ansible to provision the new VM
+* Installing recent vagrant must be done manually on older versions of ubuntu, the procedure below will validate the package using its checksums. Justing using apt-get will install an older version we don't want to use.
+* We need to install virtualbox (to run the virtual linux server for the SGI installation media)
+* We need to install vagrant 2.2.3 to configure and kick of provisioning of the new VM
+* We need to install ansible to provision the new VM
 
 ```
 $  sudo apt-get install virtualbox
@@ -63,7 +63,7 @@ Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
 
 ### Verify Versions
-Verify your installed versions for sanity check:
+Verify your installed versions:
 ```
 vagrant -v
 ansible --version
@@ -76,7 +76,7 @@ Having an exact version of VirtualBox is not critical- as long as you have the p
 
 
 ### Vagrant Plugins
-* whichever host os (OSX or Linux) you are using, install the vagrant plugin with this command:
+* Whichever host os (OSX or Linux) you are using, install the vagrant plugin with this command:
 
 ```
 $ vagrant plugin install vagrant-vbguest
