@@ -5,6 +5,10 @@ booterizer is designed to quickly configure a disposable VM to boot a specific v
 
 By default booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs in the included Vagrantfile.
 
+booterizer also works with IRIX 6.5.22 for older SGI systems that can run 6.5
+booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x
+
+
 booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. I recommend only attaching the network interface to an isolated network for this purpose and then `vagrant halt` or `vagrant destroy` the VM when you are done installing.
 
 The booterizer VM provides the following services:
@@ -24,6 +28,66 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
 
+### Installation of Prerequisite sofware for OSX (Host)
+* Apple OSX has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
+* Install Brew following directions at their website here: https://brew.sh/
+
+* If you have brew installed you can install Vagrant and VB:
+```
+$  brew cask install vagrant
+$  brew cask install virtualbox
+```
+
+### Installation of Prerequisite sofware for Ubuntu (Host)
+* Installing recent vagrant must be done manually on older versions of ubuntu, the procedure below will validate the package using its checksums. Justing using apt-get will install an older version we don't want to use.
+* We need to install virtualbox (to run the virtual linux server for the SGI installation media)
+* We need to install vagrant 2.2.3 to configure and kick of provisioning of the new VM
+* We need to install ansible to provision the new VM
+
+```
+$  sudo apt-get install virtualbox
+
+$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.deb
+$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS
+$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS.sig
+$ gpg --verify vagrant_2.2.3_SHA256SUMS.sig vagrant_2.2.3_SHA256SUMS
+$ shasum -a 256 -c <(cat vagrant_2.2.3_SHA256SUMS | grep 64.deb) -s
+$ sudo dpkg -i vagrant_2.2.3_x86_64.deb
+$ rm vagrant_2.2.3*
+
+$ sudo apt-add-repository ppa:ansible/ansible
+$ sudo apt update && sudo apt install ansible -y
+
+```
+Now you have vagrant 2.2.3 installed on an older Ubuntu system.
+
+
+### Verify Versions
+Verify your installed versions:
+```
+vagrant -v
+ansible --version
+```
+You should have:
+* ansible 2.7.6
+* Vagrant 2.2.3
+
+Having an exact version of VirtualBox is not critical- as long as you have the proper version of Vagrant, it will run VirtualBox for you.
+
+
+### Vagrant Plugins
+* Whichever host os (OSX or Linux) you are using, install the vagrant plugin with this command:
+
+```
+$ vagrant plugin install vagrant-vbguest
+```
+This will install a plugin that will automatically update any VirtualBox VMs with the latest guest additions
+
+Now we can move on and start to configure the Vagrant file and start up the VM...
+
+
+## Target SGI Systems
+
 I am not sure what range of IRIX versions this will work with or what SGI machines are compatible. Personal testing and user reports show the following (at minimum) should be compatible:
 
 * Target Hardware
@@ -42,36 +106,40 @@ I suspect that most other hardware and OS versions released in those timeframes 
 
 Some changes will definitely be needed to support other hypervisors, but booterizer should work with VirtualBox on other systems as long as the `bridgenic` parameter is updated correctly. 
 
-## Setup
-By default, this vagrant VM will fetch proper 6.5.30 installation packages from ftp.irisware.net.
 
+
+## Setup
+By default, this vagrant VM will fetch proper irix installation packages from ftp.irisware.net (or another mirror).
 
 ## Settings
-
 These settings are found in `settings.yml`. Edit them to suit your environment.
 
+* Edit these lines
 
 Set this to the version of IRIX you are installing.
 ```
 irixversion: "6.5.30"
 ```
 
-Currently installmethod is only ftp. cd is no longer supported.
+Currently installmethod is only ftp/http. Choose ftp here and http will be used if available. cd is no longer supported.
 ```
 installmethod: "ftp"
 ```
 
 Pick your install mirror
+ * the same files are in both locations
+ * choose only one of these
 ```
-installmirror: "ftp.irisware.com"
+  installmirror: "http://us.irisware.net/sgi-irix"
+  installmirror: "http://sgi-irix.s3-website-us-east-1.amazonaws.com"
 ```
 
-your SGI box's hostname
+This is the new hostname for your SGI post-installation
 ```
 clientname: 'sgi'
 ```
 
-whatever domain that you make up
+Whatever domain you use at home, or make one up for the install
 ```
 clientdomain: 'devonshire.local'
 ```
@@ -87,21 +155,26 @@ netmask: '255.255.255.0'
 ```
 
 booterizer's host IP. This is the VM's IP on its internal point to point link to the target SGI client machine.
+* this will be a unique, unused ip address in the subnet that your home/office router has created
 ```
-hostip: '192.168.0.1'
+hostip: '192.168.0.40'
 ```
 
 The SGI client box's IP address
+* this will be a unique, unused ip address in the subnet that your home/office router has created
+* it cannot be the same as the Host IP above.
 ```
-clientip: '192.168.0.2'
+clientip: '192.168.0.41'
 ```
 
 The sgi box's physical hardware address, from printenv at PROM
+* older PROMs use the command: eaddr to obtain this
 ```
 clientether: '08:00:69:0e:af:65'
 ```
 
-This is the name of the interface on your physical machine that's connected to your SGI box. In my case, it's the ethernet adapter, which is en0. 
+This is the name of the interface on your physical machine that's connected to your SGI box. In my case, it's the ethernet adapter, which is en0.
+* linux would usually be eth0, a Macintosh will use en0
 ```
 bridgenic: 'en0'
 ```
@@ -123,6 +196,43 @@ Vagrant will automatically create a vagrant/irix directory on your host machine 
 ## Booting
 
 ###### caveat: I am not an SGI expert by any means, this is just based on my experience as to what works.
+
+
+## Set IP address in PROM
+
+When the PROM menu appears choose: Enter Command Monitor
+
+* Set the netaddr of your SGI to match your local network settings, and the specific IP address you picked for it and put into the settings.yml file:
+```
+> setenv netaddr 192.168.251.34
+```
+
+## Net boot into FX to Partition Disks 
+
+Now examine the final output of the vagrant provision or vagrant up command, to find the proper command to boot into fx, the SGI disk partitioner.
+
+* Look for:  __ Partitioners found
+* copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
+Older systems use ARCS:
+```
+> bootp():/6.5.30/Overlay/disc1/stand/fx.ARCS
+Setting $netaddr to 192.168.251.34 (from server )
+Obtaining /6.5.30/Overlay/disc1/stand/fx.ARCS from server 
+95040+26448+7168+2805248+50056d+5908+8928 entry: 0x8fd4aa40
+Currently in safe read-only mode.
+Do you require extended mode with all options available? (no) yes
+SGI Version 6.5 ARCS BE  Jul 20, 2006
+...
+```
+Newer systems will use 64
+```
+bootp():/6.5.30/Overlay/disc1/stand/fx.64
+```
+
+Now continue with the partitoning process.
+
+
+
 
 ### fx (Partitioner)
 
@@ -198,6 +308,29 @@ irix_ansible should be run immediately after your IRIX host has been installed, 
 
 ## PRO TIP
 Take a look in the expect/ directory for my own personal install scripts, written in expect. You can use them as a guide for what to select during an installation -- or if you're really brave/foolish, follow the enclosed README to run those scripts over serial console.
+
+
+## Troubleshooting
+
+* During extraction if you get this ansbile failure:
+```
+TASK [fetch_files : Extracting overlay disc 1] *********************************
+fatal: [default]: FAILED! => changed=false 
+  msg: Failed to find handler for "/vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz". Make sure the required command to extract the file is installed. Command "/bin/tar" could not handle archive. Command "unzip" not found.
+```
+
+the file didn't download fully. vagrant ssh into the host, move into that directory and delete the tar file. Then use the vagrant provision command to pull that tarball again and re-extract.
+
+* Example
+```
+$ rm /vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz
+```
+* then back on you main host run the provision again:
+```
+~/booterizer (master) $ vagrant provision
+```
+
+
 
 ## License
 

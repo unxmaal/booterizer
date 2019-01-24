@@ -1,25 +1,25 @@
 # Overlay
-from booterizer:{{ irixversion }}/Overlay/disc1/dist/
-from booterizer:{{ irixversion }}/Overlay/disc2/dist/
-from booterizer:{{ irixversion }}/Overlay/disc3/dist/
+from {{ hostip }}:{{ irixversion }}/Overlay/disc1/dist
+from {{ hostip }}:{{ irixversion }}/Overlay/disc2/dist
+from {{ hostip }}:{{ irixversion }}/Overlay/disc3/dist
 # Foundation
-from booterizer:{{ irixversion }}/Foundation/disc1/dist/
-from booterizer:{{ irixversion }}/Foundation/disc2/dist/
+from {{ hostip }}:Foundation/disc1/dist
+from {{ hostip }}:Foundation/disc2/dist
 # Development
-from booterizer:{{ irixversion }}/Development/devfoundations/dist/
-from booterizer:{{ irixversion }}/Development/devlibs/dist/
+from {{ hostip }}:Development/devfoundations/dist
+from {{ hostip }}:Development/devlibs/dist
 # NFS
-from booterizer:{{ irixversion }}/Foundation/nfs/dist/
+from {{ hostip }}:Foundation/nfs/dist
 # Apps
-from booterizer:{{ irixversion }}/Overlay/apps/dist/
-from booterizer:{{ irixversion }}/Overlay/capps/dist/
+from {{ hostip }}:Overlay/apps/dist
+from {{ hostip }}:Overlay/capps/dist
 # MIPSpro 
-from booterizer:{{ irixversion }}/Development/prodev/dist/
-from booterizer:{{ irixversion }}/Development/mipspro/dist/
-from booterizer:{{ irixversion }}/Development/mipspro_update/dist/
-from booterizer:{{ irixversion }}/Development/mipspro_c/dist/
-from booterizer:{{ irixversion }}/Development/mipspro_cee/dist/
-from booterizer:{{ irixversion }}/Development/mipspro_cpp/dist/
-from booterizer:{{ irixversion }}/Development/mipspro_ap/dist/
+from {{ hostip }}:Development/prodev/dist
+from {{ hostip }}:Development/mipspro/dist
+from {{ hostip }}:Development/mipspro_update/dist
+from {{ hostip }}:Development/mipspro_c/dist
+from {{ hostip }}:Development/mipspro_cee/dist
+from {{ hostip }}:Development/mipspro_cpp/dist
+from {{ hostip }}:Development/mipspro_ap/dist
 # Extras
-from booterizer:{{ irixversion }}/Extras/perfcopilot/dist/
+from {{ hostip }}:Extras/perfcopilot/dist
