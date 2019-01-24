@@ -1,7 +1,7 @@
 booterizer:
   irixversion:    "6.5.30"
   installmethod:  "ftp"
-  installmirror:  "http://sgi-irix.s3-website-us-east-1.amazonaws.com"
+  installmirror:  "https://s3.amazonaws.com/sgi-irix"
   clientname:     "marengo"
   clientdomain:   "diller.org"
   network:        "192.168.251.0" 
