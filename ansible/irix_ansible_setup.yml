@@ -1,9 +1,9 @@
 ---
-- name: generate irix_ansible inventory file from Vagrant parameters
+- name: Copy settings into the VM
   hosts: all
   tasks:
   - import_role:
-     name: inventory_gen
+     name: settings
 - name: run fetch_files role
   hosts: all
   tasks:

@@ -34,6 +34,12 @@ clientether =   settings['booterizer']['clientether']
 #   In my case, it's the ethernet adapter, which is en0 
 bridgenic = settings['booterizer']['bridgenic']
 
+# Your user account for your SGI box
+myuser =        settings['booterizer']['myuser']
+# Your desired shell 
+  # if this doesn't exist, it defaults to /bin/csh
+myshell =       settings['booterizer']['myshell']
+
 # FTP urls
 
 if irixversion == "6.5.30"
@@ -122,6 +128,8 @@ Vagrant.configure("2") do |config|
         netmask: netmask,
         network: network,
         hostip: hostip,
+        myuser: myuser,
+        myshell: myshell,
         current_dir: current_dir,
         foundation_baseurl: foundation_baseurl,
         foundation_disc1: foundation_disc1,
@@ -168,6 +176,8 @@ Vagrant.configure("2") do |config|
         netmask: netmask,
         network: network,
         hostip: hostip,
+        myuser: myuser,
+        myshell: myshell,
         current_dir: current_dir,
         foundation_baseurl: foundation_baseurl,
         foundation_disc1: foundation_disc1,
