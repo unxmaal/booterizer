@@ -11,12 +11,12 @@ from {{ hostip }}:Development/devlibs/dist
 # NFS
 from {{ hostip }}:Foundation/nfs/dist
 # Apps
-from {{ hostip }}:Overlay/apps/dist
-from {{ hostip }}:Overlay/capps/dist
+from {{ hostip }}:{{ irixversion }}/Overlay/apps/dist
+from {{ hostip }}:{{ irixversion }}/Overlay/capps/dist # empty for some reason
 # MIPSpro 
 from {{ hostip }}:Development/prodev/dist
 from {{ hostip }}:Development/mipspro/dist
-from {{ hostip }}:Development/mipspro_update/dist
+from {{ hostip }}:Development/mipspro_update/
 from {{ hostip }}:Development/mipspro_c/dist
 from {{ hostip }}:Development/mipspro_cee/dist
 from {{ hostip }}:Development/mipspro_cpp/dist
