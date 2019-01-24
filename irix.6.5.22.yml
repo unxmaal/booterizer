@@ -1,17 +1,17 @@
 ftpurls:
   foundation:
-    baseurl:        "{{ installmirror }}/irix-6.5/network-installs/"
+    baseurl:        "{{ installmirror }}/sgi-irix/irix-6.5/network-installs/"
     disc1:          foundation1.tar.gz
     disc2:          foundation2.tar.gz
     nfs:            onc3nfs.tar.gz
   overlay:
-    baseurl:        "{{ installmirror }}/irix-6.5/network-installs/irix-6.5.22/"
+    baseurl:        "{{ installmirror }}/sgi-irix/irix-6.5/network-installs/irix-6.5.22/"
     apps:           apps.tar.gz
     disc1:          disc1.tar.gz
     disc2:          disc2.tar.gz
     disc3:          disc3.tar.gz
   devel:
-    baseurl:        "{{ installmirror }}/development/"
+    baseurl:        "{{ installmirror }}/sgi-irix/development/"
     devlibs:        developmentlibraries.tar.gz
     devfoundations: devf_13.tar.gz
     mipspro:        mipspro-7.4.3m.tar
@@ -22,7 +22,7 @@ ftpurls:
     ap:             mipsproap.tar.gz
     prodev:         prodev.tar.gz
   extras:
-    baseurl:        "{{ installmirror }}/extras/"
+    baseurl:        "{{ installmirror }}/sgi-irix/extras/"
     perfcopilot:    perfcopilot.tar.gz
     sgifonts:       sgipostscriptfonts.tar.gz
   bootstrap:
