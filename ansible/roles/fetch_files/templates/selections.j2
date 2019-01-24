@@ -1,6 +1,6 @@
 # Overlay
 from {{ hostip }}:{{ irixversion }}/Overlay/disc1/dist
-from {{ hostip }}:{{ irixversion }}/Overlay/disc2/dist
+from {{ hostip }}:{{ irixversion }}/Overlay/disc2/CDROM/dist
 from {{ hostip }}:{{ irixversion }}/Overlay/disc3/dist
 # Foundation
 from {{ hostip }}:Foundation/disc1/dist
@@ -11,13 +11,13 @@ from {{ hostip }}:Development/devlibs/dist
 # NFS
 from {{ hostip }}:Foundation/nfs/dist
 # Apps
-from {{ hostip }}:Overlay/apps/dist
-from {{ hostip }}:Overlay/capps/dist
+from {{ hostip }}:{{ irixversion }}/Overlay/apps/dist
+from {{ hostip }}:{{ irixversion }}/Overlay/capps/dist
 # MIPSpro 
 from {{ hostip }}:Development/prodev/dist
 from {{ hostip }}:Development/mipspro/dist
 from {{ hostip }}:Development/mipspro_update/dist
-from {{ hostip }}:Development/mipspro_c/dist
+from {{ hostip }}:Development/mipspro_c/CDROM/dist
 from {{ hostip }}:Development/mipspro_cee/dist
 from {{ hostip }}:Development/mipspro_cpp/dist
 from {{ hostip }}:Development/mipspro_ap/dist

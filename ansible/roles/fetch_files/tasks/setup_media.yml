@@ -27,23 +27,6 @@
     - "/vagrant/irix/Bootstrap/"
 
 
-# these are common across .30 and .22
-
-- name: Fetch foundation disc 1
-  get_url:
-    url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
-    dest: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"  
-
-- name: Fetch foundation disc 2
-  get_url:
-    url: "{{ foundation_baseurl }}{{ foundation_disc2 }}"
-    dest: "/vagrant/irix/Foundation/disc2/{{ foundation_disc2 }}"  
-
-- name: Fetch foundation NFS
-  get_url:
-    url: "{{ foundation_baseurl }}{{ foundation_nfs }}"
-    dest: "/vagrant/irix/Foundation/nfs/{{ foundation_nfs }}"  
-
 
 # these are specific and go into their own dirs for .30 and .22
 
@@ -71,11 +54,26 @@
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_capps }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/capps/{{ overlay_capps }}"
-  when:
-      - irixversion == "6.5.30"
+  when: irixversion == "6.5.30"
+
 
 
 # these are common across .30 and .22
+
+- name: Fetch foundation disc 1
+  get_url:
+    url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
+    dest: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"  
+
+- name: Fetch foundation disc 2
+  get_url:
+    url: "{{ foundation_baseurl }}{{ foundation_disc2 }}"
+    dest: "/vagrant/irix/Foundation/disc2/{{ foundation_disc2 }}"  
+
+- name: Fetch foundation NFS
+  get_url:
+    url: "{{ foundation_baseurl }}{{ foundation_nfs }}"
+    dest: "/vagrant/irix/Foundation/nfs/{{ foundation_nfs }}"  
 
 - name: Fetch development libraries
   get_url:
@@ -221,8 +219,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/{{ irixversion }}/Overlay/capps/CDrelnotes"
-  when:
-      - irixversion == "6.5.30"
+  when: irixversion == "6.5.30"
 
 
 # these are common across .30 and .22
