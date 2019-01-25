@@ -1,6 +1,10 @@
 # Overlay
 from {{ hostip }}:{{ irixversion }}/Overlay/disc1/dist
+{% if '6.5.22'  == irixversion %}
 from {{ hostip }}:{{ irixversion }}/Overlay/disc2/CDROM/dist
+{% else %}
+from {{ hostip }}:{{ irixversion }}/Overlay/disc2/dist
+{% endif %}
 from {{ hostip }}:{{ irixversion }}/Overlay/disc3/dist
 # Foundation
 from {{ hostip }}:Foundation/disc1/dist
@@ -12,7 +16,9 @@ from {{ hostip }}:Development/devlibs/dist
 from {{ hostip }}:Foundation/nfs/dist
 # Apps
 from {{ hostip }}:{{ irixversion }}/Overlay/apps/dist
+{% if '6.5.30'  == irixversion %}
 from {{ hostip }}:{{ irixversion }}/Overlay/capps/dist
+{% endif %}
 # MIPSpro 
 from {{ hostip }}:Development/prodev/dist
 from {{ hostip }}:Development/mipspro/dist
