@@ -34,15 +34,9 @@ clientether =   settings['booterizer']['clientether']
 default_gw =    settings['booterizer']['default_gw']
 nameserver =    settings['booterizer']['nameserver']
 
-
-# Handle single-NIC setups
-singlenic = settings['booterizer']['singlenic']
-
-if singlenic != "true"
-  # With dual NICs, you must specify which NIC will be directly connected to your SGI box.
-  #   In my case, it's the ethernet adapter, which is en0 
-  bridgenic = settings['booterizer']['bridgenic']
-end
+# Specify which NIC will be directly connected to your SGI box.
+#   In my case, it's the ethernet adapter, which is en0 
+bridgenic = settings['booterizer']['bridgenic']
 
 
 # Your user account for your SGI box
@@ -230,15 +224,9 @@ end
 
 
 Vagrant.configure("2") do |config|
-  if singlenic == "true"
-    config.vm.network "public_network", 
-      ip: hostip, 
-      bridge: bridgenic
-
-    #config.vm.provision "shell",
-    #  run: "always",
-    #  inline: "route add default gw 192.168.0.1 ; echo "  
-    config.vm.post_up_message = [ "booterizer running at ", hostip ]
-  end
+  config.vm.box = "debian/contrib-jessie64"
+  config.vm.box_version = "8.11.0"
+  config.vm.network "public_network", ip: hostip, bridge: bridgenic
+  config.vm.post_up_message = [ "booterizer running at ", hostip ]
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 end

@@ -1,5 +1,4 @@
 booterizer:
-  singlenic:      "true"
   irixversion:    "6.5.30"
   installmethod:  "ftp"
   installmirror:  "https://s3.amazonaws.com"
