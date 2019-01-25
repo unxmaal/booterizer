@@ -18,6 +18,8 @@ installmirror = settings['booterizer']['installmirror']
 clientname =    settings['booterizer']['clientname']
 # whatever domain that you make up
 clientdomain =  settings['booterizer']['clientdomain']
+# timezone
+tzone =    settings['booterizer']['tzone']
 
 # Internal network your SGI, Virtual Machine will be on
 network =       settings['booterizer']['network']
@@ -29,10 +31,19 @@ hostip =        settings['booterizer']['hostip']
 clientip =      settings['booterizer']['clientip']
 # your SGI box's physical hardware address, from printenv at PROM - or eaddr for older PROM
 clientether =   settings['booterizer']['clientether']
+default_gw =    settings['booterizer']['default_gw']
+nameserver =    settings['booterizer']['nameserver']
 
-# This is the name of the interface on your physical machine that's connected to your SGI box
-#   In my case, it's the ethernet adapter, which is en0 
-bridgenic = settings['booterizer']['bridgenic']
+
+# Handle single-NIC setups
+singlenic = settings['booterizer']['singlenic']
+
+if singlenic != "true"
+  # With dual NICs, you must specify which NIC will be directly connected to your SGI box.
+  #   In my case, it's the ethernet adapter, which is en0 
+  bridgenic = settings['booterizer']['bridgenic']
+end
+
 
 # Your user account for your SGI box
 myuser =        settings['booterizer']['myuser']
@@ -94,7 +105,6 @@ installdisk = "%s/%s%s" % [current_dir,disk_prefix,disk_ext]
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/contrib-jessie64"
   config.vm.box_version = "8.11.0"
-  #config.vm.network "public_network"
   config.vm.post_up_message = [ "booterizer configuration stage" ]
   
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
@@ -127,9 +137,12 @@ Vagrant.configure("2") do |config|
         clientether: clientether,
         netmask: netmask,
         network: network,
+        nameserver: nameserver,
+        default_gw: default_gw,
         hostip: hostip,
         myuser: myuser,
         myshell: myshell,
+        tzone: tzone,
         current_dir: current_dir,
         foundation_baseurl: foundation_baseurl,
         foundation_disc1: foundation_disc1,
@@ -175,9 +188,12 @@ Vagrant.configure("2") do |config|
         clientether: clientether,
         netmask: netmask,
         network: network,
+        nameserver: nameserver,
+        default_gw: default_gw,
         hostip: hostip,
         myuser: myuser,
         myshell: myshell,
+        tzone: tzone,
         current_dir: current_dir,
         foundation_baseurl: foundation_baseurl,
         foundation_disc1: foundation_disc1,
@@ -213,11 +229,16 @@ Vagrant.configure("2") do |config|
 end
 
 
-
 Vagrant.configure("2") do |config|
-  config.vm.box = "debian/contrib-jessie64"
-  config.vm.box_version = "8.11.0"
-  config.vm.network "public_network", ip: hostip, bridge: bridgenic
-  config.vm.post_up_message = [ "booterizer running at ", hostip ]
+  if singlenic == "true"
+    config.vm.network "public_network", 
+      ip: hostip, 
+      bridge: bridgenic
+
+    #config.vm.provision "shell",
+    #  run: "always",
+    #  inline: "route add default gw 192.168.0.1 ; echo "  
+    config.vm.post_up_message = [ "booterizer running at ", hostip ]
+  end
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 end

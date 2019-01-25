@@ -1,5 +1,5 @@
 ---
-- name: Copy settings into the VM
+- name: Generate settings.yml
   hosts: all
   tasks:
   - import_role:

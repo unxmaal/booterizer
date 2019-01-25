@@ -7,10 +7,9 @@
     repo: 'https://github.com/unxmaal/irix_ansible.git'
     dest: /home/vagrant/irix_ansible
     update: yes
-- name: copy inventory.ini
-  copy:
-    src: /tmp/inventory.ini
-    dest: /home/vagrant/irix_ansible/inventory.ini
-    remote_src: yes
+- name: create inventory.yml
+  template:
+    src: templates/inventory.yml.j2
+    dest: /home/vagrant/irix_ansible/inventory.yml
     owner: vagrant
     group: vagrant

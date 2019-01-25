@@ -1,0 +1,54 @@
+---
+default:
+  hosts:
+    {{ clientname }}:
+      ansible_host:   {{ clientip }}
+      become-method:  su
+      default_gw:     {{ default_gw }}
+      nameserver:     {{ nameserver }}
+      domain:         {{ clientdomain }}
+      network:        {{ network }}
+      tzone:          {{ tzone }}
+  vars:
+    ansible_python_interpreter:     /usr/nekoware/bin/python
+    bootstrap_baseurl:              "{{ bootstrap_baseurl }}"
+    bootstrap_openssh:              "{{ bootstrap_openssh }}"
+    bootstrap_python:               "{{ bootstrap_python }}"
+    bootstrap_wget:                 "{{ bootstrap_wget }}"
+    clientdomain:                   "{{ clientdomain }}"
+    clientether:                    "{{ clientether }}"
+    clientip:                       "{{ clientip }}"
+    clientname:                     "{{ clientname }}"
+    current_dir:                    "{{ current_dir }}"
+    devel_ap:                       "{{ devel_ap }}"
+    devel_baseurl:                  "{{ devel_baseurl }}"
+    devel_c:                        "{{ devel_c }}"
+    devel_cee:                      "{{ devel_cee }}"
+    devel_cpp:                      "{{ devel_cpp }}"
+    devel_devfoundations:           "{{ devel_devfoundations }}"
+    devel_devlibs:                  "{{ devel_devlibs }}"
+    devel_mipspro:                  "{{ devel_mipspro }}"
+    devel_prodev:                   "{{ devel_prodev }}"
+    devel_update:                   "{{ devel_update }}"
+    extras_baseurl:                 "{{ extras_baseurl }}"
+    extras_perfcopilot:             "{{ extras_perfcopilot }}"
+    extras_sgifonts:                "{{ extras_sgifonts }}"
+    foundation_baseurl:             "{{ foundation_baseurl }}"
+    foundation_disc1:               "{{ foundation_disc1 }}"
+    foundation_disc2:               "{{ foundation_disc2 }}"
+    foundation_nfs:                 "{{ foundation_nfs }}"
+    hostip:                         "{{ hostip }}"
+    installmethod:                  "{{ installmethod }}"
+    installmirror:                  "{{ installmirror }}"
+    irixversion:                    "{{ irixversion }}"
+    myshell:                        "{{ myshell }}"
+    myuser:                         "{{ myuser }}"
+    nekodeps:                       "{{ nekodeps }}"
+    netmask:                        "{{ netmask }}"
+    network:                        "{{ network }}"
+    overlay_apps:                   "{{ overlay_apps }}"
+    overlay_baseurl:                "{{ overlay_baseurl }}"
+    overlay_capps:                  "{{ overlay_capps }}"
+    overlay_disc1:                  "{{ overlay_disc1 }}"
+    overlay_disc2:                  "{{ overlay_disc2 }}"
+    overlay_disc3:                  "{{ overlay_disc3 }}"
