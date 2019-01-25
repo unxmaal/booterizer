@@ -312,7 +312,19 @@ Take a look in the expect/ directory for my own personal install scripts, writte
 
 ## Troubleshooting
 
-* During extraction if you get this ansbile failure:
+## Problems running inst from Serial port
+
+* see this page: https://support.hpe.com/hpsc/doc/public/display?docId=emr_na-sg2636en_us&docLocale=en_US
+* ensure in the PROM that your console variable is set to d.
+* if it is set to g you will have errors and kernel panics
+```
+setenv console d
+```
+And then continue installation as above.
+
+
+## Ansible fails to pull images
+* During extraction if you get this ansible failure:
 ```
 TASK [fetch_files : Extracting overlay disc 1] *********************************
 fatal: [default]: FAILED! => changed=false 
