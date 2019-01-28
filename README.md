@@ -188,8 +188,16 @@ The booterizer vm's fake network interfaces map to your physical host as follows
 
 NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on your network. It is configured to ignore anything but the target system but if you have another DHCP/BOOTP server on the LAN segment the queries from the SGI hardware may get answered by your network's existing DHCP server which will cause problems. You may want to temporarily disable DHCP/BOOTP if you are running it on your LAN, configure it to not reply to queries from the SGI system, or put SGI hardware on a separate LAN (my recommendation).
 
-## IRIX media from FTP
-This VM can now sync installation media from the FTP site ftp.irisware.net. As this site contains more, and more recently updated, packages, it is the default. 
+### One possible setup
+![Image of a possible network setup for Booterizer](docs/booterizer_network_v1a.png?raw=true "Booterizer Network Setup")
+
+
+## IRIX media from FTP or S3
+This VM can now sync installation media from the FTP site ftp.irisware.net or from S3 using http. Irisware it is the default but you can easily change this to S3 by editing the settings.yml file to:
+```
+installmirror:  "https://s3.amazonaws.com"
+```
+and then saving the file and using the vagrant provision command if the vagrant host has been booted.
 
 Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory. 
 
@@ -204,8 +212,10 @@ When the PROM menu appears choose: Enter Command Monitor
 
 * Set the netaddr of your SGI to match your local network settings, and the specific IP address you picked for it and put into the settings.yml file:
 ```
-> setenv netaddr 192.168.251.34
+> setenv netaddr 192.168.0.34
 ```
+The address above is only a sample. You should pick an unused IP in your local network's subnet.
+
 
 ## Net boot into FX to Partition Disks 
 
@@ -213,18 +223,19 @@ Now examine the final output of the vagrant provision or vagrant up command, to 
 
 * Look for:  __ Partitioners found
 * copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
-Older systems use ARCS:
+* Older systems use fx.ARCS (such as Indigos and Indy and some O2s)
+* O2 and newer systems use fx.64
 ```
-> bootp():/6.5.30/Overlay/disc1/stand/fx.ARCS
+> bootp():/6.5.30/Overlay/disc1/stand/fx.64
 Setting $netaddr to 192.168.251.34 (from server )
-Obtaining /6.5.30/Overlay/disc1/stand/fx.ARCS from server 
+Obtaining /6.5.30/Overlay/disc1/stand/fx.64 from server 
 95040+26448+7168+2805248+50056d+5908+8928 entry: 0x8fd4aa40
 Currently in safe read-only mode.
 Do you require extended mode with all options available? (no) yes
 SGI Version 6.5 ARCS BE  Jul 20, 2006
 ...
 ```
-Newer systems will use 64
+Newer systems will use fx.64
 ```
 bootp():/6.5.30/Overlay/disc1/stand/fx.64
 ```
@@ -243,6 +254,8 @@ If you need to boot `fx` to label/partition your disk, open the command monitor 
 where `/6.5.30/Overlay/disc1/stand/fx.ARCS` is a path relative to your selected IRIX version in the directory structure from above. When installing IRIX 6.5.x you'll want to use the partitioner included with the overlay set (first disc), but prior versions of IRIX usually locate the partitioner on the first install disc.
 
  Use `fx.ARCS` for R4xxx machines (like the O2) and `fx.64` for R5000+ machines (and others for older machines, I assume). Once `booterizer` finishes setup it lists any detected partitioners to help you find the correct path.
+
+You should use fx to partition your internal disk- read the section "Partitioning the disk" at [Getting an Indy Desktop](https://blog.pizzabox.computer/posts/getting-an-indy-desktop/) for more thorough directions.
 
 ### inst (IRIX installer)
 NOTE: After `booterizer` initializes, it displays a list of all `dist` subdirectories for your convenience. Use this list to preserve your sanity while running inst.
