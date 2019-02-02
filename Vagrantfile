@@ -73,11 +73,6 @@ devel_prodev          = ftpurls['ftpurls']['devel']['prodev']
 extras_baseurl        = ftpurls['ftpurls']['extras']['baseurl']
 extras_perfcopilot    = ftpurls['ftpurls']['extras']['perfcopilot']
 extras_sgifonts       = ftpurls['ftpurls']['extras']['sgifonts']
-nekodeps              = ftpurls['ftpurls']['nekodeps']
-bootstrap_baseurl     = ftpurls['ftpurls']['bootstrap']['baseurl']
-bootstrap_openssh     = ftpurls['ftpurls']['bootstrap']['openssh']
-bootstrap_python      = ftpurls['ftpurls']['bootstrap']['python']
-bootstrap_wget        = ftpurls['ftpurls']['bootstrap']['wget']
 
 #################################################################
 # end of settings
@@ -153,12 +148,7 @@ Vagrant.configure("2") do |config|
         devel_prodev: devel_prodev,
         extras_baseurl: extras_baseurl,
         extras_perfcopilot: extras_perfcopilot,
-        extras_sgifonts: extras_sgifonts,
-        nekodeps: nekodeps,
-        bootstrap_baseurl: bootstrap_baseurl,
-        bootstrap_openssh: bootstrap_openssh,
-        bootstrap_python: bootstrap_python,
-        bootstrap_wget: bootstrap_wget
+        extras_sgifonts: extras_sgifonts
     }
     end
   else
@@ -201,13 +191,7 @@ Vagrant.configure("2") do |config|
         devel_prodev: devel_prodev,
         extras_baseurl: extras_baseurl,
         extras_perfcopilot: extras_perfcopilot,
-        extras_sgifonts: extras_sgifonts,
-        nekodeps: nekodeps,
-        bootstrap_baseurl: bootstrap_baseurl,
-        bootstrap_openssh: bootstrap_openssh,
-        bootstrap_python: bootstrap_python,
-        bootstrap_wget: bootstrap_wget
-    }
+        extras_sgifonts: extras_sgifonts    }
     end
   end
 end
