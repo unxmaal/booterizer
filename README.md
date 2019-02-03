@@ -19,7 +19,12 @@ The booterizer VM provides the following services:
 
 NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. 
 
-## Requirements
+# Where to get help
+* Create a Github Issue vs this project
+* SGIDev Discord: https://discord.gg/nTAwGnr
+
+
+# Requirements
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
@@ -28,7 +33,7 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
 
-### Installation of Prerequisite sofware for OSX (Host)
+## Installation of Prerequisite sofware for OSX (Host)
 * Apple OSX has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
 * Install Brew following directions at their website here: https://brew.sh/
 
@@ -38,7 +43,7 @@ $  brew cask install vagrant
 $  brew cask install virtualbox
 ```
 
-### Installation of Prerequisite sofware for Ubuntu (Host)
+## Installation of Prerequisite sofware for Ubuntu (Host)
 * Installing recent vagrant must be done manually on older versions of ubuntu, the procedure below will validate the package using its checksums. Justing using apt-get will install an older version we don't want to use.
 * We need to install virtualbox (to run the virtual linux server for the SGI installation media)
 * We need to install vagrant 2.2.3 to configure and kick of provisioning of the new VM
@@ -62,7 +67,7 @@ $ sudo apt update && sudo apt install ansible -y
 Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
 
-### Verify Versions
+## Verify Versions
 Verify your installed versions:
 ```
 vagrant -v
@@ -75,7 +80,7 @@ You should have:
 Having an exact version of VirtualBox is not critical- as long as you have the proper version of Vagrant, it will run VirtualBox for you.
 
 
-### Vagrant Plugins
+## Vagrant Plugins
 * Whichever host os (OSX or Linux) you are using, install the vagrant plugin with this command:
 
 ```
@@ -86,7 +91,7 @@ This will install a plugin that will automatically update any VirtualBox VMs wit
 Now we can move on and start to configure the Vagrant file and start up the VM...
 
 
-## Target SGI Systems
+# Target SGI Systems
 
 I am not sure what range of IRIX versions this will work with or what SGI machines are compatible. Personal testing and user reports show the following (at minimum) should be compatible:
 
@@ -102,13 +107,10 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 
 I suspect that most other hardware and OS versions released in those timeframes will also work (e.g. O2, server variants, etc.) SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system. 
 
-(feel free to send me a Personal IRIS or Tezro or something to test it on!)
-
 Some changes will definitely be needed to support other hypervisors, but booterizer should work with VirtualBox on other systems as long as the `bridgenic` parameter is updated correctly. 
 
 
-
-## Setup
+# Setup
 By default, this vagrant VM will fetch proper irix installation packages from ftp.irisware.net (or another mirror).
 
 ## Settings
@@ -201,10 +203,7 @@ and then saving the file and using the vagrant provision command if the vagrant 
 
 Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory. 
 
-## Booting
-
-###### caveat: I am not an SGI expert by any means, this is just based on my experience as to what works.
-
+# Booting
 
 ## Set IP address in PROM
 
