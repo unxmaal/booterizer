@@ -21,7 +21,7 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 
 # Where to get help
 * Create a Github Issue vs this project
-* SGIDev Discord: https://discord.gg/nTAwGnr
+* SGIDev Discord: https://discord.gg/p2zZ7TZ
 
 
 # Requirements
