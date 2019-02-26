@@ -24,7 +24,6 @@
     - "/vagrant/irix/Development/prodev"
     - "/vagrant/irix/Extras/perfcopilot"
     - "/vagrant/irix/Extras/sgifonts"
-    - "/vagrant/irix/Bootstrap/"
 
 
 
@@ -129,21 +128,6 @@
   get_url:
     url: "{{ extras_baseurl }}{{ extras_sgifonts }}"
     dest: "/vagrant/irix//Extras/sgifonts/{{ extras_sgifonts }}"
-
-- name: Fetch OpenSSH Bundle for Bootstrap
-  get_url:
-    url: "{{ bootstrap_baseurl }}{{ bootstrap_openssh }}"
-    dest: "/vagrant/irix//Bootstrap/{{ bootstrap_openssh }}"
-
-- name: Fetch Python Bundle for Bootstrap
-  get_url:
-    url: "{{ bootstrap_baseurl }}{{ bootstrap_python }}"
-    dest: "/vagrant/irix//Bootstrap/{{ bootstrap_python }}"
-
-- name: Fetch wget Bundle for Bootstrap
-  get_url:
-    url: "{{ bootstrap_baseurl }}{{ bootstrap_wget }}"
-    dest: "/vagrant/irix//Bootstrap/{{ bootstrap_wget }}"
 
 - name: Extracting foundation disc 1
   unarchive:

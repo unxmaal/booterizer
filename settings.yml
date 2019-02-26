@@ -1,4 +1,5 @@
 booterizer:
+<<<<<<< HEAD
   irixversion:    "6.5.22"
   installmethod:  "ftp"
   installmirror:  "https://s3.amazonaws.com"
@@ -9,6 +10,18 @@ booterizer:
   hostip:         "192.168.251.100"
   clientip:       "192.168.251.32"
   clientether:    "08:00:69:0A:9F:52"
+=======
+  installmirror:  "https://s3.amazonaws.com"
+  irixversion:    "6.5.30"
+  installmethod:  "ftp"
+  clientname:     "sgi"
+  clientdomain:   "devonshire.org"
+  network:        "192.168.0.0" 
+  netmask:        "255.255.255.0"
+  hostip:         "192.168.0.1"
+  clientip:       "192.168.0.78"
+  clientether:    "08:00:69:0e:af:65"
+>>>>>>> upstream/master
   bridgenic:      "en0"
   myuser:         "testuser"
-  myshell:        "/usr/nekoware/bin/bash"
+  myshell: "/usr/nekoware/bin/bash"

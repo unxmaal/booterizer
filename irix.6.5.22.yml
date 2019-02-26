@@ -25,9 +25,3 @@ ftpurls:
     baseurl:        "{{ installmirror }}/sgi-irix/extras/"
     perfcopilot:    perfcopilot.tar.gz
     sgifonts:       sgipostscriptfonts.tar.gz
-  bootstrap:
-    baseurl:        ftp://nonfree.irix.fun/pub/misc/
-    openssh:        openssh_bundle-0.0.1.tardist.gz
-    python:         python_bundle-0.0.1.tardist.gz
-    wget:           wget_bundle-0.0.1.tardist.gz
-  nekodeps:         nekodeps_custom.0.0.1.tardist

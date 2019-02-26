@@ -19,7 +19,12 @@ The booterizer VM provides the following services:
 
 NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. 
 
-## Requirements
+# Where to get help
+* Create a Github Issue vs this project
+* SGIDev Discord: https://discord.gg/p2zZ7TZ
+
+
+# Requirements
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
@@ -28,7 +33,7 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
 
-### Installation of Prerequisite sofware for OSX (Host)
+## Installation of Prerequisite sofware for OSX (Host)
 * Apple OSX has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
 * Install Brew following directions at their website here: https://brew.sh/
 
@@ -38,7 +43,7 @@ $  brew cask install vagrant
 $  brew cask install virtualbox
 ```
 
-### Installation of Prerequisite sofware for Ubuntu (Host)
+## Installation of Prerequisite sofware for Ubuntu (Host)
 * Installing recent vagrant must be done manually on older versions of ubuntu, the procedure below will validate the package using its checksums. Justing using apt-get will install an older version we don't want to use.
 * We need to install virtualbox (to run the virtual linux server for the SGI installation media)
 * We need to install vagrant 2.2.3 to configure and kick of provisioning of the new VM
@@ -62,7 +67,7 @@ $ sudo apt update && sudo apt install ansible -y
 Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
 
-### Verify Versions
+## Verify Versions
 Verify your installed versions:
 ```
 vagrant -v
@@ -75,7 +80,7 @@ You should have:
 Having an exact version of VirtualBox is not critical- as long as you have the proper version of Vagrant, it will run VirtualBox for you.
 
 
-### Vagrant Plugins
+## Vagrant Plugins
 * Whichever host os (OSX or Linux) you are using, install the vagrant plugin with this command:
 
 ```
@@ -86,7 +91,7 @@ This will install a plugin that will automatically update any VirtualBox VMs wit
 Now we can move on and start to configure the Vagrant file and start up the VM...
 
 
-## Target SGI Systems
+# Target SGI Systems
 
 I am not sure what range of IRIX versions this will work with or what SGI machines are compatible. Personal testing and user reports show the following (at minimum) should be compatible:
 
@@ -102,13 +107,10 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 
 I suspect that most other hardware and OS versions released in those timeframes will also work (e.g. O2, server variants, etc.) SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system. 
 
-(feel free to send me a Personal IRIS or Tezro or something to test it on!)
-
 Some changes will definitely be needed to support other hypervisors, but booterizer should work with VirtualBox on other systems as long as the `bridgenic` parameter is updated correctly. 
 
 
-
-## Setup
+# Setup
 By default, this vagrant VM will fetch proper irix installation packages from ftp.irisware.net (or another mirror).
 
 ## Settings
@@ -188,15 +190,20 @@ The booterizer vm's fake network interfaces map to your physical host as follows
 
 NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on your network. It is configured to ignore anything but the target system but if you have another DHCP/BOOTP server on the LAN segment the queries from the SGI hardware may get answered by your network's existing DHCP server which will cause problems. You may want to temporarily disable DHCP/BOOTP if you are running it on your LAN, configure it to not reply to queries from the SGI system, or put SGI hardware on a separate LAN (my recommendation).
 
-## IRIX media from FTP
-This VM can now sync installation media from the FTP site ftp.irisware.net. As this site contains more, and more recently updated, packages, it is the default. 
+### One possible setup
+![Image of a possible network setup for Booterizer](docs/booterizer_network_v1a.png?raw=true "Booterizer Network Setup")
+
+
+## IRIX media from FTP or S3
+This VM can now sync installation media from the FTP site ftp.irisware.net or from S3 using http. Irisware it is the default but you can easily change this to S3 by editing the settings.yml file to:
+```
+installmirror:  "https://s3.amazonaws.com"
+```
+and then saving the file and using the vagrant provision command if the vagrant host has been booted.
 
 Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory. 
 
-## Booting
-
-###### caveat: I am not an SGI expert by any means, this is just based on my experience as to what works.
-
+# Booting
 
 ## Set IP address in PROM
 
@@ -204,8 +211,10 @@ When the PROM menu appears choose: Enter Command Monitor
 
 * Set the netaddr of your SGI to match your local network settings, and the specific IP address you picked for it and put into the settings.yml file:
 ```
-> setenv netaddr 192.168.251.34
+> setenv netaddr 192.168.0.34
 ```
+The address above is only a sample. You should pick an unused IP in your local network's subnet.
+
 
 ## Net boot into FX to Partition Disks 
 
@@ -213,18 +222,19 @@ Now examine the final output of the vagrant provision or vagrant up command, to 
 
 * Look for:  __ Partitioners found
 * copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
-Older systems use ARCS:
+* Older systems use fx.ARCS (such as Indigos and Indy and some O2s)
+* O2 and newer systems use fx.64
 ```
-> bootp():/6.5.30/Overlay/disc1/stand/fx.ARCS
+> bootp():/6.5.30/Overlay/disc1/stand/fx.64
 Setting $netaddr to 192.168.251.34 (from server )
-Obtaining /6.5.30/Overlay/disc1/stand/fx.ARCS from server 
+Obtaining /6.5.30/Overlay/disc1/stand/fx.64 from server 
 95040+26448+7168+2805248+50056d+5908+8928 entry: 0x8fd4aa40
 Currently in safe read-only mode.
 Do you require extended mode with all options available? (no) yes
 SGI Version 6.5 ARCS BE  Jul 20, 2006
 ...
 ```
-Newer systems will use 64
+Newer systems will use fx.64
 ```
 bootp():/6.5.30/Overlay/disc1/stand/fx.64
 ```
@@ -243,6 +253,8 @@ If you need to boot `fx` to label/partition your disk, open the command monitor 
 where `/6.5.30/Overlay/disc1/stand/fx.ARCS` is a path relative to your selected IRIX version in the directory structure from above. When installing IRIX 6.5.x you'll want to use the partitioner included with the overlay set (first disc), but prior versions of IRIX usually locate the partitioner on the first install disc.
 
  Use `fx.ARCS` for R4xxx machines (like the O2) and `fx.64` for R5000+ machines (and others for older machines, I assume). Once `booterizer` finishes setup it lists any detected partitioners to help you find the correct path.
+
+You should use fx to partition your internal disk- read the section "Partitioning the disk" at [Getting an Indy Desktop](https://blog.pizzabox.computer/posts/getting-an-indy-desktop/) for more thorough directions.
 
 ### inst (IRIX installer)
 NOTE: After `booterizer` initializes, it displays a list of all `dist` subdirectories for your convenience. Use this list to preserve your sanity while running inst.
