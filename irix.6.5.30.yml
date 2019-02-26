@@ -27,7 +27,8 @@ ftpurls:
     perfcopilot:        perfcopilot.tar.gz
     sgifonts:           sgipostscriptfonts.tar.gz
   bootstrap:
-    baseurl:            ftp://nonfree.irix.fun/pub/misc/
+    baseurl:            "https://s3.amazonaws.com/sgi-irix/nekobootstrap/"
+ #   baseurl:            ftp://nonfree.irix.fun/pub/misc/
     openssh:            openssh_bundle-0.0.1.tardist.gz
     python:             python_bundle-0.0.1.tardist.gz
     wget:               wget_bundle-0.0.1.tardist.gz
