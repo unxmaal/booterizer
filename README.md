@@ -21,7 +21,7 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 
 # Where to get help
 * Create a Github Issue vs this project
-* Silicon Graphics User Group-  for support and dev community: http://sgi.sh/
+* Silicon Graphics User Group-  for support and dev community: https://sgi.sh/
 * SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
 
