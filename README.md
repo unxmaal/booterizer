@@ -30,6 +30,7 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 	* vagrant plugin install vagrant-guest_ansible
+* Ansible/Python
 * VM host with TWO network interfaces
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
@@ -38,10 +39,16 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 * Apple OSX has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
 * Install Brew following directions at their website here: https://brew.sh/
 
-* If you have brew installed you can install Vagrant and VB:
+* If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
 ```
 $  brew cask install vagrant
 $  brew cask install virtualbox
+$  brew install ansible
+```
+
+* If you already have Python installed outside of Brew, instead of installing Ansible through Brew, install it through `pip`:
+```
+$  sudo pip install ansible
 ```
 
 ## Installation of Prerequisite sofware for Ubuntu (Host)
@@ -75,8 +82,8 @@ vagrant -v
 ansible --version
 ```
 You should have:
-* ansible 2.7.6
-* Vagrant 2.2.3
+* ansible 2.7.6 or higher
+* Vagrant 2.2.3 or higher
 
 Having an exact version of VirtualBox is not critical- as long as you have the proper version of Vagrant, it will run VirtualBox for you.
 
@@ -223,7 +230,7 @@ Now examine the final output of the vagrant provision or vagrant up command, to 
 
 * Look for:  __ Partitioners found
 * copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
-* Older systems use fx.ARCS (such as Indigos and Indy and some O2s)
+* Older systems use fx.ARCS (such as Indigos, Indys, and some O2s)
 * O2 and newer systems use fx.64
 ```
 > bootp():/6.5.30/Overlay/disc1/stand/fx.64
@@ -253,7 +260,7 @@ If you need to boot `fx` to label/partition your disk, open the command monitor 
 
 where `/6.5.30/Overlay/disc1/stand/fx.ARCS` is a path relative to your selected IRIX version in the directory structure from above. When installing IRIX 6.5.x you'll want to use the partitioner included with the overlay set (first disc), but prior versions of IRIX usually locate the partitioner on the first install disc.
 
- Use `fx.ARCS` for R4xxx machines (like the O2) and `fx.64` for R5000+ machines (and others for older machines, I assume). Once `booterizer` finishes setup it lists any detected partitioners to help you find the correct path.
+ Use `fx.ARCS` for R4xxx machines and some O2s, or `fx.64` for R5000+ machines (and others for older machines, I assume). Once `booterizer` finishes setup it lists any detected partitioners to help you find the correct path.
 
 You should use fx to partition your internal disk- read the section "Partitioning the disk" at [Getting an Indy Desktop](https://blog.pizzabox.computer/posts/getting-an-indy-desktop/) for more thorough directions.
 
