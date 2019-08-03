@@ -204,6 +204,11 @@ and then saving the file and using the vagrant provision command if the vagrant 
 
 Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory. 
 
+Now that your configuration is complete, you're ready to start up the vm and set up the SGI.
+```
+$ vagrant up
+```
+
 # Booting
 
 ## Set IP address in PROM
@@ -312,7 +317,6 @@ irix_ansible should be run immediately after your IRIX host has been installed, 
 * Connect your IRIX host to your home LAN
 * vagrant ssh
 * sudo -i
-* ifdown eth0 (this disables the point to point link originally used by booterizer)
 * Follow the irix_ansible README to create your own ansible vault
   * group_vars/default/vault.yml
 * Place your vault password in /home/vagrant/.vault_pass.txt
