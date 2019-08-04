@@ -21,7 +21,8 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 
 # Where to get help
 * Create a Github Issue vs this project
-* SGIDev Discord: https://discord.gg/p2zZ7TZ
+* Silicon Graphics User Group-  for support and dev community: https://sgi.sh/
+* SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
 
 # Requirements
@@ -264,7 +265,8 @@ The installer can be reached through the monitor GUI as follows:
 * At the maintenance boot screen, select "Install Software"
 * If it prompts you for an IP address, enter the same address you entered into the Vagrantfile config for `clientip`.
 * Use `booterizer` as the install server hostname.
-* For the installation path, this depends on your directory structure. If you use the structure example from above, you would use the path `6.5.30/Overlay/disc1/dist`. Notice the lack of leading `/`.
+* For the installation path, this depends on your directory structure. If you use the structure example from above, you would use the path `/6.5.30/Overlay/disc1/dist`.
+  * NOTE: I really don't understand why, but some PROMs and architectures insist you remove the leading '/' from the path. If you get errors or inst otherwise fails, try `6.5.30/Overlay/disc1/dist`.
 * This should load the miniroot over the network and boot into the installer.
 * From inst, choose Option 13, Admin menu
   * booterizer generates a 'selections' file that contains all of the media paths for inst to load
