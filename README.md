@@ -6,7 +6,7 @@ booterizer is designed to quickly configure a disposable VM to boot a specific v
 By default booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs in the included Vagrantfile.
 
 booterizer also works with IRIX 6.5.22 for older SGI systems that can run 6.5
-booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x
+booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x (See Callahan's Booterizer 5.3 https://github.com/callahan-44/booterizer )
 
 
 booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. I recommend only attaching the network interface to an isolated network for this purpose and then `vagrant halt` or `vagrant destroy` the VM when you are done installing.
