@@ -191,8 +191,9 @@ bridgenic: 'en0'
 
 ## Networking overview
 The booterizer vm's fake network interfaces map to your physical host as follows:
+
 | Physical Host | booterizer |
-|---|---|
+| --- | --- |
 | Home LAN-connected NIC | Adapter 1, NAT, eth0 |
 | SGI-connected NIC | Adapter 2, Bridged, eth1 |
 
