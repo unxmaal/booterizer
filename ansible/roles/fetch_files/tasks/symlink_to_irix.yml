@@ -1,0 +1,10 @@
+- name: symlink from /vagrant/irix to /irix
+  file:
+    src: /vagrant/irix/
+    dest: /irix/
+- name: Fix /irix permissions
+  file: 
+    dest: /irix 
+    owner: guest 
+    group: guest
+    recurse: yes

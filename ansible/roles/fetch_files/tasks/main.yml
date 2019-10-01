@@ -6,7 +6,7 @@
 # Tune OS
 - import_tasks: tune_os.yml
 #----- Set up XFS volume
-- import_tasks: setup_xfs.yml
+#- import_tasks: setup_xfs.yml
 #------- Setup Apps
 - import_tasks: setup_apps.yml
 #------- Setup internal Ansible
@@ -14,7 +14,7 @@
 #-------- Setup Media
 - import_tasks: setup_media.yml
 #-------- rsync media to /irix
-- import_tasks: rsync_to_irix.yml
+- import_tasks: symlink_to_irix.yml
 #--------- Generate selections
 - import_tasks: generate_selections.yml
 #--------- Display  useful info
