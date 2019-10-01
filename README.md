@@ -6,7 +6,7 @@ booterizer is designed to quickly configure a disposable VM to boot a specific v
 By default booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs in the included Vagrantfile.
 
 booterizer also works with IRIX 6.5.22 for older SGI systems that can run 6.5
-booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x
+booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x (See Callahan's Booterizer 5.3 https://github.com/callahan-44/booterizer )
 
 
 booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. I recommend only attaching the network interface to an isolated network for this purpose and then `vagrant halt` or `vagrant destroy` the VM when you are done installing.
@@ -21,7 +21,8 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 
 # Where to get help
 * Create a Github Issue vs this project
-* SGIDev Discord: https://discord.gg/nTAwGnr
+* Silicon Graphics User Group-  for support and dev community: https://sgi.sh/
+* SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
 
 # Requirements
@@ -29,6 +30,7 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 	* vagrant plugin install vagrant-guest_ansible
+* Ansible/Python
 * VM host with TWO network interfaces
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
@@ -37,10 +39,16 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 * Apple OSX has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
 * Install Brew following directions at their website here: https://brew.sh/
 
-* If you have brew installed you can install Vagrant and VB:
+* If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
 ```
 $  brew cask install vagrant
 $  brew cask install virtualbox
+$  brew install ansible
+```
+
+* If you already have Python installed outside of Brew, instead of installing Ansible through Brew, install it through `pip`:
+```
+$  sudo pip install ansible
 ```
 
 ## Installation of Prerequisite sofware for Ubuntu (Host)
@@ -74,8 +82,8 @@ vagrant -v
 ansible --version
 ```
 You should have:
-* ansible 2.7.6
-* Vagrant 2.2.3
+* ansible 2.7.6 or higher
+* Vagrant 2.2.3 or higher
 
 Having an exact version of VirtualBox is not critical- as long as you have the proper version of Vagrant, it will run VirtualBox for you.
 
@@ -183,8 +191,9 @@ bridgenic: 'en0'
 
 ## Networking overview
 The booterizer vm's fake network interfaces map to your physical host as follows:
+
 | Physical Host | booterizer |
-|---|---|
+| --- | --- |
 | Home LAN-connected NIC | Adapter 1, NAT, eth0 |
 | SGI-connected NIC | Adapter 2, Bridged, eth1 |
 
@@ -202,6 +211,11 @@ installmirror:  "https://s3.amazonaws.com"
 and then saving the file and using the vagrant provision command if the vagrant host has been booted.
 
 Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory. 
+
+Now that your configuration is complete, you're ready to start up the vm and set up the SGI.
+```
+$ vagrant up
+```
 
 # Booting
 
@@ -222,7 +236,7 @@ Now examine the final output of the vagrant provision or vagrant up command, to 
 
 * Look for:  __ Partitioners found
 * copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
-* Older systems use fx.ARCS (such as Indigos and Indy and some O2s)
+* Older systems use fx.ARCS (such as Indigos, Indys, and some O2s)
 * O2 and newer systems use fx.64
 ```
 > bootp():/6.5.30/Overlay/disc1/stand/fx.64
@@ -252,7 +266,7 @@ If you need to boot `fx` to label/partition your disk, open the command monitor 
 
 where `/6.5.30/Overlay/disc1/stand/fx.ARCS` is a path relative to your selected IRIX version in the directory structure from above. When installing IRIX 6.5.x you'll want to use the partitioner included with the overlay set (first disc), but prior versions of IRIX usually locate the partitioner on the first install disc.
 
- Use `fx.ARCS` for R4xxx machines (like the O2) and `fx.64` for R5000+ machines (and others for older machines, I assume). Once `booterizer` finishes setup it lists any detected partitioners to help you find the correct path.
+ Use `fx.ARCS` for R4xxx machines and some O2s, or `fx.64` for R5000+ machines (and others for older machines, I assume). Once `booterizer` finishes setup it lists any detected partitioners to help you find the correct path.
 
 You should use fx to partition your internal disk- read the section "Partitioning the disk" at [Getting an Indy Desktop](https://blog.pizzabox.computer/posts/getting-an-indy-desktop/) for more thorough directions.
 
@@ -264,7 +278,8 @@ The installer can be reached through the monitor GUI as follows:
 * At the maintenance boot screen, select "Install Software"
 * If it prompts you for an IP address, enter the same address you entered into the Vagrantfile config for `clientip`.
 * Use `booterizer` as the install server hostname.
-* For the installation path, this depends on your directory structure. If you use the structure example from above, you would use the path `6.5.30/Overlay/disc1/dist`. Notice the lack of leading `/`.
+* For the installation path, this depends on your directory structure. If you use the structure example from above, you would use the path `/6.5.30/Overlay/disc1/dist`.
+  * NOTE: I really don't understand why, but some PROMs and architectures insist you remove the leading '/' from the path. If you get errors or inst otherwise fails, try `6.5.30/Overlay/disc1/dist`.
 * This should load the miniroot over the network and boot into the installer.
 * From inst, choose Option 13, Admin menu
   * booterizer generates a 'selections' file that contains all of the media paths for inst to load
@@ -310,7 +325,6 @@ irix_ansible should be run immediately after your IRIX host has been installed, 
 * Connect your IRIX host to your home LAN
 * vagrant ssh
 * sudo -i
-* ifdown eth0 (this disables the point to point link originally used by booterizer)
 * Follow the irix_ansible README to create your own ansible vault
   * group_vars/default/vault.yml
 * Place your vault password in /home/vagrant/.vault_pass.txt
