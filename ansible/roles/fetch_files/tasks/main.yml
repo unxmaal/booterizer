@@ -5,8 +5,8 @@
 - import_tasks: setup_virt_os.yml
 # Tune OS
 - import_tasks: tune_os.yml
-#----- Set up XFS volume
-#- import_tasks: setup_xfs.yml
+#----- Create symlink
+- import_tasks: symlink_to_irix.yml
 #------- Setup Apps
 - import_tasks: setup_apps.yml
 #------- Setup internal Ansible
