@@ -137,11 +137,9 @@ installmethod: "ftp"
 ```
 
 Pick your install mirror
- * the same files are in both locations
- * choose only one of these
+ * currently, there is only one install mirror, so leave this line alone
 ```
-  installmirror: "http://us.irisware.net/sgi-irix"
-  installmirror: "http://sgi-irix.s3-website-us-east-1.amazonaws.com"
+  installmirror: "http://s3.amazonaws.com"
 ```
 
 This is the new hostname for your SGI post-installation
