@@ -33,7 +33,7 @@
     dest: /irix/.rhosts
     owner: root
     group: root
-    mode: 0744
+    mode: 0600
 
 - name: generate hosts.equiv
   template:
