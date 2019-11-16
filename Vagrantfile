@@ -94,13 +94,13 @@ Vagrant.configure("2") do |config|
   
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
-  # Create XFS-formatted disk for extracted CD images
-  config.vm.provider "virtualbox" do |v|
-    unless File.exist?(installdisk)
-      v.customize ['createhd', '--filename', installdisk, '--size', 50 * 1024]
-    end
-    v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', installdisk]
-  end
+#  # Create XFS-formatted disk for extracted CD images
+#  config.vm.provider "virtualbox" do |v|
+#    unless File.exist?(installdisk)
+#      v.customize ['createhd', '--filename', installdisk, '--size', 50 * 1024]
+#    end
+#    v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', installdisk]
+#  end
 end
 
 # Provision the new box with Ansible plays

@@ -1,0 +1,5 @@
+- name: symlink from /vagrant/irix to /irix
+  file:
+    src: /vagrant/irix
+    path: /irix
+    state: link
