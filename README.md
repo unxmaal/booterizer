@@ -27,6 +27,12 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 
 # Requirements
 
+## Raspberry Pi Host
+* Raspberry Pi 3 (This is what I have. Let me know if others work.)
+* 32GB SD card
+* Booterizer Pi Image
+
+## Vagrant VM
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 	* vagrant plugin install vagrant-guest_ansible

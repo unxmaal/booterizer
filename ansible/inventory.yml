@@ -1,0 +1,15 @@
+---
+ungrouped:
+  hosts:
+    localhost:
+      #ansible_host:   192.168.0.119
+      ansible_connection: ssh
+      ansible_user: pi
+      ansible_ssh_pass: raspberry
+  vars:
+    # The system locale
+    system_locale: "en_US.UTF-8"
+    # The system timezone
+    system_timezone: "America/New_York"
+    # apt-get installs listed packages
+    system_packages: []

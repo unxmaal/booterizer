@@ -1,0 +1,58 @@
+---
+
+- import_tasks: apt.yml
+  tags:
+    - apt
+
+- import_tasks: hostname.yml
+  when: system_hostname is defined
+  tags:
+    - hostname
+
+- import_tasks: locale.yml
+  tags:
+    - locale
+
+- import_tasks: mount.yml
+  tags:
+    - mount
+
+- import_tasks: user.yml
+  tags:
+    - user
+
+- import_tasks: alternatives.yml
+  tags:
+    - alternatives
+
+- import_tasks: tmpfiles.yml
+  tags:
+    - tmpfiles
+
+- import_tasks: ssh.yml
+  tags:
+    - ssh
+
+- import_tasks: ufw.yml
+  tags:
+    - ufw
+
+- import_tasks: pi.yml
+  tags:
+    - pi
+
+- import_tasks: postfix.yml
+  tags:
+    - postfix
+
+- import_tasks: unattended-upgrades.yml
+  tags:
+    - unattended-upgrades
+
+- import_tasks: fail2ban.yml
+  tags:
+    - fail2ban
+
+- import_tasks: logwatch.yml
+  tags:
+    - logwatch
