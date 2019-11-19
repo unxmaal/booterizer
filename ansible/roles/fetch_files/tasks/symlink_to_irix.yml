@@ -1,3 +1,9 @@
+- name: create /vagrant/irix
+  file:
+    path: /vagrant/irix
+    state: directory
+  when: rpi is defined
+
 - name: symlink from /vagrant/irix to /irix
   file:
     src: /vagrant/irix
