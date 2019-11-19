@@ -8,14 +8,14 @@
   - import_role:
      name: rpi_setup
 
-- name: Copy settings into the Pi
-  hosts: all
-  tasks:
-  - include_vars:
-      name: settings
-      file: ../settings.yml
-  - import_role:
-     name: settings
+# - name: Copy settings into the Pi
+#   hosts: all
+#   tasks:
+#   - include_vars:
+#       name: settings
+#       file: ../settings.yml
+#   - import_role:
+#      name: settings
 
 - name: run fetch_files role
   hosts: all

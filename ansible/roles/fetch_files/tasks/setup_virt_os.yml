@@ -56,7 +56,6 @@
     - xfsprogs 
     - rsync 
     - tcpdump
-    - ansible
     - git
     - curl
   when: rpi is defined 
