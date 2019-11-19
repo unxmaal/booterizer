@@ -1,53 +1,53 @@
 ---
 rpi: true
 # irixversion install 6.5.30, 6.5.22 or 5.3
-irixversion: settings['booterizer']['irixversion']
+irixversion: "{{ settings['booterizer']['irixversion'] }}"
 # installmethod can be via CD images or remote fetch from Internet
-installmethod: settings['booterizer']['installmethod']
-installmirror: settings['booterizer']['installmirror']
+installmethod: "{{ settings['booterizer']['installmethod'] }}"
+installmirror: "{{ settings['booterizer']['installmirror'] }}"
 # your SGI box's hostname
-clientname: settings['booterizer']['clientname']
+clientname: "{{ settings['booterizer']['clientname'] }}"
 # whatever domain that you make up
-clientdomain: settings['booterizer']['clientdomain']
+clientdomain: "{{ settings['booterizer']['clientdomain'] }}"
 # Internal network your SGI, Virtual Machine will be on
-network: settings['booterizer']['network']
+network: "{{ settings['booterizer']['network'] }}"
 # Internal network's netmask
-netmask: settings['booterizer']['netmask']
+netmask: "{{ settings['booterizer']['netmask'] }}"
 # your virtual machine (bootp/tftp server]) will get this IP
-hostip: settings['booterizer']['hostip']
+hostip: "{{ settings['booterizer']['hostip'] }}"
 # your SGI box's IP address that you make up and set in prom via setenv netaddr
-clientip: settings['booterizer']['clientip']
+clientip: "{{ settings['booterizer']['clientip'] }}"
 # your SGI box's physical hardware address, from printenv at PROM - or eaddr for older PROM
-clientether: settings['booterizer']['clientether']
+clientether: "{{ settings['booterizer']['clientether'] }}"
 # This is the name of the interface on your physical machine that's connected to your SGI box
 #   In my case, it's the ethernet adapter, which is en0 
-bridgenic: settings['booterizer']['bridgenic']
+bridgenic: "{{ settings['booterizer']['bridgenic'] }}"
 # Your user account for your SGI box
-myuser: settings['booterizer']['myuser']
+myuser: "{{ settings['booterizer']['myuser'] }}"
 # Your desired shell 
   # if this doesn't exist, it defaults to /bin/csh
-myshell: settings['booterizer']['myshell']
+myshell: "{{ settings['booterizer']['myshell'] }}"
 ###############
-foundation_baseurl: ftpurls['ftpurls']['foundation']['baseurl']
-foundation_disc1: ftpurls['ftpurls']['foundation']['disc1']
-foundation_disc2: ftpurls['ftpurls']['foundation']['disc2']
-foundation_nfs: ftpurls['ftpurls']['foundation']['nfs']
-overlay_baseurl: ftpurls['ftpurls']['overlay']['baseurl']
-overlay_apps: ftpurls['ftpurls']['overlay']['apps']
-overlay_capps: ftpurls['ftpurls']['overlay']['capps']
-overlay_disc1: ftpurls['ftpurls']['overlay']['disc1']
-overlay_disc2: ftpurls['ftpurls']['overlay']['disc2']
-overlay_disc3: ftpurls['ftpurls']['overlay']['disc3']
-devel_baseurl: ftpurls['ftpurls']['devel']['baseurl']
-devel_devlibs: ftpurls['ftpurls']['devel']['devlibs']
-devel_devfoundations: ftpurls['ftpurls']['devel']['devfoundations']
-devel_mipspro: ftpurls['ftpurls']['devel']['mipspro']
-devel_update: ftpurls['ftpurls']['devel']['update']
-devel_c: ftpurls['ftpurls']['devel']['c']
-devel_cee: ftpurls['ftpurls']['devel']['cee']
-devel_cpp: ftpurls['ftpurls']['devel']['cpp']
-devel_ap: ftpurls['ftpurls']['devel']['ap']
-devel_prodev: ftpurls['ftpurls']['devel']['prodev']
-extras_baseurl: ftpurls['ftpurls']['extras']['baseurl']
-extras_perfcopilot: ftpurls['ftpurls']['extras']['perfcopilot']
-extras_sgifonts: ftpurls['ftpurls']['extras']['sgifonts']
+foundation_baseurl: "{{ ftpurls['ftpurls']['foundation']['baseurl'] }}"
+foundation_disc1: "{{ ftpurls['ftpurls']['foundation']['disc1'] }}"
+foundation_disc2: "{{ ftpurls['ftpurls']['foundation']['disc2'] }}"
+foundation_nfs: "{{ ftpurls['ftpurls']['foundation']['nfs'] }}"
+overlay_baseurl: "{{ ftpurls['ftpurls']['overlay']['baseurl'] }}"
+overlay_apps: "{{ ftpurls['ftpurls']['overlay']['apps'] }}"
+overlay_capps: "{{ ftpurls['ftpurls']['overlay']['capps'] }}"
+overlay_disc1: "{{ ftpurls['ftpurls']['overlay']['disc1'] }}"
+overlay_disc2: "{{ ftpurls['ftpurls']['overlay']['disc2'] }}"
+overlay_disc3: "{{ ftpurls['ftpurls']['overlay']['disc3'] }}"
+devel_baseurl: "{{ ftpurls['ftpurls']['devel']['baseurl'] }}"
+devel_devlibs: "{{ ftpurls['ftpurls']['devel']['devlibs'] }}"
+devel_devfoundations: "{{ ftpurls['ftpurls']['devel']['devfoundations'] }}"
+devel_mipspro: "{{ ftpurls['ftpurls']['devel']['mipspro'] }}"
+devel_update: "{{ ftpurls['ftpurls']['devel']['update'] }}"
+devel_c: "{{ ftpurls['ftpurls']['devel']['c'] }}"
+devel_cee: "{{ ftpurls['ftpurls']['devel']['cee'] }}"
+devel_cpp: "{{ ftpurls['ftpurls']['devel']['cpp'] }}"
+devel_ap: "{{ ftpurls['ftpurls']['devel']['ap'] }}"
+devel_prodev: "{{ ftpurls['ftpurls']['devel']['prodev'] }}"
+extras_baseurl: "{{ ftpurls['ftpurls']['extras']['baseurl'] }}"
+extras_perfcopilot: "{{ ftpurls['ftpurls']['extras']['perfcopilot'] }}"
+extras_sgifonts: "{{ ftpurls['ftpurls']['extras']['sgifonts'] }}"
