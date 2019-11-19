@@ -2,7 +2,6 @@
 ungrouped:
   hosts:
     localhost:
-      #ansible_host:   192.168.0.119
       ansible_connection: ssh
       ansible_user: pi
       ansible_ssh_pass: raspberry

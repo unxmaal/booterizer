@@ -6,7 +6,7 @@
       name: settings
       file: ../settings.yml
   - import_role:
-     name: settings
+     name: rpi_setup
 
 - name: Copy settings into the Pi
   hosts: all
