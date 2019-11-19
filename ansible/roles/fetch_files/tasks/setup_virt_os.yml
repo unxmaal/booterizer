@@ -2,20 +2,24 @@
 - name: Set hostname
   hostname: 
     name: booterizer
+  when: rpi is undefined
 
 - name: Restart service rsyslog
   service:
     name: rsyslog
     state: restarted
+  when: rpi is undefined
 
 - apt_repository:
     repo: deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
     state: present
+  when: rpi is undefined
 
 - name: Add an apt key 
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: 93C4A3FD7BB9C367
+  when: rpi is undefined
 
 - name: Install required packages
   apt:
@@ -34,4 +38,25 @@
     - tcpdump
     - ansible
     - git
-    - curl 
+    - curl
+  when: rpi is undefined 
+
+- name: Install required packages for RPi
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+  vars:
+    packages: 
+    - tftpd-hpa 
+    - isc-dhcp-server 
+    - rsh-server 
+    - dnsmasq 
+    - mksh 
+    - parted 
+    - xfsprogs 
+    - rsync 
+    - tcpdump
+    - ansible
+    - git
+    - curl
+  when: rpi is defined 
