@@ -2,6 +2,8 @@
 - name: Set up the Pi
   hosts: all
   tasks:
+  - set_fact:
+    rpi: true
   - include_vars:
       name: settings
       file: ../settings.yml
