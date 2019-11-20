@@ -5,3 +5,13 @@
     owner: vagrant
     group: vagrant
     mode: 0744
+  when: rpi is undefined
+
+- name: Generate selections for pi
+  template:
+    src: templates/selections.j2
+    dest: /irix/selections
+    owner: root
+    group: root
+    mode: 0744
+  when: rpi is defined
