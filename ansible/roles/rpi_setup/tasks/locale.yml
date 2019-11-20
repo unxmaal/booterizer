@@ -13,12 +13,12 @@
   notify:
     - update-locale
 
-- name: set default system locale
-  debconf:
-    name: 'locales'
-    question: 'locales/default_environment_locale'
-    vtype: 'string'
-    value: '{{ system_locale }}'
-  when: system_locale is defined
-  notify:
-    - update-locale
+# - name: set default system locale
+#   debconf:
+#     name: 'locales'
+#     question: 'locales/default_environment_locale'
+#     vtype: 'string'
+#     value: '{{ system_locale }}'
+#   when: system_locale is defined
+#   notify:
+#     - update-locale
