@@ -16,12 +16,12 @@
   notify:
     - reboot host
 
-- name: update /boot/config.txt
-  lineinfile:
-    dest: /boot/config.txt
-    regexp: "^#?{{ item.key }}="
-    line: "{{ item.key }}={{ item.value }}"
-  with_dict: "{{ rpi_boot_config }}"
-  when: rpi_boot_config|length > 0
-  notify:
-    - reboot host
+# - name: update /boot/config.txt
+#   lineinfile:
+#     dest: /boot/config.txt
+#     regexp: "^#?{{ item.key }}="
+#     line: "{{ item.key }}={{ item.value }}"
+#   with_dict: "{{ rpi_boot_config }}"
+#   when: rpi_boot_config|length > 0
+#   notify:
+#     - reboot host
