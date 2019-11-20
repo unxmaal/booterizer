@@ -1,6 +1,7 @@
 ---
 - name: Set up the Pi
   hosts: all
+  become: yes
   tasks:
   - include_vars:
       name: settings
@@ -19,6 +20,7 @@
 
 - name: run fetch_files role
   hosts: all
+  become: yes
   tasks:
   - include_vars:
       name: settings
