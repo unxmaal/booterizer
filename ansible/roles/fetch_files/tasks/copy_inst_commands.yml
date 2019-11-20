@@ -5,6 +5,7 @@
     owner: vagrant
     group: vagrant
     mode: 0744
+  when: rpi is undefined
 - name: Copy inst commands file for pi
   file:
     src: files/commands

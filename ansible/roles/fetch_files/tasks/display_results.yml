@@ -5,6 +5,7 @@
     owner: vagrant
     group: vagrant
     mode: 0755
+  when: rpi is undefined
 - name: Copy file for pi
   copy:
     src: files/display_results.sh
