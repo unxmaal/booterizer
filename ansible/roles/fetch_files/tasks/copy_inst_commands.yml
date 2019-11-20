@@ -5,3 +5,11 @@
     owner: vagrant
     group: vagrant
     mode: 0744
+- name: Copy inst commands file for pi
+  file:
+    src: files/commands
+    dest: /irix/commands
+    owner: root
+    group: root
+    mode: 0744
+  when: rpi is defined
