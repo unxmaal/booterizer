@@ -9,15 +9,6 @@
   - import_role:
      name: rpi_setup
 
-# - name: Copy settings into the Pi
-#   hosts: all
-#   tasks:
-#   - include_vars:
-#       name: settings
-#       file: ../settings.yml
-#   - import_role:
-#      name: settings
-
 - name: run fetch_files role
   hosts: all
   become: yes
@@ -29,30 +20,14 @@
       name: ftpurls
       file: ../irix.6.5.30.yml
     when: settings['booterizer']['irixversion'] == "6.5.30"
+  - include_vars:
+      name: ftpurls
+      file: ../irix.6.5.22.yml
+    when: settings['booterizer']['irixversion'] == "6.5.22"
+  - include_vars:
+      name: ftpurls
+      file: ../irix.5.3.yml
+    when: settings['booterizer']['irixversion'] == "5.3"
   - import_role:
      name: fetch_files
     become: true
-  # vars:
-  #   foundation_baseurl: ftpurls['ftpurls']['foundation']['baseurl']
-  #   foundation_disc1: ftpurls['ftpurls']['foundation']['disc1']
-  #   foundation_disc2: ftpurls['ftpurls']['foundation']['disc2']
-  #   foundation_nfs: ftpurls['ftpurls']['foundation']['nfs']
-  #   overlay_baseurl: ftpurls['ftpurls']['overlay']['baseurl']
-  #   overlay_apps: ftpurls['ftpurls']['overlay']['apps']
-  #   overlay_capps: ftpurls['ftpurls']['overlay']['capps']
-  #   overlay_disc1: ftpurls['ftpurls']['overlay']['disc1']
-  #   overlay_disc2: ftpurls['ftpurls']['overlay']['disc2']
-  #   overlay_disc3: ftpurls['ftpurls']['overlay']['disc3']
-  #   devel_baseurl: ftpurls['ftpurls']['devel']['baseurl']
-  #   devel_devlibs: ftpurls['ftpurls']['devel']['devlibs']
-  #   devel_devfoundations: ftpurls['ftpurls']['devel']['devfoundations']
-  #   devel_mipspro: ftpurls['ftpurls']['devel']['mipspro']
-  #   devel_update: ftpurls['ftpurls']['devel']['update']
-  #   devel_c: ftpurls['ftpurls']['devel']['c']
-  #   devel_cee: ftpurls['ftpurls']['devel']['cee']
-  #   devel_cpp: ftpurls['ftpurls']['devel']['cpp']
-  #   devel_ap: ftpurls['ftpurls']['devel']['ap']
-  #   devel_prodev: ftpurls['ftpurls']['devel']['prodev']
-  #   extras_baseurl: ftpurls['ftpurls']['extras']['baseurl']
-  #   extras_perfcopilot: ftpurls['ftpurls']['extras']['perfcopilot']
-  #   extras_sgifonts: ftpurls['ftpurls']['extras']['sgifonts']
