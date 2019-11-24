@@ -24,15 +24,78 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 * Silicon Graphics User Group-  for support and dev community: https://sgi.sh/
 * SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
-
-# Requirements
-
-## Raspberry Pi Host
+# NEW: Raspberry Pi SD Card Image
+## Requirements
 * Raspberry Pi 3 (This is what I have. Let me know if others work.)
 * 32GB SD card
 * Booterizer Pi Image
 
-## Vagrant VM
+## Pi Image Usage Instructions
+* Extract the compressed image
+* Write it to a 32GB+ SD card using Etcher or something
+* Connect your SGI system via ethernet to your Pi
+* Boot your Pi
+* Log in with default, pi/raspberry
+```
+sudo -i
+cd /root/projects/github/booterizer
+```
+* Configure WiFi networking and connect to your network (use raspi-config)
+* Modify settings.yml for ONLY these values:
+  * irixverion = 6.5.30, 6.5.22, etc
+  * clientname = your SGI's hostname
+  * clientip = your SGI's IP. This MUST be 192.168.1.x for now. Change it later.
+  * clientether = your SGI's MAC address
+
+```
+cd ansible/
+ansible-playbook -i inventory.yml pooterizer.yml
+reboot
+```
+
+* Skip down to the "Booting" section below
+* You can find available partitioners and media by running /irix/display_results.sh 
+
+## Pi Image Build Instructions
+* Get https://www.raspberrypi.org/downloads/raspbian/
+* Get Etcher https://www.balena.io/etcher/
+* Put the Rasbian image on sd card
+* Boot pi
+* Add empty file named ssh in /boot
+* Configure WiFi networking and connect to your network
+* Log into the Pi and become root
+
+```
+apt update ; apt install -y python3-pip sshpass wget curl git
+mkdir -p /root/projects/github
+cd /root/projects/github
+git clone https://github.com/unxmaal/booterizer.git
+cd /root/projects/github/booterizer
+```
+
+* During development, git checkout pi_support
+* Modify settings.yml to your liking
+
+```
+cd ansible
+pip3 install -r requirements.tx
+reboot
+```
+
+* Log into the Pi and become root
+```
+ansible-playbook -i inventory.yml pooterizer.yml
+apt-get clean -y ; apt-get autoclean -y
+dd if=/dev/zero of=/EMPTY bs=1M ;rm -f /EMPTY
+halt -p
+```
+
+* Use Apple-Pi Baker to copy the SD card image to a file
+
+
+# Vagrant VM
+## Requirements
+
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 	* vagrant plugin install vagrant-guest_ansible
