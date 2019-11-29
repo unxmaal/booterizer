@@ -1,5 +1,4 @@
 ---
-rpi: true
 # irixversion install 6.5.30, 6.5.22 or 5.3
 irixversion: "{{ settings['booterizer']['irixversion'] }}"
 # installmethod can be via CD images or remote fetch from Internet

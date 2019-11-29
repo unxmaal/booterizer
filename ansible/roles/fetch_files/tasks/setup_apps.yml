@@ -1,6 +1,6 @@
-- name: Configure isc-dhcp-server
-  copy:
-    src: files/isc-dhcp-server
+- name: Configure isc-dhcp-server NIC
+  template:
+    src: templates/isc-dhcp-server.j2
     dest: /etc/default/isc-dhcp-server
     owner: root
     group: root
