@@ -1,5 +1,5 @@
 booterizer:
-  installmirror:  "https://s3.amazonaws.com"
+  installmirror:  "https://sgi-irix.s3.amazonaws.com"
   irixversion:    "6.5.30"
   installmethod:  "ftp"
   clientname:     "lantern"
