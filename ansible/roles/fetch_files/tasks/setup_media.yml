@@ -81,42 +81,42 @@
 
 - name: Fetch development foundations
   get_url:
-    url: "{{ devel_baseurl }}mipspro-74/{{ devel_devfoundations }}"
+    url: "{{ devel_baseurl }}{{ devel_devfoundations }}"
     dest: "/vagrant/irix/Development/devfoundations/{{ devel_devfoundations }}"
 
 - name: Fetch MIPSPro 7.4.3m
   get_url:
-    url: "{{ devel_baseurl }}mipspro-74/{{ devel_mipspro }}"
+    url: "{{ devel_baseurl }}{{ devel_mipspro }}"
     dest: "/vagrant/irix/Development/mipspro/{{ devel_mipspro }}"
 
 - name: Fetch MIPSPro 7.4.4 update
   get_url:
-    url: "{{ devel_baseurl }}mipspro-74/{{ devel_update }}"
+    url: "{{ devel_baseurl }}{{ devel_update }}"
     dest: "/vagrant/irix/Development/mipspro_update/{{ devel_update }}"
 
 - name: Fetch MIPSPro c
   get_url:
-    url: "{{ devel_baseurl }}mipspro-74/{{ devel_c }}"
+    url: "{{ devel_baseurl }}{{ devel_c }}"
     dest: "/vagrant/irix/Development/mipspro_c/{{ devel_c }}"
 
 - name: Fetch MIPSPro cee
   get_url:
-    url: "{{ devel_baseurl }}mipspro-74/{{ devel_cee }}"
+    url: "{{ devel_baseurl }}{{ devel_cee }}"
     dest: "/vagrant/irix/Development/mipspro_cee/{{ devel_cee }}"
 
 - name: Fetch MIPSPro cpp
   get_url:
-    url: "{{ devel_baseurl }}mipspro-74/{{ devel_cpp }}"
+    url: "{{ devel_baseurl }}{{ devel_cpp }}"
     dest: "/vagrant/irix/Development/mipspro_cpp/{{ devel_cpp }}"
 
 - name: Fetch MIPSPro ap
   get_url:
-    url: "{{ devel_baseurl }}mipspro-74/{{ devel_ap }}"
+    url: "{{ devel_baseurl }}{{ devel_ap }}"
     dest: "/vagrant/irix//Development/mipspro_ap/{{ devel_ap }}"
 
 - name: Fetch prodev
   get_url:
-    url: "{{ devel_baseurl }}mipspro-74/{{ devel_prodev }}"
+    url: "{{ devel_baseurl }}{{ devel_prodev }}"
     dest: "/vagrant/irix//Development/prodev/{{ devel_prodev }}"
 
 - name: Fetch perfcopilot

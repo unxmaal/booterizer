@@ -23,7 +23,7 @@ ftpurls:
     ap:                 mipsproap.tar.gz
     prodev:             prodev.tar.gz  
   extras:
-    baseurl:            "{{ installmirror }}/sgi-irix/extras/"
+    baseurl:            "{{ installmirror }}/extras/"
     perfcopilot:        perfcopilot.tar.gz
     sgifonts:           sgipostscriptfonts.tar.gz
   bootstrap:
