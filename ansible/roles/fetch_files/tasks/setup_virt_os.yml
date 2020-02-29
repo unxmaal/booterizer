@@ -8,6 +8,10 @@
     name: rsyslog
     state: restarted
 
+# Why this?
+# Note on versions: 14.04  trusty = jessie/sid
+# https://askubuntu.com/questions/445487/what-debian-version-are-the-different-ubuntu-versions-based-on
+
 - apt_repository:
     repo: deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
     state: present

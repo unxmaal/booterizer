@@ -112,35 +112,35 @@
 - name: Fetch MIPSPro ap
   get_url:
     url: "{{ devel_baseurl }}{{ devel_ap }}"
-    dest: "/vagrant/irix//Development/mipspro_ap/{{ devel_ap }}"
+    dest: "/vagrant/irix/Development/mipspro_ap/{{ devel_ap }}"
 
 - name: Fetch prodev
   get_url:
     url: "{{ devel_baseurl }}{{ devel_prodev }}"
-    dest: "/vagrant/irix//Development/prodev/{{ devel_prodev }}"
+    dest: "/vagrant/irix/Development/prodev/{{ devel_prodev }}"
 
 - name: Fetch perfcopilot
   get_url:
     url: "{{ extras_baseurl }}{{ extras_perfcopilot }}"
-    dest: "/vagrant/irix//Extras/perfcopilot/{{ extras_perfcopilot }}"
+    dest: "/vagrant/irix/Extras/perfcopilot/{{ extras_perfcopilot }}"
 
 - name: Fetch SGI Fonts
   get_url:
     url: "{{ extras_baseurl }}{{ extras_sgifonts }}"
-    dest: "/vagrant/irix//Extras/sgifonts/{{ extras_sgifonts }}"
+    dest: "/vagrant/irix/Extras/sgifonts/{{ extras_sgifonts }}"
 
 - name: Extracting foundation disc 1
   unarchive:
-    src: "/vagrant/irix//Foundation/disc1/{{ foundation_disc1 }}"
-    dest: "/vagrant/irix//Foundation/disc1/"
+    src: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"
+    dest: "/vagrant/irix/Foundation/disc1/"
     copy: no
     extra_opts:
     - --strip-components=1
-    creates: "/vagrant/irix//Foundation/disc1/RELEASE.info"
+    creates: "/vagrant/irix/Foundation/disc1/RELEASE.info"
 
 - name: Extracting foundation disc 2
   unarchive:
-    src: "/vagrant/irix//Foundation/disc2/{{ foundation_disc2 }}"
+    src: "/vagrant/irix/Foundation/disc2/{{ foundation_disc2 }}"
     dest: "/vagrant/irix/Foundation/disc2/"
     copy: no
     extra_opts:
