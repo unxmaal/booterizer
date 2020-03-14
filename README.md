@@ -29,6 +29,7 @@ NOTE: This fork no longer supports CD images. It may again in the future, if the
 * Raspberry Pi 3 (This is what I have. Let me know if others work.)
 * 32GB SD card
 * Booterizer Pi Image
+* Extraction software that supports bz2 (native on MacOS. Use https://www.7-zip.org/ on Windows.)
 
 ## Pi Image Usage Instructions
 * Extract the compressed image
