@@ -184,7 +184,9 @@ clientether: '08:00:69:0e:af:65'
 ```
 
 This is the name of the interface on your physical machine that's connected to your SGI box. In my case, it's the ethernet adapter, which is en0.
-* linux would usually be eth0, a Macintosh will use en0
+* A Macintosh will usually use en0.
+* By default the linux kernel will usually assign this to eth0, however many distros have switched to [predictable naming](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
+* If you are unsure of what your distro uses or do not know the interface name, check the interfaces using `ip link`.
 ```
 bridgenic: 'en0'
 ```
