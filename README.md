@@ -315,7 +315,7 @@ To help installations it's often easier to do an install via the SGI's serial po
 * copy and paste commands from this page onto the serial comms program running on your workstation
 * save the output from the SGI for posterity or help
 
-Assuming you have connected up your SGI's serial port 1 to your workstation, and you are running a serial app, and you have set it to 9006/8/N/E then you are probally seeing the PROM menu and other things emmited from the SGI serial port durning POST.
+Assuming you have connected up your SGI's serial port 1 to your workstation, and you are running a serial app, and you have set it to 9006/8/N/E then you are probally seeing the PROM menu and other characters from the SGI serial port durning the system POST.
 
 To setup the console to serial output for the installation you must set this console variable:
 
@@ -324,7 +324,7 @@ To setup the console to serial output for the installation you must set this con
 setenv console d
 ```
 
-This will ensure a smoothe installation session.
+This will ensure a smooth installation session.
 
 When you are done you should set the console back to graphical virtual console:
 
@@ -338,10 +338,10 @@ While you are in the PROM you should set the timezone to something approprate fo
 ```
 setenv Timezone EST5EDT
 ```
-would set the timezone to Easter Time for example. 
+would set the timezone to Eastern Time for example. 
 
 
-## Net boot into FX to Partition Disks 
+## FX to Partition Disks 
 
 Now examine the final output of the `vagrant provision` or `vagrant up` command, to find the proper command to boot into fx, the SGI disk partitioner.
 
@@ -357,7 +357,7 @@ Now examine the final output of the `vagrant provision` or `vagrant up` command,
 * Older systems use fx.ARCS (such as Indigos, Indys, and some O2s with R4k cpus)
 * O2 and newer systems use fx.64
 
-### Starting the paritioner
+### Starting the fx Partitioner
 ```
 > bootp():/6.5.30/Overlay/disc1/stand/fx.64
 
@@ -372,11 +372,50 @@ SGI Version 6.5 ARCS BE  Jul 20, 2006
 Now continue with the partitoning process.
 
 
-### Using fx (Partitioner)
+### Using the fx Partitioner
 
 You should use fx to partition your internal disk- read the section "Partitioning the disk" at [Getting an Indy Desktop](https://blog.pizzabox.computer/posts/getting-an-indy-desktop/) for more thorough directions.
 
-In a nutshell, you want to [re]partition and then select [ro]ot only. Then `..` to escape that menu and [ex]it to quit fx and go back to the PROM to netbook the installer, inst to install IRIX on the newly partitoned hard drive.
+In a nutshell, you want to [re]partition and then select [ro]ot only. Then `..` to escape that menu and [ex]it to quit fx and go back to the PROM to start a remote installation to install IRIX on the newly partitoned hard drive.
+
+Here is a runthru:
+```
+----- please choose one (? for help, .. to quit this menu)-----
+[exi]t             [d]ebug/           [l]abel/           [a]uto
+[b]adblock/        [exe]rcise/        [r]epartition/
+fx> r
+
+----- partitions-----
+part  type        blocks            Megabytes   (base+size)
+  0: xfs      266240 + 585671260     130 + 285972
+  1: raw        4096 + 262144         2 + 128  
+  8: volhdr        0 + 4096           0 + 2    
+ 10: volume        0 + 585937500       0 + 286102
+
+capacity is 585937500 blocks
+
+----- please choose one (? for help, .. to quit this menu)-----
+[ro]otdrive           [o]ptiondrive         [e]xpert
+[u]srrootdrive        [re]size
+fx/repartition> ro
+
+fx/repartition/rootdrive: type of data partition = (xfs) 
+Warning: you will need to re-install all software and restore user data
+from backups after changing the partition layout.  Changing partitions
+will cause all data on the drive to be lost.  Be sure you have the drive
+backed up if it contains any user data.  Continue? yes
+
+
+----- please choose one (? for help, .. to quit this menu)-----
+[ro]otdrive           [o]ptiondrive         [e]xpert
+[u]srrootdrive        [re]size
+fx/repartition> ..
+
+----- please choose one (? for help, .. to quit this menu)-----
+[exi]t             [d]ebug/           [l]abel/           [a]uto
+[b]adblock/        [exe]rcise/        [r]epartition/
+fx> exi
+```
 
 
 ### Running inst (IRIX installer)
@@ -419,10 +458,122 @@ The installer can be reached through the monitor GUI as follows:
     # the system will prompt to reboot
     ```
 
+### Example run
+```
+System Maintenance Menu
+
+1) Start System
+2) Install System Software
+3) Run Diagnostics
+4) Recover System
+5) Enter Command Monitor
+
+Option? 2
+
+
+                         Installing System Software...
+
+                       Press <Esc> to return to the menu.
+
+
+
+1) Remote Directory  2)[Local CD-ROM]  
+      *a) Local SCSI CD-ROM drive 6, on controller 0
+
+Enter 1-2 to select source type, a to select the source, <esc> to quit,
+or <enter> to start: 1
+
+
+Enter the name of the remote host: 192.168.251.99
+Enter the remote directory: 6.5.30/Overlay/disc1/dist
+
+
+1)[Remote Directory]  2) Local CD-ROM  
+      *a) Remote directory 6.5.30/Overlay/disc1/dist from server 192.168.251.99.
+
+Enter 1-2 to select source type, a to select the source, <esc> to quit,
+or <enter> to start: 
+
+
+Setting $netaddr to 192.168.251.82 (from server )
+Copying installation program to disk.
+......... 10% ......... 20% ......... 30% ......... 40% ......... 50% 
+......... 60% ......... 70% ......... 80% ......... 90% ......... 100% 
+Copy complete
+IRIX Release 6.5 IP27 Version 07202013 System V - 64 Bit
+Copyright 1987-2006 Silicon Graphics, Inc.
+All Rights Reserved.
+...
+```
+And from here inst runs and installs/creates a miniroot, then mounts the miniroot and then runs inst. Follow the directions above.
+
+
 ## IRIX installation is finished
 At this point your system should come back up (ensure you go back into PROM and `setenv console g` if you set it to d for a serial installation!) and you can login as Root, no password.
 
 Now there are many many more configurations you need to do before starting to use the system. Running EZSetup does a tiny fraction of these. The irix_ansible project (below docs) does a whole lot more!
+
+### Wiping a disk for clean IRIX install
+Often you have have a drive with IRIX already installed, and you want to do a clean install. You need to wipe the disk with mkfs, running the partitioner on the drive is not enough. The reason is that if your partitions are exactly the same as they were on the old installation, when you run inst it will still pickup settings in /etc from the old install and assume you are doing an upgrade. To wipe the disk is easy- but you have to run inst, wipe, then reboot so that inst won't pick up the old installation and create a fresh miniroot and use default values. 
+
+Here is a sample run-thru:
+```
+Admin> 11
+
+                   ** Clean Disks Procedure **
+
+      If you agree to it, this procedure will clean your disks,
+      removing all data from the root and (if present) the user
+      file systems.
+
+      Boot device partitions zero (0) and, if present, six (6)
+      will be erased (using mkfs).  This will destroy all data on
+      them.  These partitions will then be remounted under /root
+      and (if present) /root/usr.
+
+      If you have data on these file systems you want to save,
+      answer "no" below, and backup the data before cleaning
+      your disks.
+
+      Any other file systems or logical volumes will be unmounted
+      and forgotten about until you choose to reconfigure and
+      remount them.
+
+
+        Are you sure you want to clean your disks ?
+                   { (y)es, (n)o, (sh)ell, (h)elp }: y
+
+WARNING: There appears to be a valid file system on /dev/dsk/realroot already.
+Making a new file system will destroy all existing data on it.
+
+Make new file system on /dev/dsk/realroot? yes
+
+Doing: mkfs -b size=4096 /dev/dsk/realroot
+meta-data=/dev/dsk/realroot      isize=256    agcount=70, agsize=1048576 blks
+         =                       sectsz=512   attr=0, parent=0
+data     =                       bsize=4096   blocks=73208907, imaxpct=25
+         =                       sunit=0      swidth=0 blks, unwritten=1
+         =                       mmr=0
+naming   =version 2              bsize=4096   mixed-case=Y
+log      =internal log           bsize=4096   blocks=8936, version=1
+         =                       sectsz=512    sunit=0 blks, lazy-count=0
+realtime =none                   extsz=65536  blocks=0, rtextents=0
+
+Mounting file systems:
+
+    /dev/miniroot            on  /
+    /dev/dsk/realroot        on  /root
+
+
+Re-initializing installation history database
+Reading product descriptions ..   0% 
+WARNING: Assuming no hist file
+Reading product descriptions .. 100% Done.
+
+```
+And from here you just exit and reboot.
+
+
 
 
 # Provisioning your IRIX host with irix_ansible
