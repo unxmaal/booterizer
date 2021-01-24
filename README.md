@@ -29,7 +29,7 @@ The booterizer VM provides the following services:
 * TFTP server (via tftpd-hpa)
 * RSH server (via rsh-server)
 
-NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. This version will obtain the contents of the CDROMS for you automatically.
+NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. This version will obtain the contents of the CD-ROMs for you automatically.
 
 
 ## Target SGI Systems
@@ -41,7 +41,7 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 | Fuel       | all | 6.5.30 | fx.64 | unxmaal |
 | Octane1    | all | 6.5.30 | fx.64 | diller |
 | Octane2    | all   | 6.5.30 | fx.64 | unxmaal |
-| ChallengeL | R10k  | 6.5.22 | fx.ARCS | dillera |
+| Challenge L | R10k  | 6.5.22 | fx.ARCS | dillera |
 | O2         | R4k   | 6.5.30 | fx.ARCS | dillera |
 | O2         | R10k  | 6.5.30 | fx.64   | dillera |
 | Origin 2100 | R12k | 6.5.30 | fx.64  | dillera |
@@ -59,11 +59,11 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 	* IRIX 6.5.22
 	* IRIX 6.5.30
 
-I suspect that most other hardware and OS versions released in those timeframes will also work (e.g. O2, server variants, etc.) SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system. 
+I suspect that most other hardware and OS versions released in those timeframes will also work (e.g. O2, server variants, etc.) SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system.
 
 
 ## Where to get help
-* Create a Github Issue vs this project
+* Create a GitHub Issue vs this project
 * Silicon Graphics User Group-  for support and dev community: https://sgi.sh/
 * SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
@@ -77,7 +77,7 @@ I suspect that most other hardware and OS versions released in those timeframes 
 ## Pi Image Usage Instructions
 * Extract the compressed image
 * Write it to a 32GB+ SD card using Etcher or something
-* Connect your SGI system via ethernet to your Pi
+* Connect your SGI system via Ethernet to your Pi
 * Boot your Pi
 * Log in with default, pi/raspberry
 ```
@@ -86,7 +86,7 @@ cd /root/projects/github/booterizer
 ```
 * Configure WiFi networking and connect to your network (use raspi-config)
 * Modify settings.yml for ONLY these values:
-  * irixverion = 6.5.30, 6.5.22, etc
+  * irixversion = 6.5.30, 6.5.22, etc
   * clientname = your SGI's hostname
   * clientip = your SGI's IP. This MUST be 192.168.1.x for now. Change it later.
   * clientether = your SGI's MAC address
@@ -126,8 +126,8 @@ But leave the installmirror pointed to the same location!
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
 
-### Installation of Prerequisite sofware for OSX (Host)
-* Apple OSX has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
+#### Installation of Prerequisite software for OS X (Host)
+* Apple OS X has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
 * Install Brew following directions at their website here: https://brew.sh/
 
 * If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
@@ -142,11 +142,11 @@ $  brew install ansible
 $  sudo pip install ansible
 ```
 
-### Installation of Prerequisite sofware for Ubuntu (Host)
-* Installing recent vagrant must be done manually on older versions of ubuntu, the procedure below will validate the package using its checksums. Justing using apt-get will install an older version we don't want to use.
-* We need to install virtualbox (to run the virtual linux server for the SGI installation media)
-* We need to install vagrant 2.2.3 to configure and kick of provisioning of the new VM
-* We need to install ansible to provision the new VM
+### Installation of Prerequisite software for Ubuntu (Host)
+* Installing recent vagrant must be done manually on older versions of Ubuntu, the procedure below will validate the package using its checksum. Just using apt-get will install an older version we don't want to use.
+* We need to install VirtualBox (to run the virtual Linux server for the SGI installation media)
+* We need to install Vagrant 2.2.3 to configure and kick of provisioning of the new VM
+* We need to install Ansible to provision the new VM
 
 ```
 $  sudo apt-get install virtualbox
@@ -173,14 +173,14 @@ vagrant -v
 ansible --version
 ```
 You should have:
-* ansible 2.7.6 or higher
+* Ansible 2.7.6 or higher
 * Vagrant 2.2.3 or higher
 
 Having an exact version of VirtualBox is not critical- as long as you have the proper version of Vagrant, it will run VirtualBox for you.
 
 
-## Vagrant Plugins
-* Whichever host os (OSX or Linux) you are using, install the vagrant plugin with this command:
+### Vagrant Plugins
+* Whichever host OS (OS X or Linux) you are using, install the Vagrant plugin with this command:
 
 ```
 $ vagrant plugin install vagrant-vbguest
@@ -203,7 +203,7 @@ Set this to the version of IRIX you are installing.
 irixversion: "6.5.30"
 ```
 
-Currently installmethod is only ftp/http. Choose ftp here and http will be used if available. cd is no longer supported.
+Currently installmethod is only ftp/http. Choose ftp here and http will be used if available. CD is no longer supported.
 ```
 installmethod: "ftp"
 ```
@@ -236,19 +236,19 @@ netmask: '255.255.255.0'
 ```
 
 booterizer's host IP. This is the VM's IP on its internal point to point link to the target SGI client machine.
-* this will be a unique, unused ip address in the subnet that your home/office router has created
+* this will be a unique, unused IP address in the subnet that your home/office router has created
 ```
 hostip: '192.168.0.40'
 ```
 
 The SGI client box's IP address
-* this will be a unique, unused ip address in the subnet that your home/office router has created
+* this will be a unique, unused IP address in the subnet that your home/office router has created
 * it cannot be the same as the Host IP above.
 ```
 clientip: '192.168.0.41'
 ```
 
-The sgi box's physical hardware address, from printenv at PROM
+The SGI box's physical hardware address, from printenv at PROM
 ```
 printenv eaddr
 ```
@@ -261,16 +261,16 @@ will return the SGI MAC address.
 clientether: '08:00:69:0e:af:65'
 ```
 
-This is the name of the interface on your physical machine that's connected to your SGI box. In my case, it's the ethernet adapter, which is en0.
+This is the name of the interface on your physical machine that's connected to your SGI box. In my case, it's the Ethernet adapter, which is en0.
 * A Macintosh will usually use en0.
-* By default the linux kernel will usually assign this to eth0, however many distros have switched to [predictable naming](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
+* By default the Linux kernel will usually assign this to eth0, however many distros have switched to [predictable naming](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
 * If you are unsure of what your distro uses or do not know the interface name, check the interfaces using `ip link`.
 ```
 bridgenic: 'en0'
 ```
 
 ### Networking overview
-The booterizer vm's fake network interfaces map to your physical host as follows:
+The booterizer VM's fake network interfaces map to your physical host as follows:
 
 | Physical Host | booterizer |
 | --- | --- |
@@ -285,13 +285,13 @@ NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on you
 
 
 ### IRIX media
-This VM will now be able to sync installation media from S3 using http.
+This VM will now be able to sync installation media from S3 using HTTP.
 
 Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory. 
 
-You can keep both 6.5.22 and 6.5.30 media on the same host for different installations on varous SGI machines.
+You can keep both 6.5.22 and 6.5.30 media on the same host for different installations on various SGI machines.
 
-Now that your configuration is complete, you're ready to start up the vm and set up the SGI.
+Now that your configuration is complete, you're ready to start up the VM and set up the SGI.
 ```
 $ vagrant up
 ```
@@ -315,7 +315,7 @@ To help installations it's often easier to do an install via the SGI's serial po
 * copy and paste commands from this page onto the serial comms program running on your workstation
 * save the output from the SGI for posterity or help
 
-Assuming you have connected up your SGI's serial port 1 to your workstation, and you are running a serial app, and you have set it to 9006/8/N/E then you are probally seeing the PROM menu and other characters from the SGI serial port durning the system POST.
+Assuming you have connected up your SGI's serial port 1 to your workstation, and you are running a serial app, and you have set it to 9006/8/N/E then you are probably seeing the PROM menu and other characters from the SGI serial port during the system POST.
 
 To setup the console to serial output for the installation you must set this console variable:
 
@@ -334,7 +334,7 @@ setenv console g
 ```
 
 ### Setting System Timezone
-While you are in the PROM you should set the timezone to something approprate for where you live.
+While you are in the PROM you should set the timezone to something appropriate for where you live.
 ```
 setenv Timezone EST5EDT
 ```
@@ -354,7 +354,7 @@ Now examine the final output of the `vagrant provision` or `vagrant up` command,
 ```
 
 * copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
-* Older systems use fx.ARCS (such as Indigos, Indys, and some O2s with R4k cpus)
+* Older systems use fx.ARCS (such as Indigos, Indys, and some O2s with R4k CPUs)
 * O2 and newer systems use fx.64
 
 ### Starting the fx Partitioner
@@ -369,16 +369,16 @@ Do you require extended mode with all options available? (no) yes
 SGI Version 6.5 ARCS BE  Jul 20, 2006
 ...
 ```
-Now continue with the partitoning process.
+Now continue with the partitioning process.
 
 
 ### Using the fx Partitioner
 
 You should use fx to partition your internal disk- read the section "Partitioning the disk" at [Getting an Indy Desktop](https://blog.pizzabox.computer/posts/getting-an-indy-desktop/) for more thorough directions.
 
-In a nutshell, you want to [re]partition and then select [ro]ot only. Then `..` to escape that menu and [ex]it to quit fx and go back to the PROM to start a remote installation to install IRIX on the newly partitoned hard drive.
+In a nutshell, you want to [re]partition and then select [ro]ot only. Then `..` to escape that menu and [ex]it to quit fx and go back to the PROM to start a remote installation to install IRIX on the newly partitioned hard drive.
 
-Here is a runthru:
+Here is a run-thru:
 ```
 ----- please choose one (? for help, .. to quit this menu)-----
 [exi]t             [d]ebug/           [l]abel/           [a]uto
