@@ -3,15 +3,15 @@ booterizer
 
 # TL;DR: Use a Raspberry Pi
 
-The new Raspberry Pi version of Booterizer consists of pre-built images that you can write to a SD card. 
+The new Raspberry Pi version of Booterizer consists of pre-built images that you can write to a SD card.
 
-This is a significantly easier and faster method than using Vagrant. 
+This is a significantly easier and faster method than using Vagrant.
 
-Follow the Raspberry Pi instructions below. 
+Follow the Raspberry Pi instructions below.
 
 
 # Overview
-booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss. 
+booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
 
 
 ## Supported IRIX Versions
@@ -98,14 +98,14 @@ reboot
 ```
 
 * Skip down to the "Booting" section below
-* You can find available partitioners and media by running /irix/display_results.sh 
+* You can find available partitioners and media by running /irix/display_results.sh
 
 ## Pi Image Build Instructions
 Please see the README.md on the 'pi_support' branch.
 
 # Vagrant Version
 
-By default the Vagrant-based booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs and point them to 6.5.22 by editing the settings.yml file at the root of this project and setting the 
+By default the Vagrant-based booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs and point them to 6.5.22 by editing the settings.yml file at the root of this project and setting the
 ```
   irixversion:    "6.5.30"
 ```
@@ -227,7 +227,7 @@ clientdomain: 'devonshire.local'
 
 Internal network your SGI will be on. Note this is the actual "network", in the technical subnetting sense of the term.
 ```
-network: '192.168.0.0' 
+network: '192.168.0.0'
 ```
 
 Internal network's netmask
@@ -287,7 +287,7 @@ NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on you
 ### IRIX media
 This VM will now be able to sync installation media from S3 using HTTP.
 
-Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory. 
+Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory.
 
 You can keep both 6.5.22 and 6.5.30 media on the same host for different installations on various SGI machines.
 
@@ -338,10 +338,10 @@ While you are in the PROM you should set the timezone to something appropriate f
 ```
 setenv Timezone EST5EDT
 ```
-would set the timezone to Eastern Time for example. 
+would set the timezone to Eastern Time for example.
 
 
-## FX to Partition Disks 
+## FX to Partition Disks
 
 Now examine the final output of the `vagrant provision` or `vagrant up` command, to find the proper command to boot into fx, the SGI disk partitioner.
 
@@ -362,7 +362,7 @@ Now examine the final output of the `vagrant provision` or `vagrant up` command,
 > bootp():/6.5.30/Overlay/disc1/stand/fx.64
 
 Setting $netaddr to 192.168.251.34 (from server )
-Obtaining /6.5.30/Overlay/disc1/stand/fx.64 from server 
+Obtaining /6.5.30/Overlay/disc1/stand/fx.64 from server
 95040+26448+7168+2805248+50056d+5908+8928 entry: 0x8fd4aa40
 Currently in safe read-only mode.
 Do you require extended mode with all options available? (no) yes
@@ -388,8 +388,8 @@ fx> r
 ----- partitions-----
 part  type        blocks            Megabytes   (base+size)
   0: xfs      266240 + 585671260     130 + 285972
-  1: raw        4096 + 262144         2 + 128  
-  8: volhdr        0 + 4096           0 + 2    
+  1: raw        4096 + 262144         2 + 128
+  8: volhdr        0 + 4096           0 + 2
  10: volume        0 + 585937500       0 + 286102
 
 capacity is 585937500 blocks
@@ -399,7 +399,7 @@ capacity is 585937500 blocks
 [u]srrootdrive        [re]size
 fx/repartition> ro
 
-fx/repartition/rootdrive: type of data partition = (xfs) 
+fx/repartition/rootdrive: type of data partition = (xfs)
 Warning: you will need to re-install all software and restore user data
 from backups after changing the partition layout.  Changing partitions
 will cause all data on the drive to be lost.  Be sure you have the drive
@@ -435,7 +435,7 @@ The installer can be reached through the monitor GUI as follows:
   * ```load booterizer:selections```
   * You can press q to skip the readmes for each media item
   * Choose 'feature stream' when asked
-  * When inst is done loading media, it will prompt for the next location. Type 
+  * When inst is done loading media, it will prompt for the next location. Type
   * ```done```
 * From inst, Admin menu
   * booterizer generates a 'commands' file that contains all of the commands for inst to run
@@ -477,7 +477,7 @@ Option? 2
 
 
 
-1) Remote Directory  2)[Local CD-ROM]  
+1) Remote Directory  2)[Local CD-ROM]
       *a) Local SCSI CD-ROM drive 6, on controller 0
 
 Enter 1-2 to select source type, a to select the source, <esc> to quit,
@@ -488,17 +488,17 @@ Enter the name of the remote host: 192.168.251.99
 Enter the remote directory: 6.5.30/Overlay/disc1/dist
 
 
-1)[Remote Directory]  2) Local CD-ROM  
+1)[Remote Directory]  2) Local CD-ROM
       *a) Remote directory 6.5.30/Overlay/disc1/dist from server 192.168.251.99.
 
 Enter 1-2 to select source type, a to select the source, <esc> to quit,
-or <enter> to start: 
+or <enter> to start:
 
 
 Setting $netaddr to 192.168.251.82 (from server )
 Copying installation program to disk.
-......... 10% ......... 20% ......... 30% ......... 40% ......... 50% 
-......... 60% ......... 70% ......... 80% ......... 90% ......... 100% 
+......... 10% ......... 20% ......... 30% ......... 40% ......... 50%
+......... 60% ......... 70% ......... 80% ......... 90% ......... 100%
 Copy complete
 IRIX Release 6.5 IP27 Version 07202013 System V - 64 Bit
 Copyright 1987-2006 Silicon Graphics, Inc.
@@ -514,7 +514,7 @@ At this point your system should come back up (ensure you go back into PROM and 
 Now there are many many more configurations you need to do before starting to use the system. Running EZSetup does a tiny fraction of these. The irix_ansible project (below docs) does a whole lot more!
 
 ### Wiping a disk for clean IRIX install
-Often you have have a drive with IRIX already installed, and you want to do a clean install. You need to wipe the disk with mkfs, running the partitioner on the drive is not enough. The reason is that if your partitions are exactly the same as they were on the old installation, when you run inst it will still pickup settings in /etc from the old install and assume you are doing an upgrade. To wipe the disk is easy- but you have to run inst, wipe, then reboot so that inst won't pick up the old installation and create a fresh miniroot and use default values. 
+Often you have have a drive with IRIX already installed, and you want to do a clean install. You need to wipe the disk with mkfs, running the partitioner on the drive is not enough. The reason is that if your partitions are exactly the same as they were on the old installation, when you run inst it will still pickup settings in /etc from the old install and assume you are doing an upgrade. To wipe the disk is easy- but you have to run inst, wipe, then reboot so that inst won't pick up the old installation and create a fresh miniroot and use default values.
 
 Here is a sample run-thru:
 ```
@@ -566,7 +566,7 @@ Mounting file systems:
 
 
 Re-initializing installation history database
-Reading product descriptions ..   0% 
+Reading product descriptions ..   0%
 WARNING: Assuming no hist file
 Reading product descriptions .. 100% Done.
 
@@ -624,7 +624,7 @@ And then continue installation as above.
 * During extraction if you get this ansible failure:
 ```
 TASK [fetch_files : Extracting overlay disc 1] *********************************
-fatal: [default]: FAILED! => changed=false 
+fatal: [default]: FAILED! => changed=false
   msg: Failed to find handler for "/vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz". Make sure the required command to extract the file is installed. Command "/bin/tar" could not handle archive. Command "unzip" not found.
 ```
 
