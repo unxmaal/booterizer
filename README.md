@@ -14,7 +14,10 @@ Follow the Raspberry Pi instructions below.
 booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss. 
 
 
-booterizer also works with IRIX 6.5.22 for older SGI systems that can run 6.5
+## Supported IRIX Versions
+
+booterizer was designed for IRIX 6.5.30, the last version of IRIX for SGI. Use this as your first choice.
+booterizer also fully supports IRIX 6.5.22 for older SGI systems that can run 6.5. Use this for Older Indys and Challenge L servers.
 booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x (See Callahan's Booterizer 5.3 https://github.com/callahan-44/booterizer )
 
 
@@ -26,12 +29,25 @@ The booterizer VM provides the following services:
 * TFTP server (via tftpd-hpa)
 * RSH server (via rsh-server)
 
-NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. 
+NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. This version will obtain the contents of the CDROMS for you automatically.
 
 
 ## Target SGI Systems
 
 I am not sure what range of IRIX versions this will work with or what SGI machines are compatible. Personal testing and user reports show the following (at minimum) should be compatible:
+
+| SGI System | CPU | IRIX System | Fx |  Verified by |
+|------------|-----|-------------|----|--------------|
+| Fuel       | all | 6.5.30 | fx.64 | unxmaal |
+| Octane1    | all | 6.5.30 | fx.64 | diller |
+| Octane2    | all   | 6.5.30 | fx.64 | unxmaal |
+| ChallengeL | R10k  | 6.5.22 | fx.ARCS | dillera |
+| O2         | R4k   | 6.5.30 | fx.ARCS | dillera |
+| O2         | R10k  | 6.5.30 | fx.64   | dillera |
+| Origin 2100 | R12k | 6.5.30 | fx.64  | dillera |
+| Indy       | R4600PC | 6.5.22 | fx.ARCS | PeteT |
+| Indigo2    | R10k | 6.5.22 | fx.ARCS | dillera |
+
 
 * Target Hardware
 	* SGI O2
@@ -89,7 +105,16 @@ Please see the README.md on the 'pi_support' branch.
 
 # Vagrant Version
 
-By default the Vagrant-based booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs in the included Vagrantfile.
+By default the Vagrant-based booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs and point them to 6.5.22 by editing the settings.yml file at the root of this project and setting the 
+```
+  irixversion:    "6.5.30"
+```
+to
+```
+  irixversion:    "6.5.22"
+```
+But leave the installmirror pointed to the same location!
+
 
 ## Requirements
 
@@ -166,7 +191,7 @@ Now we can move on and start to configure the Vagrant file and start up the VM..
 
 
 ## Vagrant Booterizer Setup
-By default, this vagrant VM will fetch proper irix installation packages from ftp.irisware.net (or another mirror).
+By default, this vagrant VM will fetch proper IRIX installation packages as per the settings in `settings.yml`.
 
 ### Settings
 These settings are found in `settings.yml`. Edit them to suit your environment.
@@ -187,8 +212,7 @@ Pick your install mirror
  * the same files are in both locations
  * choose only one of these
 ```
-  installmirror: "http://us.irisware.net/sgi-irix"
-  installmirror: "http://sgi-irix.s3-website-us-east-1.amazonaws.com"
+  installmirror: "https://sgi-irix.s3.amazonaws.com"
 ```
 
 This is the new hostname for your SGI post-installation
@@ -225,7 +249,14 @@ clientip: '192.168.0.41'
 ```
 
 The sgi box's physical hardware address, from printenv at PROM
-* older PROMs use the command: eaddr to obtain this
+```
+printenv eaddr
+```
+will return the SGI MAC address.
+
+* older PROMs use the command: `eaddr` to obtain this
+* if you cannot find the MAC address (some PROM do not show it - setup here and then watch the daemon.log file in the booterizer VM as you run the DHCP command to start the fx partitioner- you will see the real SGI MAC try and connect to your booterizer host. Copy it and re-configure)
+
 ```
 clientether: '08:00:69:0e:af:65'
 ```
@@ -247,24 +278,24 @@ The booterizer vm's fake network interfaces map to your physical host as follows
 | SGI-connected NIC | Adapter 2, Bridged, eth1 |
 
 NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on your network. It is configured to ignore anything but the target system but if you have another DHCP/BOOTP server on the LAN segment the queries from the SGI hardware may get answered by your network's existing DHCP server which will cause problems. You may want to temporarily disable DHCP/BOOTP if you are running it on your LAN, configure it to not reply to queries from the SGI system, or put SGI hardware on a separate LAN (my recommendation).
+* Note: This is usually not an issue, but it _may_ be, YMMV
 
 #### One possible setup
 ![Image of a possible network setup for Booterizer](docs/booterizer_network_v1a.png?raw=true "Booterizer Network Setup")
 
 
-### IRIX media from FTP or S3
-This VM can now sync installation media from the FTP site ftp.irisware.net or from S3 using http. Irisware it is the default but you can easily change this to S3 by editing the settings.yml file to:
-```
-installmirror:  "https://s3.amazonaws.com"
-```
-and then saving the file and using the vagrant provision command if the vagrant host has been booted.
+### IRIX media
+This VM will now be able to sync installation media from S3 using http.
 
 Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory. 
+
+You can keep both 6.5.22 and 6.5.30 media on the same host for different installations on varous SGI machines.
 
 Now that your configuration is complete, you're ready to start up the vm and set up the SGI.
 ```
 $ vagrant up
 ```
+
 
 # Booting your SGI from Booterizer (Raspberry Pi or Vagrant)
 
@@ -278,17 +309,58 @@ When the PROM menu appears choose: Enter Command Monitor
 ```
 The address above is only a sample. You should pick an unused IP in your local network's subnet.
 
+## Setting Console Output in PROM
 
-## Net boot into FX to Partition Disks 
+To help installations it's often easier to do an install via the SGI's serial port and your host computer (Mac or Ubuntu). With serial port you are able to:
+* copy and paste commands from this page onto the serial comms program running on your workstation
+* save the output from the SGI for posterity or help
 
-Now examine the final output of the vagrant provision or vagrant up command, to find the proper command to boot into fx, the SGI disk partitioner.
+Assuming you have connected up your SGI's serial port 1 to your workstation, and you are running a serial app, and you have set it to 9006/8/N/E then you are probally seeing the PROM menu and other characters from the SGI serial port durning the system POST.
+
+To setup the console to serial output for the installation you must set this console variable:
+
+### Set for Serial Output
+```
+setenv console d
+```
+
+This will ensure a smooth installation session.
+
+When you are done you should set the console back to graphical virtual console:
+
+### Set for Graphics Output
+```
+setenv console g
+```
+
+### Setting System Timezone
+While you are in the PROM you should set the timezone to something approprate for where you live.
+```
+setenv Timezone EST5EDT
+```
+would set the timezone to Eastern Time for example. 
+
+
+## FX to Partition Disks 
+
+Now examine the final output of the `vagrant provision` or `vagrant up` command, to find the proper command to boot into fx, the SGI disk partitioner.
 
 * Look for:  __ Partitioners found
+```
+   __________________  Partitioners found __________________
+    bootp():/6.5.30/Overlay/disc1/stand/fx.64
+    bootp():/6.5.30/Overlay/disc1/stand/fx.ARCS
+
+```
+
 * copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
-* Older systems use fx.ARCS (such as Indigos, Indys, and some O2s)
+* Older systems use fx.ARCS (such as Indigos, Indys, and some O2s with R4k cpus)
 * O2 and newer systems use fx.64
+
+### Starting the fx Partitioner
 ```
 > bootp():/6.5.30/Overlay/disc1/stand/fx.64
+
 Setting $netaddr to 192.168.251.34 (from server )
 Obtaining /6.5.30/Overlay/disc1/stand/fx.64 from server 
 95040+26448+7168+2805248+50056d+5908+8928 entry: 0x8fd4aa40
@@ -297,29 +369,57 @@ Do you require extended mode with all options available? (no) yes
 SGI Version 6.5 ARCS BE  Jul 20, 2006
 ...
 ```
-Newer systems will use fx.64
-```
-bootp():/6.5.30/Overlay/disc1/stand/fx.64
-```
-
 Now continue with the partitoning process.
 
 
-
-
-### fx (Partitioner)
-
-If you need to boot `fx` to label/partition your disk, open the command monitor and issue a command similar to this:
-
-`bootp():/6.5.30/Overlay/disc1/stand/fx.ARCS`
-
-where `/6.5.30/Overlay/disc1/stand/fx.ARCS` is a path relative to your selected IRIX version in the directory structure from above. When installing IRIX 6.5.x you'll want to use the partitioner included with the overlay set (first disc), but prior versions of IRIX usually locate the partitioner on the first install disc.
-
- Use `fx.ARCS` for R4xxx machines and some O2s, or `fx.64` for R5000+ machines (and others for older machines, I assume). Once `booterizer` finishes setup it lists any detected partitioners to help you find the correct path.
+### Using the fx Partitioner
 
 You should use fx to partition your internal disk- read the section "Partitioning the disk" at [Getting an Indy Desktop](https://blog.pizzabox.computer/posts/getting-an-indy-desktop/) for more thorough directions.
 
-### inst (IRIX installer)
+In a nutshell, you want to [re]partition and then select [ro]ot only. Then `..` to escape that menu and [ex]it to quit fx and go back to the PROM to start a remote installation to install IRIX on the newly partitoned hard drive.
+
+Here is a runthru:
+```
+----- please choose one (? for help, .. to quit this menu)-----
+[exi]t             [d]ebug/           [l]abel/           [a]uto
+[b]adblock/        [exe]rcise/        [r]epartition/
+fx> r
+
+----- partitions-----
+part  type        blocks            Megabytes   (base+size)
+  0: xfs      266240 + 585671260     130 + 285972
+  1: raw        4096 + 262144         2 + 128  
+  8: volhdr        0 + 4096           0 + 2    
+ 10: volume        0 + 585937500       0 + 286102
+
+capacity is 585937500 blocks
+
+----- please choose one (? for help, .. to quit this menu)-----
+[ro]otdrive           [o]ptiondrive         [e]xpert
+[u]srrootdrive        [re]size
+fx/repartition> ro
+
+fx/repartition/rootdrive: type of data partition = (xfs) 
+Warning: you will need to re-install all software and restore user data
+from backups after changing the partition layout.  Changing partitions
+will cause all data on the drive to be lost.  Be sure you have the drive
+backed up if it contains any user data.  Continue? yes
+
+
+----- please choose one (? for help, .. to quit this menu)-----
+[ro]otdrive           [o]ptiondrive         [e]xpert
+[u]srrootdrive        [re]size
+fx/repartition> ..
+
+----- please choose one (? for help, .. to quit this menu)-----
+[exi]t             [d]ebug/           [l]abel/           [a]uto
+[b]adblock/        [exe]rcise/        [r]epartition/
+fx> exi
+```
+
+
+### Running inst (IRIX installer)
+
 NOTE: After `booterizer` initializes, it displays a list of all `dist` subdirectories for your convenience. Use this list to preserve your sanity while running inst.
 
 The installer can be reached through the monitor GUI as follows:
@@ -354,8 +454,126 @@ The installer can be reached through the monitor GUI as follows:
     # go for a walk
     quit
     # go for another walk
+    [elf binaries are prepared for use]
     # the system will prompt to reboot
     ```
+
+### Example run
+```
+System Maintenance Menu
+
+1) Start System
+2) Install System Software
+3) Run Diagnostics
+4) Recover System
+5) Enter Command Monitor
+
+Option? 2
+
+
+                         Installing System Software...
+
+                       Press <Esc> to return to the menu.
+
+
+
+1) Remote Directory  2)[Local CD-ROM]  
+      *a) Local SCSI CD-ROM drive 6, on controller 0
+
+Enter 1-2 to select source type, a to select the source, <esc> to quit,
+or <enter> to start: 1
+
+
+Enter the name of the remote host: 192.168.251.99
+Enter the remote directory: 6.5.30/Overlay/disc1/dist
+
+
+1)[Remote Directory]  2) Local CD-ROM  
+      *a) Remote directory 6.5.30/Overlay/disc1/dist from server 192.168.251.99.
+
+Enter 1-2 to select source type, a to select the source, <esc> to quit,
+or <enter> to start: 
+
+
+Setting $netaddr to 192.168.251.82 (from server )
+Copying installation program to disk.
+......... 10% ......... 20% ......... 30% ......... 40% ......... 50% 
+......... 60% ......... 70% ......... 80% ......... 90% ......... 100% 
+Copy complete
+IRIX Release 6.5 IP27 Version 07202013 System V - 64 Bit
+Copyright 1987-2006 Silicon Graphics, Inc.
+All Rights Reserved.
+...
+```
+And from here inst runs and installs/creates a miniroot, then mounts the miniroot and then runs inst. Follow the directions above.
+
+
+## IRIX installation is finished
+At this point your system should come back up (ensure you go back into PROM and `setenv console g` if you set it to d for a serial installation!) and you can login as Root, no password.
+
+Now there are many many more configurations you need to do before starting to use the system. Running EZSetup does a tiny fraction of these. The irix_ansible project (below docs) does a whole lot more!
+
+### Wiping a disk for clean IRIX install
+Often you have have a drive with IRIX already installed, and you want to do a clean install. You need to wipe the disk with mkfs, running the partitioner on the drive is not enough. The reason is that if your partitions are exactly the same as they were on the old installation, when you run inst it will still pickup settings in /etc from the old install and assume you are doing an upgrade. To wipe the disk is easy- but you have to run inst, wipe, then reboot so that inst won't pick up the old installation and create a fresh miniroot and use default values. 
+
+Here is a sample run-thru:
+```
+Admin> 11
+
+                   ** Clean Disks Procedure **
+
+      If you agree to it, this procedure will clean your disks,
+      removing all data from the root and (if present) the user
+      file systems.
+
+      Boot device partitions zero (0) and, if present, six (6)
+      will be erased (using mkfs).  This will destroy all data on
+      them.  These partitions will then be remounted under /root
+      and (if present) /root/usr.
+
+      If you have data on these file systems you want to save,
+      answer "no" below, and backup the data before cleaning
+      your disks.
+
+      Any other file systems or logical volumes will be unmounted
+      and forgotten about until you choose to reconfigure and
+      remount them.
+
+
+        Are you sure you want to clean your disks ?
+                   { (y)es, (n)o, (sh)ell, (h)elp }: y
+
+WARNING: There appears to be a valid file system on /dev/dsk/realroot already.
+Making a new file system will destroy all existing data on it.
+
+Make new file system on /dev/dsk/realroot? yes
+
+Doing: mkfs -b size=4096 /dev/dsk/realroot
+meta-data=/dev/dsk/realroot      isize=256    agcount=70, agsize=1048576 blks
+         =                       sectsz=512   attr=0, parent=0
+data     =                       bsize=4096   blocks=73208907, imaxpct=25
+         =                       sunit=0      swidth=0 blks, unwritten=1
+         =                       mmr=0
+naming   =version 2              bsize=4096   mixed-case=Y
+log      =internal log           bsize=4096   blocks=8936, version=1
+         =                       sectsz=512    sunit=0 blks, lazy-count=0
+realtime =none                   extsz=65536  blocks=0, rtextents=0
+
+Mounting file systems:
+
+    /dev/miniroot            on  /
+    /dev/dsk/realroot        on  /root
+
+
+Re-initializing installation history database
+Reading product descriptions ..   0% 
+WARNING: Assuming no hist file
+Reading product descriptions .. 100% Done.
+
+```
+And from here you just exit and reboot.
+
+
 
 
 # Provisioning your IRIX host with irix_ansible
