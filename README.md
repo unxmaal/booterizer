@@ -109,13 +109,13 @@ Please see the README.md on the 'pi_support' branch.
 By default the Vagrant-based booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs and point them to 6.5.22 by editing the settings.yml file at the root of this project and setting the
 
 ```
-  irixversion:    "6.5.30"
+irixversion:    "6.5.30"
 ```
 
 to
 
 ```
-  irixversion:    "6.5.22"
+irixversion:    "6.5.22"
 ```
 
 But leave the installmirror pointed to the same location!
@@ -229,7 +229,7 @@ Pick your install mirror
 * choose only one of these
 
 ```
-  installmirror: "https://sgi-irix.s3.amazonaws.com"
+installmirror: "https://sgi-irix.s3.amazonaws.com"
 ```
 
 This is the new hostname for your SGI post-installation
