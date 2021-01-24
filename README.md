@@ -107,13 +107,17 @@ Please see the README.md on the 'pi_support' branch.
 ## Vagrant Version
 
 By default the Vagrant-based booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs and point them to 6.5.22 by editing the settings.yml file at the root of this project and setting the
+
 ```
   irixversion:    "6.5.30"
 ```
+
 to
+
 ```
   irixversion:    "6.5.22"
 ```
+
 But leave the installmirror pointed to the same location!
 
 ### Requirements
@@ -166,15 +170,18 @@ $ sudo apt-add-repository ppa:ansible/ansible
 $ sudo apt update && sudo apt install ansible -y
 
 ```
+
 Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
 ### Verify Versions
 
 Verify your installed versions:
+
 ```
 vagrant -v
 ansible --version
 ```
+
 You should have:
 
 * Ansible 2.7.6 or higher
@@ -189,6 +196,7 @@ Having an exact version of VirtualBox is not critical- as long as you have the p
 ```
 $ vagrant plugin install vagrant-vbguest
 ```
+
 This will install a plugin that will automatically update any VirtualBox VMs with the latest guest additions
 
 Now we can move on and start to configure the Vagrant file and start up the VM...
@@ -204,11 +212,13 @@ These settings are found in `settings.yml`. Edit them to suit your environment.
 * Edit these lines
 
 Set this to the version of IRIX you are installing.
+
 ```
 irixversion: "6.5.30"
 ```
 
 Currently installmethod is only ftp/http. Choose ftp here and http will be used if available. CD is no longer supported.
+
 ```
 installmethod: "ftp"
 ```
@@ -223,21 +233,25 @@ Pick your install mirror
 ```
 
 This is the new hostname for your SGI post-installation
+
 ```
 clientname: 'sgi'
 ```
 
 Whatever domain you use at home, or make one up for the install
+
 ```
 clientdomain: 'devonshire.local'
 ```
 
 Internal network your SGI will be on. Note this is the actual "network", in the technical subnetting sense of the term.
+
 ```
 network: '192.168.0.0'
 ```
 
 Internal network's netmask
+
 ```
 netmask: '255.255.255.0'
 ```
@@ -260,9 +274,11 @@ clientip: '192.168.0.41'
 ```
 
 The SGI box's physical hardware address, from printenv at PROM
+
 ```
 printenv eaddr
 ```
+
 will return the SGI MAC address.
 
 * older PROMs use the command: `eaddr` to obtain this
@@ -308,6 +324,7 @@ Vagrant will automatically create a vagrant/irix directory on your host machine 
 You can keep both 6.5.22 and 6.5.30 media on the same host for different installations on various SGI machines.
 
 Now that your configuration is complete, you're ready to start up the VM and set up the SGI.
+
 ```
 $ vagrant up
 ```
@@ -323,6 +340,7 @@ When the PROM menu appears choose: Enter Command Monitor
 ```
 > setenv netaddr 192.168.0.34
 ```
+
 The address above is only a sample. You should pick an unused IP in your local network's subnet.
 
 ### Setting Console Output in PROM
@@ -355,9 +373,11 @@ setenv console g
 #### Setting System Timezone
 
 While you are in the PROM you should set the timezone to something appropriate for where you live.
+
 ```
 setenv Timezone EST5EDT
 ```
+
 would set the timezone to Eastern Time for example.
 
 ### FX to Partition Disks
@@ -390,6 +410,7 @@ Do you require extended mode with all options available? (no) yes
 SGI Version 6.5 ARCS BE  Jul 20, 2006
 ...
 ```
+
 Now continue with the partitioning process.
 
 #### Using the fx Partitioner
@@ -399,6 +420,7 @@ You should use fx to partition your internal disk- read the section "Partitionin
 In a nutshell, you want to [re]partition and then select [ro]ot only. Then `..` to escape that menu and [ex]it to quit fx and go back to the PROM to start a remote installation to install IRIX on the newly partitioned hard drive.
 
 Here is a run-thru:
+
 ```
 ----- please choose one (? for help, .. to quit this menu)-----
 [exi]t             [d]ebug/           [l]abel/           [a]uto
@@ -526,6 +548,7 @@ Copyright 1987-2006 Silicon Graphics, Inc.
 All Rights Reserved.
 ...
 ```
+
 And from here inst runs and installs/creates a miniroot, then mounts the miniroot and then runs inst. Follow the directions above.
 
 ### IRIX installation is finished
@@ -539,6 +562,7 @@ Now there are many many more configurations you need to do before starting to us
 Often you have have a drive with IRIX already installed, and you want to do a clean install. You need to wipe the disk with mkfs, running the partitioner on the drive is not enough. The reason is that if your partitions are exactly the same as they were on the old installation, when you run inst it will still pickup settings in /etc from the old install and assume you are doing an upgrade. To wipe the disk is easy- but you have to run inst, wipe, then reboot so that inst won't pick up the old installation and create a fresh miniroot and use default values.
 
 Here is a sample run-thru:
+
 ```
 Admin> 11
 
@@ -593,6 +617,7 @@ WARNING: Assuming no hist file
 Reading product descriptions .. 100% Done.
 
 ```
+
 And from here you just exit and reboot.
 
 ## Provisioning your IRIX host with irix_ansible
@@ -638,6 +663,7 @@ Generally, if you have trouble with the Vagrant-based booterizer, use the Pi ver
 ```
 setenv console d
 ```
+
 And then continue installation as above.
 
 ### Ansible fails to pull images
