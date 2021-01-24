@@ -71,7 +71,7 @@ I suspect that most other hardware and OS versions released in those timeframes 
 * Raspberry Pi 3 (This is what I have. Let me know if others work.)
 * 32GB SD card
 * Booterizer Pi Image from http://booterizer.com .
-* Extraction software that supports bz2 (native on MacOS. Use https://www.7-zip.org/ on Windows.)
+* Extraction software that supports bz2 (native on macOS. Use https://www.7-zip.org/ on Windows.)
 
 ### Pi Image Usage Instructions
 * Extract the compressed image
@@ -125,8 +125,8 @@ But leave the installmirror pointed to the same location!
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
 
-#### Installation of Prerequisite software for OS X (Host)
-* Apple OS X has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
+#### Installation of Prerequisite software for macOS (Host)
+* macOS has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
 * Install Brew following directions at their website here: https://brew.sh/
 
 * If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
@@ -179,7 +179,7 @@ Having an exact version of VirtualBox is not critical- as long as you have the p
 
 
 ### Vagrant Plugins
-* Whichever host OS (OS X or Linux) you are using, install the Vagrant plugin with this command:
+* Whichever host OS (macOS or Linux) you are using, install the Vagrant plugin with this command:
 
 ```
 $ vagrant plugin install vagrant-vbguest
