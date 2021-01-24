@@ -137,15 +137,15 @@ But leave the installmirror pointed to the same location!
 * If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
 
 ```
-$  brew cask install vagrant
-$  brew cask install virtualbox
-$  brew install ansible
+brew cask install vagrant
+brew cask install virtualbox
+brew install ansible
 ```
 
 * If you already have Python installed outside of Brew, instead of installing Ansible through Brew, install it through `pip`:
 
 ```
-$  sudo pip install ansible
+sudo pip install ansible
 ```
 
 #### Installation of Prerequisite software for Ubuntu (Host)
@@ -156,18 +156,18 @@ $  sudo pip install ansible
 * We need to install Ansible to provision the new VM
 
 ```
-$  sudo apt-get install virtualbox
+sudo apt-get install virtualbox
 
-$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.deb
-$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS
-$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS.sig
-$ gpg --verify vagrant_2.2.3_SHA256SUMS.sig vagrant_2.2.3_SHA256SUMS
-$ shasum -a 256 -c <(cat vagrant_2.2.3_SHA256SUMS | grep 64.deb) -s
-$ sudo dpkg -i vagrant_2.2.3_x86_64.deb
-$ rm vagrant_2.2.3*
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.deb
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS.sig
+gpg --verify vagrant_2.2.3_SHA256SUMS.sig vagrant_2.2.3_SHA256SUMS
+shasum -a 256 -c <(cat vagrant_2.2.3_SHA256SUMS | grep 64.deb) -s
+sudo dpkg -i vagrant_2.2.3_x86_64.deb
+rm vagrant_2.2.3*
 
-$ sudo apt-add-repository ppa:ansible/ansible
-$ sudo apt update && sudo apt install ansible -y
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt update && sudo apt install ansible -y
 
 ```
 
@@ -194,7 +194,7 @@ Having an exact version of VirtualBox is not critical- as long as you have the p
 * Whichever host OS (macOS or Linux) you are using, install the Vagrant plugin with this command:
 
 ```
-$ vagrant plugin install vagrant-vbguest
+vagrant plugin install vagrant-vbguest
 ```
 
 This will install a plugin that will automatically update any VirtualBox VMs with the latest guest additions
@@ -326,7 +326,7 @@ You can keep both 6.5.22 and 6.5.30 media on the same host for different install
 Now that your configuration is complete, you're ready to start up the VM and set up the SGI.
 
 ```
-$ vagrant up
+vagrant up
 ```
 
 ## Booting your SGI from Booterizer (Raspberry Pi or Vagrant)
@@ -338,7 +338,7 @@ When the PROM menu appears choose: Enter Command Monitor
 * Set the netaddr of your SGI to match your local network settings, and the specific IP address you picked for it and put into the settings.yml file:
 
 ```
-> setenv netaddr 192.168.0.34
+setenv netaddr 192.168.0.34
 ```
 
 The address above is only a sample. You should pick an unused IP in your local network's subnet.
@@ -681,7 +681,7 @@ the file didn't download fully. vagrant ssh into the host, move into that direct
 * Example
 
 ```
-$ rm /vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz
+rm /vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz
 ```
 
 * then back on you main host run the provision again:
