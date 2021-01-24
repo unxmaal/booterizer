@@ -8,17 +8,14 @@ This is a significantly easier and faster method than using Vagrant.
 
 Follow the Raspberry Pi instructions below.
 
-
 ## Overview
 booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
-
 
 ### Supported IRIX Versions
 
 booterizer was designed for IRIX 6.5.30, the last version of IRIX for SGI. Use this as your first choice.
 booterizer also fully supports IRIX 6.5.22 for older SGI systems that can run 6.5. Use this for Older Indys and Challenge L servers.
 booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x (See Callahan's Booterizer 5.3 https://github.com/callahan-44/booterizer )
-
 
 booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. I recommend only attaching the network interface to an isolated network for this purpose and then `vagrant halt` or `vagrant destroy` the VM when you are done installing.
 
@@ -29,7 +26,6 @@ The booterizer VM provides the following services:
 * RSH server (via rsh-server)
 
 NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. This version will obtain the contents of the CD-ROMs for you automatically.
-
 
 ### Target SGI Systems
 
@@ -47,7 +43,6 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 | Indy       | R4600PC | 6.5.22 | fx.ARCS | PeteT |
 | Indigo2    | R10k | 6.5.22 | fx.ARCS | dillera |
 
-
 * Target Hardware
 	* SGI O2
 	* SGI Indigo
@@ -59,7 +54,6 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 	* IRIX 6.5.30
 
 I suspect that most other hardware and OS versions released in those timeframes will also work (e.g. O2, server variants, etc.) SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system.
-
 
 ### Where to get help
 * Create a GitHub Issue vs this project
@@ -114,7 +108,6 @@ to
 ```
 But leave the installmirror pointed to the same location!
 
-
 ### Requirements
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
@@ -123,7 +116,6 @@ But leave the installmirror pointed to the same location!
 * Ansible/Python
 * VM host with TWO network interfaces
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
-
 
 #### Installation of Prerequisite software for macOS (Host)
 * macOS has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
@@ -164,7 +156,6 @@ $ sudo apt update && sudo apt install ansible -y
 ```
 Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
-
 ### Verify Versions
 Verify your installed versions:
 ```
@@ -177,7 +168,6 @@ You should have:
 
 Having an exact version of VirtualBox is not critical- as long as you have the proper version of Vagrant, it will run VirtualBox for you.
 
-
 ### Vagrant Plugins
 * Whichever host OS (macOS or Linux) you are using, install the Vagrant plugin with this command:
 
@@ -187,7 +177,6 @@ $ vagrant plugin install vagrant-vbguest
 This will install a plugin that will automatically update any VirtualBox VMs with the latest guest additions
 
 Now we can move on and start to configure the Vagrant file and start up the VM...
-
 
 ### Vagrant Booterizer Setup
 By default, this vagrant VM will fetch proper IRIX installation packages as per the settings in `settings.yml`.
@@ -282,7 +271,6 @@ NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on you
 ##### One possible setup
 ![Image of a possible network setup for Booterizer](docs/booterizer_network_v1a.png?raw=true "Booterizer Network Setup")
 
-
 #### IRIX media
 This VM will now be able to sync installation media from S3 using HTTP.
 
@@ -294,7 +282,6 @@ Now that your configuration is complete, you're ready to start up the VM and set
 ```
 $ vagrant up
 ```
-
 
 ## Booting your SGI from Booterizer (Raspberry Pi or Vagrant)
 
@@ -339,7 +326,6 @@ setenv Timezone EST5EDT
 ```
 would set the timezone to Eastern Time for example.
 
-
 ### FX to Partition Disks
 
 Now examine the final output of the `vagrant provision` or `vagrant up` command, to find the proper command to boot into fx, the SGI disk partitioner.
@@ -369,7 +355,6 @@ SGI Version 6.5 ARCS BE  Jul 20, 2006
 ...
 ```
 Now continue with the partitioning process.
-
 
 #### Using the fx Partitioner
 
@@ -415,7 +400,6 @@ fx/repartition> ..
 [b]adblock/        [exe]rcise/        [r]epartition/
 fx> exi
 ```
-
 
 #### Running inst (IRIX installer)
 
@@ -506,7 +490,6 @@ All Rights Reserved.
 ```
 And from here inst runs and installs/creates a miniroot, then mounts the miniroot and then runs inst. Follow the directions above.
 
-
 ### IRIX installation is finished
 At this point your system should come back up (ensure you go back into PROM and `setenv console g` if you set it to d for a serial installation!) and you can login as Root, no password.
 
@@ -572,9 +555,6 @@ Reading product descriptions .. 100% Done.
 ```
 And from here you just exit and reboot.
 
-
-
-
 ## Provisioning your IRIX host with irix_ansible
 https://github.com/unxmaal/irix_ansible/
 
@@ -596,17 +576,13 @@ irix_ansible should be run immediately after your IRIX host has been installed, 
 * Place your vault password in /home/vagrant/.vault_pass.txt
 * Continue with the irix_ansible README
 
-
-
 ### PRO TIP
 Take a look in the expect/ directory for my own personal install scripts, written in expect. You can use them as a guide for what to select during an installation -- or if you're really brave/foolish, follow the enclosed README to run those scripts over serial console.
-
 
 ## Troubleshooting
 
 ### I'm having trouble with the Vagrant Booterizer
 Generally, if you have trouble with the Vagrant-based booterizer, use the Pi version. It's easier, faster, and nearly everything's already done for you.
-
 
 ### Problems running inst from Serial port
 
@@ -617,7 +593,6 @@ Generally, if you have trouble with the Vagrant-based booterizer, use the Pi ver
 setenv console d
 ```
 And then continue installation as above.
-
 
 ### Ansible fails to pull images
 * During extraction if you get this ansible failure:
@@ -637,8 +612,6 @@ $ rm /vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz
 ```
 ~/booterizer (master) $ vagrant provision
 ```
-
-
 
 ## License
 
