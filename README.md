@@ -38,9 +38,9 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 
 | SGI System | CPU | IRIX System | Fx |  Verified by |
 |------------|-----|-------------|----|--------------|
-| Fuel       | all | 6.5.30 | fx.64 | Unxmall |
+| Fuel       | all | 6.5.30 | fx.64 | unxmaal |
 | Octane1    | all | 6.5.30 | fx.64 | diller |
-| Octane2    | all   | 6.5.30 | fx.64 | unxmall|
+| Octane2    | all   | 6.5.30 | fx.64 | unxmaal |
 | ChallengeL | R10k  | 6.5.22 | fx.ARCS | dillera |
 | O2         | R4k   | 6.5.30 | fx.ARCS | dillera |
 | O2         | R10k  | 6.5.30 | fx.64   | dillera |
