@@ -80,7 +80,7 @@ I suspect that most other hardware and OS versions released in those timeframes 
 * Boot your Pi
 * Log in with default, pi/raspberry
 
-```
+```console
 sudo -i
 cd /root/projects/github/booterizer
 ```
@@ -92,7 +92,7 @@ cd /root/projects/github/booterizer
   * clientip = your SGI's IP. This MUST be 192.168.1.x for now. Change it later.
   * clientether = your SGI's MAC address
 
-```
+```console
 cd ansible/
 ansible-playbook -i inventory.yml pooterizer.yml
 reboot
@@ -110,13 +110,13 @@ Please see the README.md on the 'pi_support' branch.
 By default the Vagrant-based booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs and point them to 6.5.22 by editing the settings.yml file at the root of this project and setting the
 
 ```
-  irixversion:    "6.5.30"
+irixversion:    "6.5.30"
 ```
 
 to
 
 ```
-  irixversion:    "6.5.22"
+irixversion:    "6.5.22"
 ```
 
 But leave the installmirror pointed to the same location!
@@ -137,16 +137,16 @@ But leave the installmirror pointed to the same location!
 
 * If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
 
-```
-$  brew cask install vagrant
-$  brew cask install virtualbox
-$  brew install ansible
+```console
+brew cask install vagrant
+brew cask install virtualbox
+brew install ansible
 ```
 
 * If you already have Python installed outside of Brew, instead of installing Ansible through Brew, install it through `pip`:
 
-```
-$  sudo pip install ansible
+```console
+sudo pip install ansible
 ```
 
 ### Installation of Prerequisite software for Ubuntu (Host)
@@ -156,19 +156,19 @@ $  sudo pip install ansible
 * We need to install Vagrant 2.2.3 to configure and kick of provisioning of the new VM
 * We need to install Ansible to provision the new VM
 
-```
-$  sudo apt-get install virtualbox
+```console
+sudo apt-get install virtualbox
 
-$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.deb
-$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS
-$ wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS.sig
-$ gpg --verify vagrant_2.2.3_SHA256SUMS.sig vagrant_2.2.3_SHA256SUMS
-$ shasum -a 256 -c <(cat vagrant_2.2.3_SHA256SUMS | grep 64.deb) -s
-$ sudo dpkg -i vagrant_2.2.3_x86_64.deb
-$ rm vagrant_2.2.3*
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.deb
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS.sig
+gpg --verify vagrant_2.2.3_SHA256SUMS.sig vagrant_2.2.3_SHA256SUMS
+shasum -a 256 -c <(cat vagrant_2.2.3_SHA256SUMS | grep 64.deb) -s
+sudo dpkg -i vagrant_2.2.3_x86_64.deb
+rm vagrant_2.2.3*
 
-$ sudo apt-add-repository ppa:ansible/ansible
-$ sudo apt update && sudo apt install ansible -y
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt update && sudo apt install ansible -y
 
 ```
 
@@ -178,7 +178,7 @@ Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
 Verify your installed versions:
 
-```
+```console
 vagrant -v
 ansible --version
 ```
@@ -194,8 +194,8 @@ Having an exact version of VirtualBox is not critical- as long as you have the p
 
 * Whichever host OS (macOS or Linux) you are using, install the Vagrant plugin with this command:
 
-```
-$ vagrant plugin install vagrant-vbguest
+```console
+vagrant plugin install vagrant-vbguest
 ```
 
 This will install a plugin that will automatically update any VirtualBox VMs with the latest guest additions
@@ -230,7 +230,7 @@ Pick your install mirror
 * choose only one of these
 
 ```
-  installmirror: "https://sgi-irix.s3.amazonaws.com"
+installmirror: "https://sgi-irix.s3.amazonaws.com"
 ```
 
 This is the new hostname for your SGI post-installation
@@ -325,8 +325,8 @@ You can keep both 6.5.22 and 6.5.30 media on the same host for different install
 
 Now that your configuration is complete, you're ready to start up the VM and set up the SGI.
 
-```
-$ vagrant up
+```console
+vagrant up
 ```
 
 # Booting your SGI from Booterizer (Raspberry Pi or Vagrant)
@@ -338,7 +338,7 @@ When the PROM menu appears choose: Enter Command Monitor
 * Set the netaddr of your SGI to match your local network settings, and the specific IP address you picked for it and put into the settings.yml file:
 
 ```
-> setenv netaddr 192.168.0.34
+setenv netaddr 192.168.0.34
 ```
 
 The address above is only a sample. You should pick an unused IP in your local network's subnet.
@@ -393,7 +393,7 @@ Now examine the final output of the `vagrant provision` or `vagrant up` command,
 
 ```
 
-* copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
+* Copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
 * Older systems use fx.ARCS (such as Indigos, Indys, and some O2s with R4k CPUs)
 * O2 and newer systems use fx.64
 
@@ -473,14 +473,14 @@ The installer can be reached through the monitor GUI as follows:
 * This should load the miniroot over the network and boot into the installer.
 * From inst, choose Option 13, Admin menu
   * booterizer generates a 'selections' file that contains all of the media paths for inst to load
-  * ```load booterizer:selections```
+  * `load booterizer:selections`
   * You can press q to skip the readmes for each media item
   * Choose 'feature stream' when asked
   * When inst is done loading media, it will prompt for the next location. Type
-  * ```done```
+  * `done`
 * From inst, Admin menu
   * booterizer provides a 'commands' file that contains all of the commands for inst to run
-  * ```source booterizer:commands```
+  * `source booterizer:commands`
   * Just in case, sourced commands are:
 
     ```
@@ -637,8 +637,8 @@ irix_ansible performs the following tasks, and more:
 irix_ansible should be run immediately after your IRIX host has been installed, and has booted for the first time:
 
 * Connect your IRIX host to your home LAN
-* vagrant ssh
-* sudo -i
+* `vagrant ssh`
+* `sudo -i`
 * Follow the irix_ansible README to create your own ansible vault
   * group_vars/default/vault.yml
 * Place your vault password in /home/vagrant/.vault_pass.txt
@@ -680,13 +680,13 @@ the file didn't download fully. vagrant ssh into the host, move into that direct
 
 * Example
 
-```
-$ rm /vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz
+```console
+rm /vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz
 ```
 
 * then back on you main host run the provision again:
 
-```
+```console
 ~/booterizer (master) $ vagrant provision
 ```
 
