@@ -9,6 +9,7 @@ This is a significantly easier and faster method than using Vagrant.
 Follow the Raspberry Pi instructions below.
 
 ## Overview
+
 booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
 
 ### Supported IRIX Versions
@@ -62,6 +63,7 @@ I suspect that most other hardware and OS versions released in those timeframes 
 * SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
 ## NEW: Raspberry Pi Version
+
 ### Requirements
 
 * Raspberry Pi 3 (This is what I have. Let me know if others work.)
@@ -99,6 +101,7 @@ reboot
 * You can find available partitioners and media by running /irix/display_results.sh
 
 ### Pi Image Build Instructions
+
 Please see the README.md on the 'pi_support' branch.
 
 ## Vagrant Version
@@ -166,6 +169,7 @@ $ sudo apt update && sudo apt install ansible -y
 Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
 ### Verify Versions
+
 Verify your installed versions:
 ```
 vagrant -v
@@ -190,9 +194,11 @@ This will install a plugin that will automatically update any VirtualBox VMs wit
 Now we can move on and start to configure the Vagrant file and start up the VM...
 
 ### Vagrant Booterizer Setup
+
 By default, this vagrant VM will fetch proper IRIX installation packages as per the settings in `settings.yml`.
 
 #### Settings
+
 These settings are found in `settings.yml`. Edit them to suit your environment.
 
 * Edit these lines
@@ -277,6 +283,7 @@ bridgenic: 'en0'
 ```
 
 #### Networking overview
+
 The booterizer VM's fake network interfaces map to your physical host as follows:
 
 | Physical Host | booterizer |
@@ -289,9 +296,11 @@ NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on you
 * Note: This is usually not an issue, but it _may_ be, YMMV
 
 ##### One possible setup
+
 ![Image of a possible network setup for Booterizer](docs/booterizer_network_v1a.png?raw=true "Booterizer Network Setup")
 
 #### IRIX media
+
 This VM will now be able to sync installation media from S3 using HTTP.
 
 Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory.
@@ -328,6 +337,7 @@ Assuming you have connected up your SGI's serial port 1 to your workstation, and
 To setup the console to serial output for the installation you must set this console variable:
 
 #### Set for Serial Output
+
 ```
 setenv console d
 ```
@@ -337,11 +347,13 @@ This will ensure a smooth installation session.
 When you are done you should set the console back to graphical virtual console:
 
 #### Set for Graphics Output
+
 ```
 setenv console g
 ```
 
 #### Setting System Timezone
+
 While you are in the PROM you should set the timezone to something appropriate for where you live.
 ```
 setenv Timezone EST5EDT
@@ -366,6 +378,7 @@ Now examine the final output of the `vagrant provision` or `vagrant up` command,
 * O2 and newer systems use fx.64
 
 #### Starting the fx Partitioner
+
 ```
 > bootp():/6.5.30/Overlay/disc1/stand/fx.64
 
@@ -466,6 +479,7 @@ The installer can be reached through the monitor GUI as follows:
     ```
 
 #### Example run
+
 ```
 System Maintenance Menu
 
@@ -515,11 +529,13 @@ All Rights Reserved.
 And from here inst runs and installs/creates a miniroot, then mounts the miniroot and then runs inst. Follow the directions above.
 
 ### IRIX installation is finished
+
 At this point your system should come back up (ensure you go back into PROM and `setenv console g` if you set it to d for a serial installation!) and you can login as Root, no password.
 
 Now there are many many more configurations you need to do before starting to use the system. Running EZSetup does a tiny fraction of these. The irix_ansible project (below docs) does a whole lot more!
 
 #### Wiping a disk for clean IRIX install
+
 Often you have have a drive with IRIX already installed, and you want to do a clean install. You need to wipe the disk with mkfs, running the partitioner on the drive is not enough. The reason is that if your partitions are exactly the same as they were on the old installation, when you run inst it will still pickup settings in /etc from the old install and assume you are doing an upgrade. To wipe the disk is easy- but you have to run inst, wipe, then reboot so that inst won't pick up the old installation and create a fresh miniroot and use default values.
 
 Here is a sample run-thru:
@@ -580,6 +596,7 @@ Reading product descriptions .. 100% Done.
 And from here you just exit and reboot.
 
 ## Provisioning your IRIX host with irix_ansible
+
 https://github.com/unxmaal/irix_ansible/
 
 booterizer automatically installs irix_ansible, which allows for easy configuration of your IRIX system.
@@ -603,11 +620,13 @@ irix_ansible should be run immediately after your IRIX host has been installed, 
 * Continue with the irix_ansible README
 
 ### PRO TIP
+
 Take a look in the expect/ directory for my own personal install scripts, written in expect. You can use them as a guide for what to select during an installation -- or if you're really brave/foolish, follow the enclosed README to run those scripts over serial console.
 
 ## Troubleshooting
 
 ### I'm having trouble with the Vagrant Booterizer
+
 Generally, if you have trouble with the Vagrant-based booterizer, use the Pi version. It's easier, faster, and nearly everything's already done for you.
 
 ### Problems running inst from Serial port
