@@ -79,7 +79,7 @@ I suspect that most other hardware and OS versions released in those timeframes 
 * Boot your Pi
 * Log in with default, pi/raspberry
 
-```
+```console
 sudo -i
 cd /root/projects/github/booterizer
 ```
@@ -91,7 +91,7 @@ cd /root/projects/github/booterizer
   * clientip = your SGI's IP. This MUST be 192.168.1.x for now. Change it later.
   * clientether = your SGI's MAC address
 
-```
+```console
 cd ansible/
 ansible-playbook -i inventory.yml pooterizer.yml
 reboot
@@ -136,7 +136,7 @@ But leave the installmirror pointed to the same location!
 
 * If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
 
-```
+```console
 brew cask install vagrant
 brew cask install virtualbox
 brew install ansible
@@ -144,7 +144,7 @@ brew install ansible
 
 * If you already have Python installed outside of Brew, instead of installing Ansible through Brew, install it through `pip`:
 
-```
+```console
 sudo pip install ansible
 ```
 
@@ -155,7 +155,7 @@ sudo pip install ansible
 * We need to install Vagrant 2.2.3 to configure and kick of provisioning of the new VM
 * We need to install Ansible to provision the new VM
 
-```
+```console
 sudo apt-get install virtualbox
 
 wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.deb
@@ -177,7 +177,7 @@ Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
 Verify your installed versions:
 
-```
+```console
 vagrant -v
 ansible --version
 ```
@@ -193,7 +193,7 @@ Having an exact version of VirtualBox is not critical- as long as you have the p
 
 * Whichever host OS (macOS or Linux) you are using, install the Vagrant plugin with this command:
 
-```
+```console
 vagrant plugin install vagrant-vbguest
 ```
 
@@ -325,7 +325,7 @@ You can keep both 6.5.22 and 6.5.30 media on the same host for different install
 
 Now that your configuration is complete, you're ready to start up the VM and set up the SGI.
 
-```
+```console
 vagrant up
 ```
 
@@ -680,13 +680,13 @@ the file didn't download fully. vagrant ssh into the host, move into that direct
 
 * Example
 
-```
+```console
 rm /vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz
 ```
 
 * then back on you main host run the provision again:
 
-```
+```console
 ~/booterizer (master) $ vagrant provision
 ```
 
