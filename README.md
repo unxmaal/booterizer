@@ -34,20 +34,20 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 
 | SGI System | CPU | IRIX System | Fx |  Verified by |
 |------------|-----|-------------|----|--------------|
+| Challenge L | R10k  | 6.5.22 | fx.ARCS | dillera |
 | Fuel       | all | 6.5.30 | fx.64 | unxmaal |
+| Indigo2    | R10k | 6.5.22 | fx.ARCS | dillera |
+| Indy       | R4600PC | 6.5.22 | fx.ARCS | PeteT |
+| O2         | R10k  | 6.5.30 | fx.64   | dillera |
+| O2         | R4k   | 6.5.30 | fx.ARCS | dillera |
 | Octane1    | all | 6.5.30 | fx.64 | diller |
 | Octane2    | all   | 6.5.30 | fx.64 | unxmaal |
-| Challenge L | R10k  | 6.5.22 | fx.ARCS | dillera |
-| O2         | R4k   | 6.5.30 | fx.ARCS | dillera |
-| O2         | R10k  | 6.5.30 | fx.64   | dillera |
 | Origin 2100 | R12k | 6.5.30 | fx.64  | dillera |
-| Indy       | R4600PC | 6.5.22 | fx.ARCS | PeteT |
-| Indigo2    | R10k | 6.5.22 | fx.ARCS | dillera |
 
 * Target Hardware
-  * SGI O2
   * SGI Indigo
   * SGI Indigo2
+  * SGI O2
   * SGI Octane
 
 * Operating Systems
