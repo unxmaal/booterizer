@@ -438,9 +438,9 @@ The installer can be reached through the monitor GUI as follows:
   * When inst is done loading media, it will prompt for the next location. Type
   * ```done```
 * From inst, Admin menu
-  * booterizer generates a 'commands' file that contains all of the commands for inst to run
+  * booterizer provides a 'commands' file that contains all of the commands for inst to run
   * ```source booterizer:commands```
-  * NOTE: I've not yet confirmed these work. They appear to, but just in case, they are:
+  * Just in case, sourced commands are:
     ```
     return
     keep *
