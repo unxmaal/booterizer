@@ -21,7 +21,7 @@ ftpurls:
     cee:                mipspro_cee.tar.gz
     cpp:                mipspro_cpp.tar.gz
     ap:                 mipsproap.tar.gz
-    prodev:             prodev.tar.gz  
+    prodev:             prodev.tar.gz
   extras:
     baseurl:            "{{ installmirror }}/extras/"
     perfcopilot:        perfcopilot.tar.gz
