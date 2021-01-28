@@ -50,14 +50,14 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 
 
 * Target Hardware
-	* SGI O2
-	* SGI Indigo
-	* SGI Indigo2
-	* SGI Octane
+  * SGI O2
+  * SGI Indigo
+  * SGI Indigo2
+  * SGI Octane
 
 * Operating Systems
-	* IRIX 6.5.22
-	* IRIX 6.5.30
+  * IRIX 6.5.22
+  * IRIX 6.5.30
 
 I suspect that most other hardware and OS versions released in those timeframes will also work (e.g. O2, server variants, etc.) SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system.
 
@@ -120,7 +120,7 @@ But leave the installmirror pointed to the same location!
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
-	* vagrant plugin install vagrant-guest_ansible
+  * vagrant plugin install vagrant-guest_ansible
 * Ansible/Python
 * VM host with TWO network interfaces
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
