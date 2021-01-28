@@ -4,7 +4,7 @@
 cd /irix
 
 echo "__________________  Partitioners found __________________"
-find . -name "fx.*" -type f | sed 's#./#bootp():/#' | sort 
+find . -name "fx.*" -type f | sed 's#./#bootp():/#' | sort
 
 echo "__________________ Paths for Inst __________________"
 sed 's/from //g' selections

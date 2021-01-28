@@ -2,7 +2,7 @@
 
 if [[ -e selections ]] ; then
     rm -f selections
-fi 
+fi
 
 ## Display some useful info about the IRIX files
 cd /irix

@@ -31,12 +31,12 @@ clientip =      settings['booterizer']['clientip']
 clientether =   settings['booterizer']['clientether']
 
 # This is the name of the interface on your physical machine that's connected to your SGI box
-#   In my case, it's the ethernet adapter, which is en0 
+#   In my case, it's the ethernet adapter, which is en0
 bridgenic = settings['booterizer']['bridgenic']
 
 # Your user account for your SGI box
 myuser =        settings['booterizer']['myuser']
-# Your desired shell 
+# Your desired shell
   # if this doesn't exist, it defaults to /bin/csh
 myshell =       settings['booterizer']['myshell']
 
@@ -81,17 +81,17 @@ extras_sgifonts       = ftpurls['ftpurls']['extras']['sgifonts']
 
 
 
-current_dir = File.dirname(File.expand_path(__FILE__))     
+current_dir = File.dirname(File.expand_path(__FILE__))
 disk_prefix = 'installdisk'
-disk_ext ='.vdi'      
-installdisk = "%s/%s%s" % [current_dir,disk_prefix,disk_ext] 
+disk_ext ='.vdi'
+installdisk = "%s/%s%s" % [current_dir,disk_prefix,disk_ext]
 
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/contrib-jessie64"
   config.vm.box_version = "8.11.0"
   #config.vm.network "public_network"
   config.vm.post_up_message = [ "booterizer configuration stage" ]
-  
+
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
 #  # Create XFS-formatted disk for extracted CD images
@@ -108,7 +108,7 @@ Vagrant.configure("2") do |config|
   if Vagrant::Util::Platform.windows?
    config.vm.provision :shell do |shell|
       shell.inline = "sudo apt-get -y install wget curl"
-    end 
+    end
     config.vm.provision :guest_ansible do |ansible|
       ansible.verbose = "v"
     ansible.playbook = "ansible/irix_ansible_setup.yml"

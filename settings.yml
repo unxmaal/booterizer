@@ -4,7 +4,7 @@ booterizer:
   installmethod:  "ftp"
   clientname:     "origin"
   clientdomain:   "dillera.org"
-  network:        "192.168.251.0" 
+  network:        "192.168.251.0"
   netmask:        "255.255.255.0"
   hostip:         "192.168.251.99"
   clientip:       "192.168.251.82"

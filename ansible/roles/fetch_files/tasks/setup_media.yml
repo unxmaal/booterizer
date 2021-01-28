@@ -32,22 +32,22 @@
 - name: Fetch overlay disc 1
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc1 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/{{ overlay_disc1 }}"  
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/{{ overlay_disc1 }}"
 
 - name: Fetch overlay disc 2
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc2 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/{{ overlay_disc2 }}"  
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/{{ overlay_disc2 }}"
 
 - name: Fetch overlay disc 3
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc3 }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"  
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"
 
 - name: Fetch overlay apps
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_apps }}"
-    dest: "/vagrant/irix/{{ irixversion }}/Overlay/apps/{{ overlay_apps }}"  
+    dest: "/vagrant/irix/{{ irixversion }}/Overlay/apps/{{ overlay_apps }}"
 
 - name: Fetch overlay complementary apps
   get_url:
@@ -62,17 +62,17 @@
 - name: Fetch foundation disc 1
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
-    dest: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"  
+    dest: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"
 
 - name: Fetch foundation disc 2
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc2 }}"
-    dest: "/vagrant/irix/Foundation/disc2/{{ foundation_disc2 }}"  
+    dest: "/vagrant/irix/Foundation/disc2/{{ foundation_disc2 }}"
 
 - name: Fetch foundation NFS
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_nfs }}"
-    dest: "/vagrant/irix/Foundation/nfs/{{ foundation_nfs }}"  
+    dest: "/vagrant/irix/Foundation/nfs/{{ foundation_nfs }}"
 
 - name: Fetch development libraries
   get_url:
