@@ -25,7 +25,7 @@ booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to
             * [Networking overview](#networking-overview)
                * [One possible setup](#one-possible-setup)
             * [IRIX media](#irix-media)
-      * [Booting your SGI from Booterizer (Raspberry Pi or Vagrant)](#booting-your-sgi-from-booterizer-raspberry-pi-or-vagrant)
+      * [Booting your SGI from Booterizer](#booting-your-sgi-from-booterizer)
          * [Set IP address in PROM](#set-ip-address-in-prom)
          * [Setting Console Output in PROM](#setting-console-output-in-prom)
             * [Set for Serial Output](#set-for-serial-output)
@@ -59,7 +59,7 @@ Follow the Raspberry Pi instructions below.
 ## Supported IRIX Versions
 
 booterizer was designed for IRIX 6.5.30, the last version of IRIX for SGI. Use this as your first choice.
-booterizer also fully supports IRIX 6.5.22 for older SGI systems that can run 6.5. Use this for Older Indys and Challenge L servers.
+booterizer also fully supports IRIX 6.5.22 for older SGI systems that can run 6.5. Use this for Indys and Challenge L servers.
 booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x (See Callahan's Booterizer 5.3 https://github.com/callahan-44/booterizer )
 
 booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. I recommend only attaching the network interface to an isolated network for this purpose and then `vagrant halt` or `vagrant destroy` the VM when you are done installing.
@@ -106,7 +106,7 @@ I suspect that most other hardware and OS versions released in those timeframes 
 * Silicon Graphics User Group-  for support and dev community: https://sgi.sh/
 * SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
-# NEW: Raspberry Pi Version
+# Raspberry Pi Version
 
 ## Requirements
 
@@ -167,9 +167,9 @@ But leave the installmirror pointed to the same location!
 ## Requirements
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-* [Vagrant](https://www.vagrantup.com/downloads.html)
-  * vagrant plugin install vagrant-guest_ansible
-* Ansible/Python
+* [Vagrant](https://www.vagrantup.com/downloads.html) 2.2.3 or higher
+  * `vagrant plugin install vagrant-guest_ansible`
+* Ansible/Python 2.7.6 or higher
 * VM host with TWO network interfaces
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
@@ -177,7 +177,6 @@ But leave the installmirror pointed to the same location!
 
 * macOS has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
 * Install Brew following directions at their website here: https://brew.sh/
-
 * If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
 
 ```console
@@ -194,14 +193,18 @@ sudo pip install ansible
 
 ### Installation of Prerequisite software for Ubuntu (Host)
 
-* Installing recent vagrant must be done manually on older versions of Ubuntu, the procedure below will validate the package using its checksum. Just using apt-get will install an older version we don't want to use.
+* Installing recent Vagrant must be done manually on Ubuntu Bionic/18.04 and older. Just using apt-get will install an older version we don't want to use. The procedure below will validate the package using its checksum.
 * We need to install VirtualBox (to run the virtual Linux server for the SGI installation media)
-* We need to install Vagrant 2.2.3 to configure and kick of provisioning of the new VM
+* We need to install Vagrant to configure and kick of provisioning of the new VM
 * We need to install Ansible to provision the new VM
 
 ```console
 sudo apt-get install virtualbox
 
+# Vagrant - Ubuntu 20.04 (Focal) and newer
+sudo apt-get install vagrant
+
+# Vagrant - Ubuntu 18.04 (Bionic) and older
 wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.deb
 wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS
 wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS.sig
@@ -212,10 +215,7 @@ rm vagrant_2.2.3*
 
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt update && sudo apt install ansible -y
-
 ```
-
-Now you have vagrant 2.2.3 installed on an older Ubuntu system.
 
 ## Verify Versions
 
@@ -247,13 +247,11 @@ Now we can move on and start to configure the Vagrant file and start up the VM..
 
 ## Vagrant Booterizer Setup
 
-By default, this vagrant VM will fetch proper IRIX installation packages as per the settings in `settings.yml`.
+By default, this Vagrant VM will fetch proper IRIX installation packages as per the settings in `settings.yml`.
 
 ### Settings
 
-These settings are found in `settings.yml`. Edit them to suit your environment.
-
-* Edit these lines
+These settings are found in `settings.yml`. Edit them to suit your environment:
 
 Set this to the version of IRIX you are installing.
 
@@ -279,42 +277,42 @@ installmirror: "https://sgi-irix.s3.amazonaws.com"
 This is the new hostname for your SGI post-installation
 
 ```
-clientname: 'sgi'
+clientname: "sgi"
 ```
 
 Whatever domain you use at home, or make one up for the install
 
 ```
-clientdomain: 'devonshire.local'
+clientdomain: "devonshire.local"
 ```
 
 Internal network your SGI will be on. Note this is the actual "network", in the technical subnetting sense of the term.
 
 ```
-network: '192.168.0.0'
+network: "192.168.0.0"
 ```
 
 Internal network's netmask
 
 ```
-netmask: '255.255.255.0'
+netmask: "255.255.255.0"
 ```
 
 booterizer's host IP. This is the VM's IP on its internal point to point link to the target SGI client machine.
 
-* this will be a unique, unused IP address in the subnet that your home/office router has created
+* this must be a unique, unused IP address in the subnet that your home/office router has created
 
 ```
-hostip: '192.168.0.40'
+hostip: "192.168.0.40"
 ```
 
 The SGI client box's IP address
 
-* this will be a unique, unused IP address in the subnet that your home/office router has created
+* this must be a unique, unused IP address in the subnet that your home/office router has created
 * it cannot be the same as the Host IP above.
 
 ```
-clientip: '192.168.0.41'
+clientip: "192.168.0.41"
 ```
 
 The SGI box's physical hardware address, from printenv at PROM
@@ -329,7 +327,7 @@ will return the SGI MAC address.
 * if you cannot find the MAC address (some PROM do not show it - setup here and then watch the daemon.log file in the booterizer VM as you run the DHCP command to start the fx partitioner- you will see the real SGI MAC try and connect to your booterizer host. Copy it and re-configure)
 
 ```
-clientether: '08:00:69:0e:af:65'
+clientether: "08:00:69:0e:af:65"
 ```
 
 This is the name of the interface on your physical machine that's connected to your SGI box. In my case, it's the Ethernet adapter, which is en0.
@@ -339,7 +337,7 @@ This is the name of the interface on your physical machine that's connected to y
 * If you are unsure of what your distro uses or do not know the interface name, check the interfaces using `ip link`.
 
 ```
-bridgenic: 'en0'
+bridgenic: "en0"
 ```
 
 ### Networking overview
@@ -372,16 +370,16 @@ Now that your configuration is complete, you're ready to start up the VM and set
 vagrant up
 ```
 
-# Booting your SGI from Booterizer (Raspberry Pi or Vagrant)
+# Booting your SGI from Booterizer
 
 ## Set IP address in PROM
 
 When the PROM menu appears choose: Enter Command Monitor
 
-* Set the netaddr of your SGI to match your local network settings, and the specific IP address you picked for it and put into the settings.yml file:
+* Set the netaddr of your SGI to match your local network settings, and the specific IP address you picked for it and put into the settings.yml file as `clientip`:
 
 ```
-setenv netaddr 192.168.0.34
+setenv netaddr 192.168.0.41
 ```
 
 The address above is only a sample. You should pick an unused IP in your local network's subnet.
@@ -433,12 +431,12 @@ Now examine the final output of the `vagrant provision` or `vagrant up` command,
    __________________  Partitioners found __________________
     bootp():/6.5.30/Overlay/disc1/stand/fx.64
     bootp():/6.5.30/Overlay/disc1/stand/fx.ARCS
-
 ```
 
 * Copy and paste that entire line starting with bootp into the PROM (doing this via serial is easier to cut and paste.)
 * Older systems use fx.ARCS (such as Indigos, Indys, and some O2s with R4k CPUs)
 * O2 and newer systems use fx.64
+* NOTE: I really don't understand why, but some PROMs and architectures (e.g. Indy) insist you remove the leading '/' from the path. If you get errors or inst otherwise fails, try `bootp():6.5.30/Overlay/disc1/dist`.
 
 ### Starting the fx Partitioner
 
@@ -560,7 +558,6 @@ Re-initializing installation history database
 Reading product descriptions ..   0%
 WARNING: Assuming no hist file
 Reading product descriptions .. 100% Done.
-
 ```
 
 And from here you just exit and reboot.
@@ -575,7 +572,7 @@ The installer can be reached through the monitor GUI as follows:
 * If it prompts you for an IP address, enter the same address you entered into the Vagrantfile config for `clientip`.
 * Use `booterizer` as the install server hostname.
 * For the installation path, this depends on your directory structure. If you use the structure example from above, you would use the path `/6.5.30/Overlay/disc1/dist`.
-  * NOTE: I really don't understand why, but some PROMs and architectures insist you remove the leading '/' from the path. If you get errors or inst otherwise fails, try `6.5.30/Overlay/disc1/dist`.
+  * NOTE: If you get errors or inst otherwise fails, remove the leading '/' from the path: `6.5.30/Overlay/disc1/dist`.
 * This should load the miniroot over the network and boot into the installer.
 * From inst, choose Option 13, Admin menu
   * booterizer generates a 'selections' file that contains all of the media paths for inst to load
@@ -659,7 +656,7 @@ And from here inst runs and installs/creates a miniroot, then mounts the miniroo
 
 ## IRIX installation is finished
 
-At this point your system should come back up (ensure you go back into PROM and `setenv console g` if you set it to d for a serial installation!) and you can login as Root, no password.
+At this point your system should come back up (ensure you go back into PROM and `setenv console g` if you set it to d for a serial installation!) and you can login as `root`, no password.
 
 Now there are many many more configurations you need to do before starting to use the system. Running EZSetup does a tiny fraction of these. The irix_ansible project (below docs) does a whole lot more!
 
@@ -719,7 +716,7 @@ fatal: [default]: FAILED! => changed=false
   msg: Failed to find handler for "/vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz". Make sure the required command to extract the file is installed. Command "/bin/tar" could not handle archive. Command "unzip" not found.
 ```
 
-the file didn't download fully. vagrant ssh into the host, move into that directory and delete the tar file. Then use the vagrant provision command to pull that tarball again and re-extract.
+The file didn't download fully. `vagrant ssh` into the host, move into that directory and delete the tar file. Then use the `vagrant provision` command to pull that tarball again and re-extract.
 
 * Example
 
@@ -727,7 +724,7 @@ the file didn't download fully. vagrant ssh into the host, move into that direct
 rm /vagrant/irix/6.5.30/Overlay/disc1/disc1.tar.gz
 ```
 
-* then back on you main host run the provision again:
+* Then back on you main host run the provision again:
 
 ```console
 ~/booterizer (master) $ vagrant provision
