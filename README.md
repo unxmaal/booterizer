@@ -1,5 +1,50 @@
-booterizer
-========
+# booterizer
+
+booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
+
+# Table of Contents
+
+   * [booterizer](#booterizer)
+      * [Table of Contents](#table-of-contents)
+      * [TL;DR: Use a Raspberry Pi](#tldr-use-a-raspberry-pi)
+         * [Supported IRIX Versions](#supported-irix-versions)
+         * [Target SGI Systems](#target-sgi-systems)
+         * [Where to get help](#where-to-get-help)
+      * [Raspberry Pi Version](#raspberry-pi-version)
+         * [Requirements](#requirements)
+         * [Pi Image Usage Instructions](#pi-image-usage-instructions)
+         * [Pi Image Build Instructions](#pi-image-build-instructions)
+      * [Vagrant Version](#vagrant-version)
+         * [Requirements](#requirements-1)
+            * [Installation of Prerequisite software for macOS (Host)](#installation-of-prerequisite-software-for-macos-host)
+            * [Installation of Prerequisite software for Ubuntu (Host)](#installation-of-prerequisite-software-for-ubuntu-host)
+         * [Verify Versions](#verify-versions)
+         * [Vagrant Plugins](#vagrant-plugins)
+         * [Vagrant Booterizer Setup](#vagrant-booterizer-setup)
+            * [Settings](#settings)
+            * [Networking overview](#networking-overview)
+               * [One possible setup](#one-possible-setup)
+            * [IRIX media](#irix-media)
+      * [Booting your SGI from Booterizer (Raspberry Pi or Vagrant)](#booting-your-sgi-from-booterizer-raspberry-pi-or-vagrant)
+         * [Set IP address in PROM](#set-ip-address-in-prom)
+         * [Setting Console Output in PROM](#setting-console-output-in-prom)
+            * [Set for Serial Output](#set-for-serial-output)
+            * [Set for Graphics Output](#set-for-graphics-output)
+            * [Setting System Timezone](#setting-system-timezone)
+         * [FX to Partition Disks](#fx-to-partition-disks)
+            * [Starting the fx Partitioner](#starting-the-fx-partitioner)
+            * [Using the fx Partitioner](#using-the-fx-partitioner)
+            * [Wiping a disk for clean IRIX install](#wiping-a-disk-for-clean-irix-install)
+         * [Running inst (IRIX installer)](#running-inst-irix-installer)
+            * [Example run](#example-run)
+         * [IRIX installation is finished](#irix-installation-is-finished)
+      * [Provisioning your IRIX host with irix_ansible](#provisioning-your-irix-host-with-irix_ansible)
+         * [PRO TIP](#pro-tip)
+      * [Troubleshooting](#troubleshooting)
+         * [I'm having trouble with the Vagrant Booterizer](#im-having-trouble-with-the-vagrant-booterizer)
+         * [Problems running inst from Serial port](#problems-running-inst-from-serial-port)
+         * [Ansible fails to pull images](#ansible-fails-to-pull-images)
+      * [License](#license)
 
 # TL;DR: Use a Raspberry Pi
 
@@ -10,8 +55,6 @@ This is a significantly easier and faster method than using Vagrant.
 Follow the Raspberry Pi instructions below.
 
 # Overview
-
-booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
 
 ## Supported IRIX Versions
 
