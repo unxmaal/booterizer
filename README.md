@@ -87,17 +87,7 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 | Indy       | R4600PC | 6.5.22 | fx.ARCS | PeteT |
 | Indigo2    | R10k | 6.5.22 | fx.ARCS | dillera |
 
-* Target Hardware
-  * SGI O2
-  * SGI Indigo
-  * SGI Indigo2
-  * SGI Octane
-
-* Operating Systems
-  * IRIX 6.5.22
-  * IRIX 6.5.30
-
-I suspect that most other hardware and OS versions released in those timeframes will also work (e.g. O2, server variants, etc.) SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system.
+I suspect that most other hardware and OS versions released in those timeframes will also work SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system.
 
 ## Where to get help
 
