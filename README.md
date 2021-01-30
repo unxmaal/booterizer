@@ -48,10 +48,9 @@ booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to
 # TL;DR: Use a Raspberry Pi
 
 The new Raspberry Pi version of Booterizer consists of pre-built images that you can write to a SD card.
-
 This is a significantly easier and faster method than using Vagrant.
 
-Follow the Raspberry Pi instructions below.
+Follow the [Raspberry Pi instructions](#raspberry-pi-version).
 
 # Overview
 
@@ -59,7 +58,7 @@ Follow the Raspberry Pi instructions below.
 
 booterizer was designed for IRIX 6.5.30, the last version of IRIX for SGI. Use this as your first choice.
 booterizer also fully supports IRIX 6.5.22 for older SGI systems that can run 6.5. Use this for Indys and Challenge L servers.
-booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x (See Callahan's Booterizer 5.3 https://github.com/callahan-44/booterizer )
+booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x (See [Callahan's Booterizer 5.3](https://github.com/callahan-44/booterizer))
 
 booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. I recommend only attaching the network interface to an isolated network for this purpose and then `vagrant halt` or `vagrant destroy` the VM when you are done installing.
 
@@ -91,7 +90,7 @@ I suspect that most other hardware and OS versions released in those timeframes 
 
 ## Where to get help
 
-* Create a GitHub Issue vs this project
+* Create a new [GitHub issue](https://github.com/unxmaal/booterizer/issues)
 * Silicon Graphics User Group-  for support and dev community: https://sgi.sh/
 * SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
@@ -130,12 +129,12 @@ ansible-playbook -i inventory.yml pooterizer.yml
 reboot
 ```
 
-* Skip down to the "Booting" section below
+* Skip down to the [Booting your SGI from Booterizer](#booting-your-sgi-from-booterizer) section
 * You can find available partitioners and media by running /irix/display_results.sh
 
 ## Pi Image Build Instructions
 
-Please see the README.md on the 'pi_support' branch.
+Please see the [README.md on the 'pi_support' branch](https://github.com/unxmaal/booterizer/blob/pi_support/README.md#pi-image-build-instructions).
 
 # Vagrant Version
 
@@ -691,7 +690,7 @@ Please check following links for more information about correct null-modem seria
 
 ## I'm having trouble with the Vagrant Booterizer
 
-Generally, if you have trouble with the Vagrant-based booterizer, use the Pi version. It's easier, faster, and nearly everything's already done for you.
+Generally, if you have trouble with the Vagrant-based booterizer, use the [Raspberry Pi Version](#raspberry-pi-version). It's easier, faster, and nearly everything's already done for you.
 
 ## Problems running inst from Serial port
 
