@@ -621,15 +621,13 @@ And from here inst runs and installs/creates a miniroot, then mounts the miniroo
 
 At this point your system should come back up (ensure you go back into PROM and `setenv console g` if you set it to d for a serial installation!) and you can login as `root`, no password.
 
-Now there are many many more configurations you need to do before starting to use the system. Running EZSetup does a tiny fraction of these. The irix_ansible project (below docs) does a whole lot more!
+Now there are many many more configurations you need to do before starting to use the system. Running EZSetup does a tiny fraction of these. The irix_ansible project does a whole lot more!
 
 # Provisioning your IRIX host with irix_ansible
 
-https://github.com/unxmaal/irix_ansible/
+booterizer automatically installs [irix_ansible](https://github.com/unxmaal/irix_ansible/), which allows for easy configuration of your IRIX system.
 
-booterizer automatically installs irix_ansible, which allows for easy configuration of your IRIX system.
-
-irix_ansible performs the following tasks, and more:
+It performs the following tasks, and more:
 
 * install wget, python, and openssh
 * start sshd
