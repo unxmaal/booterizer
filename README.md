@@ -459,6 +459,69 @@ fx/repartition> ..
 fx> exi
 ```
 
+### Wiping a disk for clean IRIX install
+
+Often you have have a drive with IRIX already installed, and you want to do a clean install. You need to wipe the disk with mkfs, running the partitioner on the drive is not enough. The reason is that if your partitions are exactly the same as they were on the old installation, when you run inst it will still pickup settings in /etc from the old install and assume you are doing an upgrade. To wipe the disk is easy- but you have to run inst, wipe, then reboot so that inst won't pick up the old installation and create a fresh miniroot and use default values.
+
+Here is a sample run-thru:
+
+```
+Admin> 11
+
+                   ** Clean Disks Procedure **
+
+      If you agree to it, this procedure will clean your disks,
+      removing all data from the root and (if present) the user
+      file systems.
+
+      Boot device partitions zero (0) and, if present, six (6)
+      will be erased (using mkfs).  This will destroy all data on
+      them.  These partitions will then be remounted under /root
+      and (if present) /root/usr.
+
+      If you have data on these file systems you want to save,
+      answer "no" below, and backup the data before cleaning
+      your disks.
+
+      Any other file systems or logical volumes will be unmounted
+      and forgotten about until you choose to reconfigure and
+      remount them.
+
+
+        Are you sure you want to clean your disks ?
+                   { (y)es, (n)o, (sh)ell, (h)elp }: y
+
+WARNING: There appears to be a valid file system on /dev/dsk/realroot already.
+Making a new file system will destroy all existing data on it.
+
+Make new file system on /dev/dsk/realroot? yes
+
+Doing: mkfs -b size=4096 /dev/dsk/realroot
+meta-data=/dev/dsk/realroot      isize=256    agcount=70, agsize=1048576 blks
+         =                       sectsz=512   attr=0, parent=0
+data     =                       bsize=4096   blocks=73208907, imaxpct=25
+         =                       sunit=0      swidth=0 blks, unwritten=1
+         =                       mmr=0
+naming   =version 2              bsize=4096   mixed-case=Y
+log      =internal log           bsize=4096   blocks=8936, version=1
+         =                       sectsz=512    sunit=0 blks, lazy-count=0
+realtime =none                   extsz=65536  blocks=0, rtextents=0
+
+Mounting file systems:
+
+    /dev/miniroot            on  /
+    /dev/dsk/realroot        on  /root
+
+
+Re-initializing installation history database
+Reading product descriptions ..   0%
+WARNING: Assuming no hist file
+Reading product descriptions .. 100% Done.
+
+```
+
+And from here you just exit and reboot.
+
 ### Running inst (IRIX installer)
 
 NOTE: After `booterizer` initializes, it displays a list of all `dist` subdirectories for your convenience. Use this list to preserve your sanity while running inst.
@@ -556,69 +619,6 @@ And from here inst runs and installs/creates a miniroot, then mounts the miniroo
 At this point your system should come back up (ensure you go back into PROM and `setenv console g` if you set it to d for a serial installation!) and you can login as Root, no password.
 
 Now there are many many more configurations you need to do before starting to use the system. Running EZSetup does a tiny fraction of these. The irix_ansible project (below docs) does a whole lot more!
-
-### Wiping a disk for clean IRIX install
-
-Often you have have a drive with IRIX already installed, and you want to do a clean install. You need to wipe the disk with mkfs, running the partitioner on the drive is not enough. The reason is that if your partitions are exactly the same as they were on the old installation, when you run inst it will still pickup settings in /etc from the old install and assume you are doing an upgrade. To wipe the disk is easy- but you have to run inst, wipe, then reboot so that inst won't pick up the old installation and create a fresh miniroot and use default values.
-
-Here is a sample run-thru:
-
-```
-Admin> 11
-
-                   ** Clean Disks Procedure **
-
-      If you agree to it, this procedure will clean your disks,
-      removing all data from the root and (if present) the user
-      file systems.
-
-      Boot device partitions zero (0) and, if present, six (6)
-      will be erased (using mkfs).  This will destroy all data on
-      them.  These partitions will then be remounted under /root
-      and (if present) /root/usr.
-
-      If you have data on these file systems you want to save,
-      answer "no" below, and backup the data before cleaning
-      your disks.
-
-      Any other file systems or logical volumes will be unmounted
-      and forgotten about until you choose to reconfigure and
-      remount them.
-
-
-        Are you sure you want to clean your disks ?
-                   { (y)es, (n)o, (sh)ell, (h)elp }: y
-
-WARNING: There appears to be a valid file system on /dev/dsk/realroot already.
-Making a new file system will destroy all existing data on it.
-
-Make new file system on /dev/dsk/realroot? yes
-
-Doing: mkfs -b size=4096 /dev/dsk/realroot
-meta-data=/dev/dsk/realroot      isize=256    agcount=70, agsize=1048576 blks
-         =                       sectsz=512   attr=0, parent=0
-data     =                       bsize=4096   blocks=73208907, imaxpct=25
-         =                       sunit=0      swidth=0 blks, unwritten=1
-         =                       mmr=0
-naming   =version 2              bsize=4096   mixed-case=Y
-log      =internal log           bsize=4096   blocks=8936, version=1
-         =                       sectsz=512    sunit=0 blks, lazy-count=0
-realtime =none                   extsz=65536  blocks=0, rtextents=0
-
-Mounting file systems:
-
-    /dev/miniroot            on  /
-    /dev/dsk/realroot        on  /root
-
-
-Re-initializing installation history database
-Reading product descriptions ..   0%
-WARNING: Assuming no hist file
-Reading product descriptions .. 100% Done.
-
-```
-
-And from here you just exit and reboot.
 
 # Provisioning your IRIX host with irix_ansible
 
