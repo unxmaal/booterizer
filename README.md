@@ -7,6 +7,7 @@ booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to
    * [booterizer](#booterizer)
       * [Table of Contents](#table-of-contents)
       * [TL;DR: Use a Raspberry Pi](#tldr-use-a-raspberry-pi)
+      * [Overview](#overview)
          * [Supported IRIX Versions](#supported-irix-versions)
          * [Target SGI Systems](#target-sgi-systems)
          * [Where to get help](#where-to-get-help)
@@ -27,9 +28,6 @@ booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to
             * [IRIX media](#irix-media)
       * [Booting your SGI from Booterizer](#booting-your-sgi-from-booterizer)
          * [Set IP address in PROM](#set-ip-address-in-prom)
-         * [Setting Console Output in PROM](#setting-console-output-in-prom)
-            * [Set for Serial Output](#set-for-serial-output)
-            * [Set for Graphics Output](#set-for-graphics-output)
             * [Setting System Timezone](#setting-system-timezone)
          * [FX to Partition Disks](#fx-to-partition-disks)
             * [Starting the fx Partitioner](#starting-the-fx-partitioner)
@@ -40,6 +38,7 @@ booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to
          * [IRIX installation is finished](#irix-installation-is-finished)
       * [Provisioning your IRIX host with irix_ansible](#provisioning-your-irix-host-with-irix_ansible)
          * [PRO TIP](#pro-tip)
+      * [Installation using serial console](#installation-using-serial-console)
       * [Troubleshooting](#troubleshooting)
          * [I'm having trouble with the Vagrant Booterizer](#im-having-trouble-with-the-vagrant-booterizer)
          * [Problems running inst from Serial port](#problems-running-inst-from-serial-port)
@@ -372,9 +371,11 @@ vagrant up
 
 # Booting your SGI from Booterizer
 
-## Set IP address in PROM
+If you have a null-modem cable and a serial port available in your host computer, in this point you might want to consider [installation using serial console](#installation-using-serial-console) instead of using a keyboard and display connected to your SGI. However, that is totally optional. When using booterizer not much typing is needed in any case.
 
 When the PROM menu appears choose: Enter Command Monitor
+
+## Set IP address in PROM
 
 * Set the netaddr of your SGI to match your local network settings, and the specific IP address you picked for it and put into the settings.yml file as `clientip`:
 
@@ -384,34 +385,7 @@ setenv netaddr 192.168.0.41
 
 The address above is only a sample. You should pick an unused IP in your local network's subnet.
 
-## Setting Console Output in PROM
-
-To help installations it's often easier to do an install via the SGI's serial port and your host computer (Mac or Ubuntu). With serial port you are able to:
-
-* copy and paste commands from this page onto the serial comms program running on your workstation
-* save the output from the SGI for posterity or help
-
-Assuming you have connected up your SGI's serial port 1 to your workstation, and you are running a serial app, and you have set it to 9006/8/N/E then you are probably seeing the PROM menu and other characters from the SGI serial port during the system POST.
-
-To setup the console to serial output for the installation you must set this console variable:
-
-### Set for Serial Output
-
-```
-setenv console d
-```
-
-This will ensure a smooth installation session.
-
-When you are done you should set the console back to graphical virtual console:
-
-### Set for Graphics Output
-
-```
-setenv console g
-```
-
-### Setting System Timezone
+## Setting System Timezone
 
 While you are in the PROM you should set the timezone to something appropriate for where you live.
 
@@ -687,6 +661,41 @@ irix_ansible should be run immediately after your IRIX host has been installed, 
 ## PRO TIP
 
 Take a look in the expect/ directory for my own personal install scripts, written in expect. You can use them as a guide for what to select during an installation -- or if you're really brave/foolish, follow the enclosed README to run those scripts over serial console.
+
+# Installation using serial console
+
+To help installations it is often easier to do an install via the SGI's serial port and your host computer (Mac or
+Linux). With serial port you are able to:
+
+* Copy and paste commands from this page onto the serial comms program running on your workstation.
+* Save the output from the SGI for posterity or help.
+
+This requires a null-modem serial cable, and a serial port on the host computer. Note that some modern PC serial ports
+might not work reliably with an old SGI. A good-quality USB to RS-232 adapter should work well.
+
+Assuming you have connected up your SGI's serial port 1 to your workstation, and you are running a serial app, and
+you have set it (usually) to 9600/8/N/E then you are probably seeing the PROM menu and other characters from the SGI
+serial port during the system POST.
+
+To setup the console to serial output for the installation you must set this console variable:
+
+```
+setenv console d
+```
+
+This will ensure a smooth installation session.
+
+When you are done you should set the console back to graphical virtual console:
+
+```
+setenv console g
+```
+
+Please check following links for more information about correct null-modem serial cable wiring and more:
+
+* <https://wiki.preterhuman.net/Headless>
+* <https://software.majix.org/irix/admin-serial.shtml>
+* <http://www.obsolyte.com/sunFAQ/serial/>
 
 # Troubleshooting
 
