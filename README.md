@@ -4,46 +4,46 @@ booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to
 
 # Table of Contents
 
-   * [booterizer](#booterizer)
-      * [Table of Contents](#table-of-contents)
-      * [TL;DR: Use a Raspberry Pi](#tldr-use-a-raspberry-pi)
-      * [Overview](#overview)
-         * [Supported IRIX Versions](#supported-irix-versions)
-         * [Target SGI Systems](#target-sgi-systems)
-         * [Where to get help](#where-to-get-help)
-      * [Raspberry Pi Version](#raspberry-pi-version)
-         * [Requirements](#requirements)
-         * [Pi Image Usage Instructions](#pi-image-usage-instructions)
-         * [Pi Image Build Instructions](#pi-image-build-instructions)
-      * [Vagrant Version](#vagrant-version)
-         * [Requirements](#requirements-1)
-            * [Installation of Prerequisite software for macOS (Host)](#installation-of-prerequisite-software-for-macos-host)
-            * [Installation of Prerequisite software for Ubuntu (Host)](#installation-of-prerequisite-software-for-ubuntu-host)
-         * [Verify Versions](#verify-versions)
-         * [Vagrant Plugins](#vagrant-plugins)
-         * [Vagrant Booterizer Setup](#vagrant-booterizer-setup)
-            * [Settings](#settings)
-            * [Networking overview](#networking-overview)
-               * [One possible setup](#one-possible-setup)
-            * [IRIX media](#irix-media)
-      * [Booting your SGI from Booterizer](#booting-your-sgi-from-booterizer)
-         * [Set IP address in PROM](#set-ip-address-in-prom)
-            * [Setting System Timezone](#setting-system-timezone)
-         * [FX to Partition Disks](#fx-to-partition-disks)
-            * [Starting the fx Partitioner](#starting-the-fx-partitioner)
-            * [Using the fx Partitioner](#using-the-fx-partitioner)
-            * [Wiping a disk for clean IRIX install](#wiping-a-disk-for-clean-irix-install)
-         * [Running inst (IRIX installer)](#running-inst-irix-installer)
-            * [Example run](#example-run)
-         * [IRIX installation is finished](#irix-installation-is-finished)
-      * [Provisioning your IRIX host with irix_ansible](#provisioning-your-irix-host-with-irix_ansible)
-         * [PRO TIP](#pro-tip)
-      * [Installation using serial console](#installation-using-serial-console)
-      * [Troubleshooting](#troubleshooting)
-         * [I'm having trouble with the Vagrant Booterizer](#im-having-trouble-with-the-vagrant-booterizer)
-         * [Problems running inst from Serial port](#problems-running-inst-from-serial-port)
-         * [Ansible fails to pull images](#ansible-fails-to-pull-images)
-      * [License](#license)
+* [booterizer](#booterizer)
+* [Table of Contents](#table-of-contents)
+* [TL;DR: Use a Raspberry Pi](#tldr-use-a-raspberry-pi)
+* [Overview](#overview)
+  * [Supported IRIX Versions](#supported-irix-versions)
+  * [Target SGI Systems](#target-sgi-systems)
+  * [Where to get help](#where-to-get-help)
+* [Raspberry Pi Version](#raspberry-pi-version)
+  * [Requirements](#requirements)
+  * [Pi Image Usage Instructions](#pi-image-usage-instructions)
+  * [Pi Image Build Instructions](#pi-image-build-instructions)
+* [Vagrant Version](#vagrant-version)
+  * [Requirements](#requirements-1)
+    * [Installation of Prerequisite software for macOS (Host)](#installation-of-prerequisite-software-for-macos-host)
+    * [Installation of Prerequisite software for Ubuntu (Host)](#installation-of-prerequisite-software-for-ubuntu-host)
+    * [Verify Versions](#verify-versions)
+    * [Vagrant Plugins](#vagrant-plugins)
+  * [Vagrant Booterizer Setup](#vagrant-booterizer-setup)
+    * [Settings](#settings)
+    * [Networking overview](#networking-overview)
+    * [One possible setup](#one-possible-setup)
+    * [IRIX media](#irix-media)
+* [Booting your SGI from Booterizer](#booting-your-sgi-from-booterizer)
+  * [Set IP address in PROM](#set-ip-address-in-prom)
+  * [Setting System Timezone](#setting-system-timezone)
+  * [FX to Partition Disks](#fx-to-partition-disks)
+    * [Starting the fx Partitioner](#starting-the-fx-partitioner)
+    * [Using the fx Partitioner](#using-the-fx-partitioner)
+    * [Wiping a disk for clean IRIX install](#wiping-a-disk-for-clean-irix-install)
+  * [Running inst (IRIX installer)](#running-inst-irix-installer)
+    * [Example run](#example-run)
+  * [IRIX installation is finished](#irix-installation-is-finished)
+* [Provisioning your IRIX host with irix_ansible](#provisioning-your-irix-host-with-irix_ansible)
+  * [PRO TIP](#pro-tip)
+* [Installation using serial console](#installation-using-serial-console)
+* [Troubleshooting](#troubleshooting)
+  * [I'm having trouble with the Vagrant Booterizer](#im-having-trouble-with-the-vagrant-booterizer)
+  * [Problems running inst from Serial port](#problems-running-inst-from-serial-port)
+  * [Ansible fails to pull images](#ansible-fails-to-pull-images)
+* [License](#license)
 
 # TL;DR: Use a Raspberry Pi
 
@@ -161,7 +161,7 @@ But leave the installmirror pointed to the same location!
 * VM host with TWO network interfaces
   * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
 
-#### Installation of Prerequisite software for macOS (Host)
+### Installation of Prerequisite software for macOS (Host)
 
 * macOS has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
 * Install Brew following directions at their website here: https://brew.sh/
@@ -342,6 +342,7 @@ NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on you
 * Note: This is usually not an issue, but it _may_ be, YMMV
 
 #### One possible setup
+
 ![Image of a possible network setup for Booterizer](docs/booterizer_network_v1a.png?raw=true "Booterizer Network Setup")
 
 ### IRIX media
@@ -525,7 +526,7 @@ Reading product descriptions .. 100% Done.
 
 And from here you just exit and reboot.
 
-### Running inst (IRIX installer)
+## Running inst (IRIX installer)
 
 NOTE: After `booterizer` initializes, it displays a list of all `dist` subdirectories for your convenience. Use this list to preserve your sanity while running inst.
 
