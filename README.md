@@ -88,6 +88,7 @@ reboot
 ansible-playbook -i inventory.yml pooterizer.yml
 ```
 * NOTE: If you've connected your Pi to WiFi, clear your networking info from /etc/wpa_supplicant/wpa_supplicant.conf
+```
 apt-get clean -y ; apt-get autoclean -y
 dd if=/dev/zero of=/EMPTY bs=1M ;rm -f /EMPTY
 halt -p
