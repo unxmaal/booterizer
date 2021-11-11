@@ -50,6 +50,16 @@
     owner: root
     group: root
     mode: 0744
+  when: rpi is undefined
+
+- name: generate dhcpd.conf for rpi
+  template:
+    src: templates/dhcpd.conf_rpi.j2
+    dest: /etc/dhcp/dhcpd.conf
+    owner: root
+    group: root
+    mode: 0744
+  when: rpi is defined
 
 - name: Add the guest user
   user:

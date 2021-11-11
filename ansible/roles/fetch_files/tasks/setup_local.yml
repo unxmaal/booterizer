@@ -1,4 +1,4 @@
-- name: setup local machine
+- name: Create irix directory on vagrant host
   local_action: command /bin/mkdir -p {{ current_dir }}/irix
-  become:       false
-#  when:         NOT irix_path_exists.stat.exists
+  become: false
+  when: rpi is not defined

@@ -13,7 +13,9 @@
   modprobe:
     name: efs
     state: present
+  when: rpi is undefined
 - name: Add efs module
   modprobe:
     name: xfs
     state: present
+  when: rpi is undefined

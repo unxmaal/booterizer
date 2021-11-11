@@ -94,63 +94,80 @@ I suspect that most other hardware and OS versions released in those timeframes 
 * Silicon Graphics User Group-  for support and dev community: https://sgi.sh/
 * SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
-# Raspberry Pi Version
 
+# NEW: Raspberry Pi SD Card Image
 ## Requirements
-
 * Raspberry Pi 3 (This is what I have. Let me know if others work.)
 * 32GB SD card
-* Booterizer Pi Image from http://booterizer.com .
-* Extraction software that supports bz2 (native on macOS. Use https://www.7-zip.org/ on Windows.)
+* Booterizer Pi Image
+* Extraction software that supports bz2 (native on MacOS. Use https://www.7-zip.org/ on Windows.)
 
 ## Pi Image Usage Instructions
-
 * Extract the compressed image
 * Write it to a 32GB+ SD card using Etcher or something
-* Connect your SGI system via Ethernet to your Pi
+* Connect your SGI system via ethernet to your Pi
 * Boot your Pi
 * Log in with default, pi/raspberry
-
-```console
+```
 sudo -i
 cd /root/projects/github/booterizer
 ```
-
 * Configure WiFi networking and connect to your network (use raspi-config)
 * Modify settings.yml for ONLY these values:
-  * irixversion = 6.5.30, 6.5.22, etc
+  * irixverion = 6.5.30, 6.5.22, etc
   * clientname = your SGI's hostname
   * clientip = your SGI's IP. This MUST be 192.168.1.x for now. Change it later.
   * clientether = your SGI's MAC address
 
-```console
 cd ansible/
 ansible-playbook -i inventory.yml pooterizer.yml
 reboot
 ```
 
-* Skip down to the [Booting your SGI from Booterizer](#booting-your-sgi-from-booterizer) section
-* You can find available partitioners and media by running /irix/display_results.sh
+* Skip down to the "Booting" section below
+* You can find available partitioners and media by running /irix/display_results.sh 
 
 ## Pi Image Build Instructions
-
-Please see the [README.md on the 'pi_support' branch](https://github.com/unxmaal/booterizer/blob/pi_support/README.md#pi-image-build-instructions).
-
-# Vagrant Version
-
-By default the Vagrant-based booterizer downloads IRIX 6.5.30 installation media from a mirror site. You can modify the media download URLs and point them to 6.5.22 by editing the settings.yml file at the root of this project and setting the
-
-```
-irixversion:    "6.5.30"
-```
-
-to
+* Get https://www.raspberrypi.org/downloads/raspbian/
+* Get Etcher https://www.balena.io/etcher/
+* Put the Rasbian image on sd card
+* Boot pi
+* Add empty file named ssh in /boot
+* Configure WiFi networking and connect to your network
+* Log into the Pi and become root
 
 ```
-irixversion:    "6.5.22"
+apt update ; apt install -y python3-pip sshpass wget curl git
+mkdir -p /root/projects/github
+cd /root/projects/github
+git clone https://github.com/unxmaal/booterizer.git
+cd /root/projects/github/booterizer
 ```
 
-But leave the installmirror pointed to the same location!
+* During development, git checkout pi_support
+* Modify settings.yml to your liking
+
+```
+cd ansible
+pip3 install -r requirements.tx
+reboot
+```
+
+* Log into the Pi and become root
+```
+ansible-playbook -i inventory.yml pooterizer.yml
+```
+* NOTE: If you've connected your Pi to WiFi, clear your networking info from /etc/wpa_supplicant/wpa_supplicant.conf
+```
+apt-get clean -y ; apt-get autoclean -y
+dd if=/dev/zero of=/EMPTY bs=1M ;rm -f /EMPTY
+halt -p
+```
+
+* Use Apple-Pi Baker to copy the SD card image to a file
+
+
+# Vagrant VM
 
 ## Requirements
 

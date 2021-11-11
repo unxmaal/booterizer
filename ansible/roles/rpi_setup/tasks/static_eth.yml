@@ -1,0 +1,15 @@
+- name: generate /etc/network/interfaces.d/ for rpi
+  template:
+      src: templates/eth0_rpi.j2
+      dest: /etc/network/interfaces.d/eth0
+      owner: root
+      group: root
+      mode: 0744
+  when: rpi is defined
+
+- name: restart networking
+  systemd:
+    state: restarted
+    name: networking
+  when: rpi is defined
+  ignore_errors: yes
