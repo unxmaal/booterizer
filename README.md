@@ -118,7 +118,7 @@ cd /root/projects/github/booterizer
   * clientname = your SGI's hostname
   * clientip = your SGI's IP. This MUST be 192.168.1.x for now. Change it later.
   * clientether = your SGI's MAC address
-
+```
 cd ansible/
 ansible-playbook -i inventory.yml pooterizer.yml
 reboot
