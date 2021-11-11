@@ -1,7 +1,7 @@
-- name: generate /etc/network/interfaces.d/ for rpi
+- name: generate /etc/dhcp/dhcpcd.conf for rpi
   template:
-      src: templates/eth0_rpi.j2
-      dest: /etc/network/interfaces.d/eth0
+      src: templates/dhcpcd.conf.j2
+      dest: /etc/dhcp/dhcpcd.conf
       owner: root
       group: root
       mode: 0744
