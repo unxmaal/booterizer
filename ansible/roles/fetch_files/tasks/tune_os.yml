@@ -8,3 +8,14 @@
     name: net.ipv4.ip_local_port_range
     value: "2048 32767"
     state: present
+
+- name: Add efs module
+  modprobe:
+    name: efs
+    state: present
+  when: rpi is undefined
+- name: Add efs module
+  modprobe:
+    name: xfs
+    state: present
+  when: rpi is undefined

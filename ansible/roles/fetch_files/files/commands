@@ -5,3 +5,5 @@ keep incompleteoverlays
 remove java_dev*
 remove java2_plugin*
 conflicts
+go
+quit

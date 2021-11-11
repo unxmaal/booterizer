@@ -1,6 +1,6 @@
 # Setup the virt OS
 - name: Set hostname
-  hostname: 
+  hostname:
     name: booterizer
   when: rpi is undefined
 
@@ -10,12 +10,16 @@
     state: restarted
   when: rpi is undefined
 
+# Why this?
+# Note on versions: 14.04  trusty = jessie/sid
+# https://askubuntu.com/questions/445487/what-debian-version-are-the-different-ubuntu-versions-based-on
+
 - apt_repository:
     repo: deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
     state: present
   when: rpi is undefined
 
-- name: Add an apt key 
+- name: Add an apt key
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: 93C4A3FD7BB9C367
@@ -26,15 +30,15 @@
     name: "{{ packages }}"
     update_cache: yes
   vars:
-    packages: 
-    - tftpd-hpa 
-    - isc-dhcp-server 
-    - rsh-server 
-    - dnsmasq 
-    - mksh 
-    - parted 
-    - xfsprogs 
-    - rsync 
+    packages:
+    - tftpd-hpa
+    - isc-dhcp-server
+    - rsh-server
+    - dnsmasq
+    - mksh
+    - parted
+    - xfsprogs
+    - rsync
     - tcpdump
     - ansible
     - git
@@ -59,3 +63,4 @@
     - git
     - curl
   when: rpi is defined 
+

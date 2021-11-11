@@ -1,6 +1,5 @@
 ftpurls:
-  foundation: 
+  foundation:
     - http://dillernet.com/apple/downloads/irix_5_3_foundation.tgz
-  devel: 
+  devel:
     - http://dillernet.com/apple/downloads/irix_5_3_development.tgz
-  
