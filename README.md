@@ -97,14 +97,14 @@ I suspect that most other hardware and OS versions released in those timeframes 
 
 # NEW: Raspberry Pi SD Card Image
 ## Requirements
-* Raspberry Pi 3 (This is what I have. Let me know if others work.)
-* 32GB SD card
+* Raspberry Pi 4 (This is what I have. Let me know if others work.)
+* 64GB SD card
 * Booterizer Pi Image
-* Extraction software that supports bz2 (native on MacOS. Use https://www.7-zip.org/ on Windows.)
+* Extraction software that supports xz 
 
 ## Pi Image Usage Instructions
 * Extract the compressed image
-* Write it to a 32GB+ SD card using Etcher or something
+* Write it to a 64GB+ SD card using Etcher or something
 * Connect your SGI system via ethernet to your Pi
 * Boot your Pi
 * Log in with default, pi/raspberry
@@ -114,13 +114,12 @@ cd /root/projects/github/booterizer
 ```
 * Configure WiFi networking and connect to your network (use raspi-config)
 * Modify settings.yml for ONLY these values:
-  * irixverion = 6.5.30, 6.5.22, etc
+  * irixversion = 6.5.30, 6.5.22, etc
   * clientname = your SGI's hostname
-  * clientip = your SGI's IP. This MUST be 192.168.1.x for now. Change it later.
   * clientether = your SGI's MAC address
 ```
 cd ansible/
-ansible-playbook -i inventory.yml pooterizer.yml
+ansible-playbook -i inventory.yml rpi_booterizer.yml
 reboot
 ```
 
@@ -128,12 +127,21 @@ reboot
 * You can find available partitioners and media by running /irix/display_results.sh 
 
 ## Pi Image Build Instructions
+
+If you don't have precisely the same hardware as I used to create the image it may not work properly for you. 
+
+In this case, you can install Booterizer on whatever Pi you might have.
+
 * Get https://www.raspberrypi.org/downloads/raspbian/
 * Get Etcher https://www.balena.io/etcher/
 * Put the Rasbian image on sd card
 * Boot pi
-* Add empty file named ssh in /boot
-* Configure WiFi networking and connect to your network
+* Run raspi-config from the console
+  * Configure WiFi networking and connect to your network
+  * Enable ssh
+* Configure sshd to allow ssh as root
+  * Edit /etc/ssh/sshd_config
+  * Set `PermitRootLogin` to `yes`
 * Log into the Pi and become root
 
 ```
@@ -144,8 +152,10 @@ git clone https://github.com/unxmaal/booterizer.git
 cd /root/projects/github/booterizer
 ```
 
-* During development, git checkout pi_support
-* Modify settings.yml to your liking
+* Modify settings.yml
+  * to connect to your network
+  * to install 6.5.22
+    * Note: we're creating an image that has both 6.5.30 and 6.5.22. Adjust as desired.
 
 ```
 cd ansible
@@ -155,8 +165,17 @@ reboot
 
 * Log into the Pi and become root
 ```
-ansible-playbook -i inventory.yml pooterizer.yml
+cd /root/projects/github/booterizer/ansible
+ansible-playbook -i inventory.yml rpi_booterizer.yml
 ```
+
+* When this completes, modify settings.yml to install 6.5.30
+* Run ansible-playbook again
+```
+ansible-playbook -i inventory.yml rpi_booterizer.yml
+```
+
+
 * NOTE: If you've connected your Pi to WiFi, clear your networking info from /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 apt-get clean -y ; apt-get autoclean -y

@@ -1,7 +1,7 @@
 - name: Adjust pmtu
   sysctl:
     name: net.ipv4.ip_no_pmtu_disc
-    value: 1
+    value: '1'
     state: present
 - name: Adjust port range
   sysctl:
