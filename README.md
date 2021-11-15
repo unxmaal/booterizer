@@ -85,6 +85,7 @@ I am not sure what range of IRIX versions this will work with or what SGI machin
 | Origin 2100 | R12k | 6.5.30 | fx.64  | dillera |
 | Indy       | R4600PC | 6.5.22 | fx.ARCS | PeteT |
 | Indigo2    | R10k | 6.5.22 | fx.ARCS | dillera |
+| Onyx2      | R12k | 6.5.30 | fx.64 | chrsmeca |
 
 I suspect that most other hardware and OS versions released in those timeframes will also work SGI obviously kept the netboot/install process pretty consistent so I'd expect it to work on probably any MIPS-based SGI system.
 
