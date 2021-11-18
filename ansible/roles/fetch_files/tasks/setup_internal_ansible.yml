@@ -2,6 +2,7 @@
   file:
     dest: /home/vagrant/irix_ansible
     state: absent
+
 - name: Clone irix_ansible repo
   git:
     repo: 'https://github.com/unxmaal/irix_ansible.git'

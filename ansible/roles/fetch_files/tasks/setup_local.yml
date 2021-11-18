@@ -1,4 +1,4 @@
 - name: Create irix directory on vagrant host
   local_action: command /bin/mkdir -p {{ current_dir }}/irix
   become: false
-  when: rpi is not defined
+  when: rpi == false

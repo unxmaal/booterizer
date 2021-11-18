@@ -50,7 +50,7 @@
     owner: root
     group: root
     mode: 0744
-  when: rpi is undefined
+  when: rpi == False
 
 - name: generate dhcpd.conf for rpi
   template:
@@ -59,7 +59,7 @@
     owner: root
     group: root
     mode: 0744
-  when: rpi is defined
+  when: rpi == True
 
 - name: Add the guest user
   user:

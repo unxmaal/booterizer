@@ -2,13 +2,13 @@
 - name: Set hostname
   hostname:
     name: booterizer
-  when: rpi is undefined
+  when: rpi == False
 
 - name: Restart service rsyslog
   service:
     name: rsyslog
     state: restarted
-  when: rpi is undefined
+  when: rpi == false
 
 # Why this?
 # Note on versions: 14.04  trusty = jessie/sid
@@ -23,7 +23,7 @@
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: 93C4A3FD7BB9C367
-  when: rpi is undefined
+  when: rpi == False
 
 - name: Install required packages
   apt:
@@ -43,7 +43,7 @@
     - ansible
     - git
     - curl
-  when: rpi is undefined 
+  when: rpi == False 
 
 - name: Install required packages for RPi
   apt:
@@ -62,5 +62,4 @@
     - tcpdump
     - git
     - curl
-  when: rpi is defined 
-
+  when: rpi == True

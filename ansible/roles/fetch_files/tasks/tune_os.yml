@@ -3,6 +3,7 @@
     name: net.ipv4.ip_no_pmtu_disc
     value: '1'
     state: present
+
 - name: Adjust port range
   sysctl:
     name: net.ipv4.ip_local_port_range
@@ -13,9 +14,10 @@
   modprobe:
     name: efs
     state: present
-  when: rpi is undefined
+  when: rpi == false
+
 - name: Add efs module
   modprobe:
     name: xfs
     state: present
-  when: rpi is undefined
+  when: rpi == false

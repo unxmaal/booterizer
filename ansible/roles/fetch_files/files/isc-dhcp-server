@@ -1,1 +1,3 @@
-INTERFACES=eth0
+INTERFACESv4="eth0"
+INTERFACESv6=""
+# booterizer config

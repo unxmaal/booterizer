@@ -5,7 +5,8 @@
     owner: vagrant
     group: vagrant
     mode: 0755
-  when: rpi is undefined
+  when: rpi == False
+
 - name: Copy file for pi
   copy:
     src: files/display_results.sh
@@ -13,7 +14,7 @@
     owner: root
     group: root
     mode: 0744
-  when: rpi is defined
+  when: rpi == True
 
 - name: Display results
   command: /irix/display_results.sh

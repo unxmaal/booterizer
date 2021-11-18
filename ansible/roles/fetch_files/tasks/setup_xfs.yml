@@ -3,10 +3,12 @@
     device: /dev/sdb
     number: 1
     state: present
+
 - name: Create a ext2 filesystem on /dev/sdb1
   filesystem:
     fstype: xfs
     dev: /dev/sdb1
+
 - name: Mount sdb1 at /irix
   mount:
     path: /irix

@@ -1,5 +1,9 @@
 ---
-rpi: true
+#
+# rpi - are you running to setup a RaspberryPi or vagrant VM?
+#       set rpi to False for vagrant, set to True for Pi
+rpi: False
+
 # irixversion install 6.5.30, 6.5.22 or 5.3
 irixversion: "{{ settings['booterizer']['irixversion'] }}"
 # installmethod can be via CD images or remote fetch from Internet

@@ -5,7 +5,7 @@
     owner: vagrant
     group: vagrant
     mode: 0744
-  when: rpi is undefined
+  when: rpi == False
 
 - name: Generate selections for pi
   template:
@@ -14,4 +14,4 @@
     owner: root
     group: root
     mode: 0744
-  when: rpi is defined
+  when: rpi == True

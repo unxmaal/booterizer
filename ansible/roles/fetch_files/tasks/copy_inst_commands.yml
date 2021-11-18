@@ -5,7 +5,8 @@
     owner: vagrant
     group: vagrant
     mode: 0744
-  when: rpi is undefined
+  when: rpi == False
+
 - name: Copy inst commands file for pi
   copy:
     src: files/commands
@@ -13,5 +14,5 @@
     owner: root
     group: root
     mode: 0744
-  when: rpi is defined
+  when: rpi == True
 
