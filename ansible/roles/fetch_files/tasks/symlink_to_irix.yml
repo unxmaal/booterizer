@@ -2,7 +2,7 @@
   file:
     path: /vagrant/irix
     state: directory
-  when: rpi == true
+  when: rpi == True
 
 - name: symlink from /vagrant/irix to /irix
   file:

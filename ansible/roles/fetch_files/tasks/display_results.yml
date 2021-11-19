@@ -1,4 +1,4 @@
-- name: Copy file
+- name: Copy results file
   copy:
     src: files/display_results.sh
     dest: /irix/display_results.sh
@@ -7,7 +7,7 @@
     mode: 0755
   when: rpi == False
 
-- name: Copy file for pi
+- name: Copy results file for pi
   copy:
     src: files/display_results.sh
     dest: /irix/display_results.sh
@@ -16,5 +16,5 @@
     mode: 0744
   when: rpi == True
 
-- name: Display results
+- name: Display results to local output
   command: /irix/display_results.sh

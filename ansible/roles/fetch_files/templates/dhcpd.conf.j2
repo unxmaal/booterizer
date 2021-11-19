@@ -1,13 +1,19 @@
-# booterizer config
+# this file was created by booterizer
+#
+
 allow booting;
 allow bootp;
 
-subnet {{ network }} netmask {{ netmask }} { ignore unknown-clients; }
+subnet {{ network }} netmask {{ netmask }} { ignore unknown-clients; allow bootp; }
 
 host {{ clientname }} {
 	hardware ethernet {{ clientether }};
 	fixed-address {{ clientip }} ;
 	option domain-name-servers {{ hostip }};
-	option domain-name "{{ clientdomain }}";
+	option domain-name "{{ clientdomain }}";  
+	server-name "{{ hostip }}";
+    next-server {{ hostip }};
 	}
-# end of booterizer config
+
+# booterizer-created-{{ ansible_date_time.iso8601 }}
+

@@ -1,4 +1,6 @@
 TFTP_USERNAME="tftp"
 TFTP_DIRECTORY="/irix"
-TFTP_ADDRESS="0.0.0.0:69"
-TFTP_OPTIONS="--secure -vvvv"
+TFTP_ADDRESS=":69"
+TFTP_OPTIONS="--ipv4 --secure -vvvv"
+
+# booterizer-created-{{ ansible_date_time.iso8601 }}

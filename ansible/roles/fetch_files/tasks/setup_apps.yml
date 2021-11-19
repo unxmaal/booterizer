@@ -67,6 +67,9 @@
     shell: /bin/ksh
     home: /irix
 
+
+
+
 #---- Restart services
 - name: Restart service openbsd-inetd
   service:

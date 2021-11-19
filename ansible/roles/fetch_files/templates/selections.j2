@@ -1,7 +1,7 @@
 # Overlay
 from {{ hostip }}:{{ irixversion }}/Overlay/disc1/dist
 {% if '6.5.22'  == irixversion %}
-from {{ hostip }}:{{ irixversion }}/Overlay/disc2/CDROM/dist
+from {{ hostip }}:{{ irixversion }}/Overlay/disc2/dist
 {% else %}
 from {{ hostip }}:{{ irixversion }}/Overlay/disc2/dist
 {% endif %}
@@ -20,12 +20,16 @@ from {{ hostip }}:{{ irixversion }}/Overlay/apps/dist
 from {{ hostip }}:{{ irixversion }}/Overlay/capps/dist
 {% endif %}
 # # MIPSpro
-# from {{ hostip }}:Development/prodev/dist
-# from {{ hostip }}:Development/mipspro/dist
-# from {{ hostip }}:Development/mipspro_update
-# from {{ hostip }}:Development/mipspro_c/CDROM/dist
-# from {{ hostip }}:Development/mipspro_cee/dist
-# from {{ hostip }}:Development/mipspro_cpp/dist
-# from {{ hostip }}:Development/mipspro_ap/dist
+from {{ hostip }}:Development/prodev/dist
+from {{ hostip }}:Development/mipspro/dist
+from {{ hostip }}:Development/mipspro_update
+from {{ hostip }}:Development/mipspro_c/CDROM/dist
+from {{ hostip }}:Development/mipspro_cee/dist
+from {{ hostip }}:Development/mipspro_cpp/dist
+from {{ hostip }}:Development/mipspro_ap/dist
 # # Extras
-# from {{ hostip }}:Extras/perfcopilot/dist
+from {{ hostip }}:Extras/perfcopilot/dist
+
+# after installation and reboot visit:
+# https://forums.sgi.sh/index.php?threads/booterizer-fix-for-math-h-compiler-errors.78/post-453
+# and fix patch for mipspro math.c issues

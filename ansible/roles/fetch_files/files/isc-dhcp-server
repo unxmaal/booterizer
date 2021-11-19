@@ -1,3 +1,4 @@
-INTERFACESv4="eth0"
+INTERFACESv4="eth1"
 INTERFACESv6=""
-# booterizer config
+
+# booterizer-created-{{ ansible_date_time.iso8601 }}

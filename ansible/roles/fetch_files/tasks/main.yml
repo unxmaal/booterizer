@@ -1,23 +1,32 @@
-# Setup the local system as needed
+#------ Setup the local system as needed
 - import_tasks: setup_local.yml
 
-# Setup the virt OS
+#------ Setup the virt OS
 - import_tasks: setup_virt_os.yml
-# Tune OS
+
+#------ Tune OS - parameters on local system
 - import_tasks: tune_os.yml
-#----- Create symlink
+
+#------- Create symlink on vm - /irix to ~/irix
 - import_tasks: symlink_to_irix.yml
-#------- Setup Apps
+
+#------- Setup Apps - setup the services on the vm
 - import_tasks: setup_apps.yml
-#------- Setup internal Ansible
+
+#------- Setup internal Ansible to home dir on vm
 - import_tasks: setup_internal_ansible.yml
-#-------- Setup Media
+
+#-------- Setup Media on local system
 - import_tasks: setup_media.yml
-#-------- rsync media to /irix
+
+#-------- Rsync media to /irix on vm
 - import_tasks: symlink_to_irix.yml
-#--------- Generate selections
+
+#--------- Generate selections on vm
 - import_tasks: generate_selections.yml
-#--------- Copy commands file
+
+#--------- Copy inst commands file to vm
 - import_tasks: copy_inst_commands.yml
+
 #--------- Display  useful info
 - import_tasks: display_results.yml
