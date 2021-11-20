@@ -99,13 +99,13 @@ I suspect that most other hardware and OS versions released in those timeframes 
 # NEW: Raspberry Pi SD Card Image
 ## Requirements
 * Raspberry Pi 4 (This is what I have. Let me know if others work.)
-* 64GB SD card
+* 16GB+ SD card
 * Booterizer Pi Image
 * Extraction software that supports xz 
 
 ## Pi Image Usage Instructions
 * Extract the compressed image
-* Write it to a 64GB+ SD card using Etcher or something
+* Write it to a 16GB+ SD card using Etcher or something
 * Connect your SGI system via ethernet to your Pi
 * Boot your Pi
 * Log in with default, pi/raspberry
