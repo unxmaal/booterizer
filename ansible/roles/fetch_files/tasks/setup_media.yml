@@ -25,6 +25,115 @@
     - "/vagrant/irix/Extras/perfcopilot"
     - "/vagrant/irix/Extras/sgifonts"
 
+# Determine if things are already fetched
+- name: Check overlay disc 1
+  stat:
+    path: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/dist"
+  register: old1
+
+- name: Check overlay disc 2
+  stat:
+    path: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/dist"
+  register: old2
+
+- name: Check overlay disc 3
+  stat:
+    path: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/dist"
+  register: old3
+
+- name: Check overlay apps
+  stat:
+    path: "/vagrant/irix/{{ irixversion }}/Overlay/apps/dist"
+  register: olapps
+
+- name: Check overlay complementary apps
+  stat:
+    path: "/vagrant/irix/{{ irixversion }}/Overlay/capps/dist"
+  register: olcompapps
+
+
+
+# these are common across .30 and .22
+
+- name: Check foundation disc 1
+  stat:
+    path: "/vagrant/irix/Foundation/disc1/dist"
+  register: fd1
+
+- name: Check foundation disc 2
+  stat:
+    path: "/vagrant/irix/Foundation/disc2/dist"
+  register: fd2
+
+- name: Check foundation NFS
+  stat:
+    path: "/vagrant/irix/Foundation/nfs/dist"
+  register: fnfs
+
+- name: Check development libraries
+  stat:
+    path: "/vagrant/irix/Development/devlibs/dist"
+  register: devl
+
+- name: Check development foundations
+  stat:
+    path: "/vagrant/irix/Development/devfoundations/dist"
+  register: devf
+
+- name: Check MIPSPro 7.4.3m
+  stat:
+    path: "/vagrant/irix/Development/mipspro/dist"
+  register: mp
+
+- name: Check MIPSPro 7.4.4 update
+  stat:
+    path: "/vagrant/irix/Development/mipspro_update/inst.README"
+  register: mpu
+
+- name: Check MIPSPro c
+  stat:
+    path: "/vagrant/irix/Development/mipspro_c/dist"
+  register: mpc
+
+- name: Check MIPSPro cee
+  stat:
+    path: "/vagrant/irix/Development/mipspro_cee/dist"
+  register: mpcee
+
+- name: Check MIPSPro cpp
+  stat:
+    path: "/vagrant/irix/Development/mipspro_cpp/dist"
+  register: mpcpp
+
+- name: Check MIPSPro ap
+  stat:
+    path: "/vagrant/irix/Development/mipspro_ap/dist"
+  register: mpap
+
+- name: Check prodev
+  stat:
+    path: "/vagrant/irix/Development/prodev/dist"
+  register: prodev
+
+- name: Check perfcopilot
+  stat:
+    path: "/vagrant/irix/Extras/perfcopilot/dist"
+  register: pc
+
+- name: Check SGI Fonts
+  stat:
+    path: "/vagrant/irix/Extras/sgifonts/Text"
+  register: sf
+
+
+
+
+
+
+
+
+
+
 
 
 # these are specific and go into their own dirs for .30 and .22
@@ -33,29 +142,31 @@
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc1 }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/{{ overlay_disc1 }}"
+  when: not old1.stat.exists
 
 - name: Fetch overlay disc 2
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc2 }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/{{ overlay_disc2 }}"
+  when: not old2.stat.exists
 
 - name: Fetch overlay disc 3
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc3 }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"
+  when: not old3.stat.exists
 
 - name: Fetch overlay apps
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_apps }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/apps/{{ overlay_apps }}"
+  when: not olapps.stat.exists
 
 - name: Fetch overlay complementary apps
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_capps }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/capps/{{ overlay_capps }}"
-  when: irixversion == "6.5.30"
-
-
+  when: irixversion == "6.5.30" and not olcompapps.stat.exists
 
 # these are common across .30 and .22
 
@@ -63,72 +174,88 @@
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
     dest: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"
+  when: not fd1.stat.exists
 
 - name: Fetch foundation disc 2
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc2 }}"
     dest: "/vagrant/irix/Foundation/disc2/{{ foundation_disc2 }}"
+  when: not fd2.stat.exists
 
 - name: Fetch foundation NFS
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_nfs }}"
     dest: "/vagrant/irix/Foundation/nfs/{{ foundation_nfs }}"
+  when: not fnfs.stat.exists
 
 - name: Fetch development libraries
   get_url:
     url: "{{ devel_baseurl }}{{ devel_devlibs }}"
     dest: "/vagrant/irix/Development/devlibs/{{ devel_devlibs }}"
+  when: not devl.stat.exists
 
 - name: Fetch development foundations
   get_url:
     url: "{{ devel_baseurl }}{{ devel_devfoundations }}"
     dest: "/vagrant/irix/Development/devfoundations/{{ devel_devfoundations }}"
+  when: not devf.stat.exists
 
 - name: Fetch MIPSPro 7.4.3m
   get_url:
     url: "{{ devel_baseurl }}{{ devel_mipspro }}"
     dest: "/vagrant/irix/Development/mipspro/{{ devel_mipspro }}"
+  when: not mp.stat.exists
 
 - name: Fetch MIPSPro 7.4.4 update
   get_url:
     url: "{{ devel_baseurl }}{{ devel_update }}"
     dest: "/vagrant/irix/Development/mipspro_update/{{ devel_update }}"
+  when: not mpu.stat.exists
 
 - name: Fetch MIPSPro c
   get_url:
     url: "{{ devel_baseurl }}{{ devel_c }}"
     dest: "/vagrant/irix/Development/mipspro_c/{{ devel_c }}"
+  when: not mpc.stat.exists
 
 - name: Fetch MIPSPro cee
   get_url:
     url: "{{ devel_baseurl }}{{ devel_cee }}"
     dest: "/vagrant/irix/Development/mipspro_cee/{{ devel_cee }}"
+  when: not mpcee.stat.exists
 
 - name: Fetch MIPSPro cpp
   get_url:
     url: "{{ devel_baseurl }}{{ devel_cpp }}"
     dest: "/vagrant/irix/Development/mipspro_cpp/{{ devel_cpp }}"
+  when: not mpcpp.stat.exists
 
 - name: Fetch MIPSPro ap
   get_url:
     url: "{{ devel_baseurl }}{{ devel_ap }}"
     dest: "/vagrant/irix/Development/mipspro_ap/{{ devel_ap }}"
+  when: not mpap.stat.exists
 
 - name: Fetch prodev
   get_url:
     url: "{{ devel_baseurl }}{{ devel_prodev }}"
     dest: "/vagrant/irix/Development/prodev/{{ devel_prodev }}"
+  when: not prodev.stat.exists
 
 - name: Fetch perfcopilot
   get_url:
     url: "{{ extras_baseurl }}{{ extras_perfcopilot }}"
     dest: "/vagrant/irix/Extras/perfcopilot/{{ extras_perfcopilot }}"
+  when: not pc.stat.exists
 
 - name: Fetch SGI Fonts
   get_url:
     url: "{{ extras_baseurl }}{{ extras_sgifonts }}"
     dest: "/vagrant/irix/Extras/sgifonts/{{ extras_sgifonts }}"
+  when: not sf.stat.exists
 
+
+# Extraction
 - name: Extracting foundation disc 1
   unarchive:
     src: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"
