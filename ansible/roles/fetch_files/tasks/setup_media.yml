@@ -1,4 +1,4 @@
-- name: Create directories
+- name: Create 6.5 directories
   file:
     path: "{{ item }}"
     state: directory
@@ -24,30 +24,81 @@
     - "/vagrant/irix/Development/prodev"
     - "/vagrant/irix/Extras/perfcopilot"
     - "/vagrant/irix/Extras/sgifonts"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
+
+
+#########################################################################
+# Setup, fetch and expand the two 5.3 directories
+
+- name: Create 5.3 directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+  with_items:
+    - "/vagrant/irix/{{ irixversion }}/Foundation"
+    - "/vagrant/irix/{{ irixversion }}/Development"
+
+- name: Fetch 5.3 foundation disc 1
+  get_url:
+    url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/{{ foundation_disc1 }}"
+  when: irixversion == "5.3"
+
+- name: Fetch 5.3 foundation disc 2
+  get_url:
+    url: "{{ foundation_baseurl }}{{ foundation_disc2 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/{{ foundation_disc2 }}"
+  when: irixversion == "5.3"
+
+
+- name: Extracting 5.3 foundation disc 1
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Foundation/{{ foundation_disc1 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Foundation/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+    creates: "/vagrant/irix/Foundation/RELEASE.info"
+
+- name: Extracting 5.3 foundation disc 2
+  unarchive:
+    src: "/vagrant/irix/{{ irixversion }}/Development/{{ foundation_disc2 }}"
+    dest: "/vagrant/irix/{{ irixversion }}/Development/"
+    copy: no
+    extra_opts:
+    - --strip-components=1
+    creates: "/vagrant/irix/Foundation/RELEASE.info"
 
 
 
-# these are specific and go into their own dirs for .30 and .22
+
+#########################################################################
+# Fetch Overlays
 
 - name: Fetch overlay disc 1
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc1 }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/{{ overlay_disc1 }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch overlay disc 2
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc2 }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/{{ overlay_disc2 }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch overlay disc 3
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_disc3 }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/{{ overlay_disc3 }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch overlay apps
   get_url:
     url: "{{ overlay_baseurl }}{{ overlay_apps }}"
     dest: "/vagrant/irix/{{ irixversion }}/Overlay/apps/{{ overlay_apps }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch overlay complementary apps
   get_url:
@@ -57,77 +108,104 @@
 
 
 
-# these are common across .30 and .22
+#########################################################################
+# Fetch Foundations
 
 - name: Fetch foundation disc 1
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
     dest: "/vagrant/irix/Foundation/disc1/{{ foundation_disc1 }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch foundation disc 2
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc2 }}"
     dest: "/vagrant/irix/Foundation/disc2/{{ foundation_disc2 }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch foundation NFS
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_nfs }}"
     dest: "/vagrant/irix/Foundation/nfs/{{ foundation_nfs }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
+
+
+#########################################################################
+# Fetch Dev and Misc
 
 - name: Fetch development libraries
   get_url:
     url: "{{ devel_baseurl }}{{ devel_devlibs }}"
     dest: "/vagrant/irix/Development/devlibs/{{ devel_devlibs }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch development foundations
   get_url:
     url: "{{ devel_baseurl }}{{ devel_devfoundations }}"
     dest: "/vagrant/irix/Development/devfoundations/{{ devel_devfoundations }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch MIPSPro 7.4.3m
   get_url:
     url: "{{ devel_baseurl }}{{ devel_mipspro }}"
     dest: "/vagrant/irix/Development/mipspro/{{ devel_mipspro }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch MIPSPro 7.4.4 update
   get_url:
     url: "{{ devel_baseurl }}{{ devel_update }}"
     dest: "/vagrant/irix/Development/mipspro_update/{{ devel_update }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch MIPSPro c
   get_url:
     url: "{{ devel_baseurl }}{{ devel_c }}"
     dest: "/vagrant/irix/Development/mipspro_c/{{ devel_c }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch MIPSPro cee
   get_url:
     url: "{{ devel_baseurl }}{{ devel_cee }}"
     dest: "/vagrant/irix/Development/mipspro_cee/{{ devel_cee }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch MIPSPro cpp
   get_url:
     url: "{{ devel_baseurl }}{{ devel_cpp }}"
     dest: "/vagrant/irix/Development/mipspro_cpp/{{ devel_cpp }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch MIPSPro ap
   get_url:
     url: "{{ devel_baseurl }}{{ devel_ap }}"
     dest: "/vagrant/irix/Development/mipspro_ap/{{ devel_ap }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch prodev
   get_url:
     url: "{{ devel_baseurl }}{{ devel_prodev }}"
     dest: "/vagrant/irix/Development/prodev/{{ devel_prodev }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch perfcopilot
   get_url:
     url: "{{ extras_baseurl }}{{ extras_perfcopilot }}"
     dest: "/vagrant/irix/Extras/perfcopilot/{{ extras_perfcopilot }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Fetch SGI Fonts
   get_url:
     url: "{{ extras_baseurl }}{{ extras_sgifonts }}"
     dest: "/vagrant/irix/Extras/sgifonts/{{ extras_sgifonts }}"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
+
+
+
+#########################################################################
+#  EXTRACTION
+#########################################################################
+
+# 6.5
 
 - name: Extracting foundation disc 1
   unarchive:
@@ -137,6 +215,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Foundation/disc1/RELEASE.info"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting foundation disc 2
   unarchive:
@@ -146,6 +225,10 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Foundation/disc2/RELEASE.info"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
+
+
+#  6.5 only
 
 - name: Extracting foundation NFS
   unarchive:
@@ -155,6 +238,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Foundation/nfs/RELEASE.info"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 
 # these are specific and go into their own dirs for .30 and .22
@@ -167,6 +251,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc1/stand/fx.ARCS"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting overlay disc 2
   unarchive:
@@ -176,6 +261,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc2/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting overlay disc 3
   unarchive:
@@ -185,6 +271,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/{{ irixversion }}/Overlay/disc3/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting overlay apps
   unarchive:
@@ -194,6 +281,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/{{ irixversion }}/Overlay/apps/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting overlay complimentary apps
   unarchive:
@@ -206,8 +294,6 @@
   when: irixversion == "6.5.30"
 
 
-# these are common across .30 and .22
-
 - name: Extracting development libraries
   unarchive:
     src: "/vagrant/irix/Development/devlibs/{{ devel_devlibs }}"
@@ -216,6 +302,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/devlibs/RELEASE.info"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting development foundations
   unarchive:
@@ -225,6 +312,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/devfoundations/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting MIPSPro 7.4.3m
   unarchive:
@@ -234,6 +322,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/mipspro/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting MIPSPro 7.4.4 update
   unarchive:
@@ -243,6 +332,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/mipspro_update/inst.README"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting MIPSPro c
   unarchive:
@@ -252,6 +342,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/mipspro_c/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting MIPSPro cee
   unarchive:
@@ -261,6 +352,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/mipspro_cee/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting MIPSPro cpp
   unarchive:
@@ -270,6 +362,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/mipspro_cpp/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting MIPSPro ap
   unarchive:
@@ -279,6 +372,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/mipspro_ap/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting prodev
   unarchive:
@@ -288,6 +382,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Development/prodev/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting perfcopilot
   unarchive:
@@ -297,6 +392,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Extras/perfcopilot/docs/CDrelnotes"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"
 
 - name: Extracting SGI Fonts
   unarchive:
@@ -306,3 +402,4 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Extras/sgifonts/Text/SGI-Text.ttf"
+  when: irixversion == "6.5.30" or irixversion == "6.5.22"

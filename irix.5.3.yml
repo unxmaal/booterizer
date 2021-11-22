@@ -1,5 +1,6 @@
 ftpurls:
   foundation:
-    - http://dillernet.com/apple/downloads/irix_5_3_foundation.tgz
-  devel:
-    - http://dillernet.com/apple/downloads/irix_5_3_development.tgz
+    baseurl:        "{{ installmirror }}/irix-5.3/"
+    disc1:          irix_5_3_foundation.tar.gz
+    disc2:          irix_5_3_development.tar.gz
+    
