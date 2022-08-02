@@ -1,10 +1,6 @@
 # Overlay
 from {{ hostip }}:{{ irixversion }}/Overlay/disc1/dist
-{% if '6.5.22'  == irixversion %}
-from {{ hostip }}:{{ irixversion }}/Overlay/disc2/CDROM/dist
-{% else %}
 from {{ hostip }}:{{ irixversion }}/Overlay/disc2/dist
-{% endif %}
 from {{ hostip }}:{{ irixversion }}/Overlay/disc3/dist
 # Foundation
 from {{ hostip }}:Foundation/disc1/dist
