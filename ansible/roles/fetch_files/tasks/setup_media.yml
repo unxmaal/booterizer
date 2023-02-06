@@ -38,7 +38,8 @@
   with_items:
     - "/vagrant/irix/{{ irixversion }}/Foundation"
     - "/vagrant/irix/{{ irixversion }}/Development"
-
+  when: irixversion == "5.3"
+  
 - name: Fetch 5.3 foundation disc 1
   get_url:
     url: "{{ foundation_baseurl }}{{ foundation_disc1 }}"
