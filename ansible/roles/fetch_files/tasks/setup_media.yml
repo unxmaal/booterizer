@@ -60,6 +60,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Foundation/RELEASE.info"
+  when: irixversion == "5.3"
 
 - name: Extracting 5.3 foundation disc 2
   unarchive:
@@ -69,6 +70,7 @@
     extra_opts:
     - --strip-components=1
     creates: "/vagrant/irix/Foundation/RELEASE.info"
+  when: irixversion == "5.3"
 
 
 
