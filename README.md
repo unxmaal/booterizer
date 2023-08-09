@@ -11,7 +11,7 @@ booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to
   * [Supported IRIX Versions](#supported-irix-versions)
   * [Target SGI Systems](#target-sgi-systems)
   * [Where to get help](#where-to-get-help)
-* [Raspberry Pi Version](#raspberry-pi-version)
+* [Raspberry Pi Version](#new-raspberry-pi-sd-card-image)
   * [Requirements](#requirements)
   * [Pi Image Usage Instructions](#pi-image-usage-instructions)
   * [Pi Image Build Instructions](#pi-image-build-instructions)
@@ -50,7 +50,7 @@ booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to
 The new Raspberry Pi version of Booterizer consists of pre-built images that you can write to a SD card.
 This is a significantly easier and faster method than using Vagrant.
 
-Follow the [Raspberry Pi instructions](#raspberry-pi-version).
+Follow the [Raspberry Pi instructions](#new-raspberry-pi-sd-card-image).
 
 # Overview
 
@@ -100,12 +100,13 @@ I suspect that most other hardware and OS versions released in those timeframes 
 ## Requirements
 * Raspberry Pi 4 (This is what I have. Let me know if others work.)
 * 16GB+ SD card
-* Booterizer Pi Image
-* Extraction software that supports xz 
+* Booterizer Pi Image (http://booterizer.com)
+* Extraction software that supports xz
+* A tool like Etcher (https://www.balena.io/etcher) to write the image to the SD card
 
 ## Pi Image Usage Instructions
 * Extract the compressed image
-* Write it to a 16GB+ SD card using Etcher or something
+* Write it to a 16GB+ SD card using Etcher or a similar tool
 * Connect your SGI system via ethernet to your Pi
 * Boot your Pi
 * Log in with default, pi/raspberry
@@ -726,7 +727,7 @@ Please check following links for more information about correct null-modem seria
 
 ## I'm having trouble with the Vagrant Booterizer
 
-Generally, if you have trouble with the Vagrant-based booterizer, use the [Raspberry Pi Version](#raspberry-pi-version). It's easier, faster, and nearly everything's already done for you.
+Generally, if you have trouble with the Vagrant-based booterizer, use the [Raspberry Pi Version](#new-raspberry-pi-sd-card-image). It's easier, faster, and nearly everything's already done for you.
 
 ## Problems running inst from Serial port
 
