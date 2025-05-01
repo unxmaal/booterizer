@@ -1,0 +1,11 @@
+allow booting;
+allow bootp;
+
+subnet {{ network }} netmask {{ netmask }} { ignore unknown-clients; }
+
+host {{ clientname }} {
+	hardware ethernet {{ clientether }};
+	fixed-address {{ clientip }} ;
+	option domain-name-servers {{ hostip }};
+	option domain-name "{{ clientdomain }}";
+	}
