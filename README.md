@@ -1,31 +1,16 @@
-# booterizer
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/ktechhub/doctoc)*
 
-booterizer is designed to help boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
+<!---toc start-->
 
-# Table of Contents
-
-* [booterizer](#booterizer)
-* [Table of Contents](#table-of-contents)
-* [TL;DR: Use a Raspberry Pi](#tldr-use-a-raspberry-pi)
 * [Overview](#overview)
   * [Supported IRIX Versions](#supported-irix-versions)
   * [Target SGI Systems](#target-sgi-systems)
   * [Where to get help](#where-to-get-help)
-* [Raspberry Pi Version](#new-raspberry-pi-sd-card-image)
+* [NEW: Booterizer via Systemd containers](#new-booterizer-via-systemd-containers)
   * [Requirements](#requirements)
-  * [Pi Image Usage Instructions](#pi-image-usage-instructions)
-  * [Pi Image Build Instructions](#pi-image-build-instructions)
-* [Vagrant Version](#vagrant-version)
-  * [Requirements](#requirements-1)
-    * [Installation of Prerequisite software for macOS (Host)](#installation-of-prerequisite-software-for-macos-host)
-    * [Installation of Prerequisite software for Ubuntu (Host)](#installation-of-prerequisite-software-for-ubuntu-host)
-    * [Verify Versions](#verify-versions)
-    * [Vagrant Plugins](#vagrant-plugins)
-  * [Vagrant Booterizer Setup](#vagrant-booterizer-setup)
-    * [Settings](#settings)
-    * [Networking overview](#networking-overview)
-    * [One possible setup](#one-possible-setup)
-    * [IRIX media](#irix-media)
+  * [Booterizer Usage Instructions](#booterizer-usage-instructions)
 * [Booting your SGI from Booterizer](#booting-your-sgi-from-booterizer)
   * [Set IP address in PROM](#set-ip-address-in-prom)
   * [Setting System Timezone](#setting-system-timezone)
@@ -45,7 +30,13 @@ booterizer is designed to help boot a specific version of the SGI IRIX installer
   * [Ansible fails to pull images](#ansible-fails-to-pull-images)
 * [License](#license)
 
+<!---toc end-->
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 # Overview
+
+booterizer is designed to help boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
+
 
 ## Supported IRIX Versions
 
