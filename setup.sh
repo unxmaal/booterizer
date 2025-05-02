@@ -6,6 +6,11 @@ CONTAINER_PATH=/var/lib/machines/$CONTAINER_NAME
 DEBIAN_VERSION=stable
 MIRROR_URL=http://deb.debian.org/debian
 
+# setup
+sudo add-apt-repository ppa:rmescandon/yq
+sudo apt update 
+sudo apt install -y yq debootstrap
+
 # Create the container rootfs
 if [ ! -d "$CONTAINER_PATH" ]; then
   echo "Creating container rootfs with debootstrap..."

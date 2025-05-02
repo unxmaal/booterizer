@@ -1,6 +1,6 @@
 # booterizer
 
-booterizer is designed to help boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
+booterizer is designed to quickly configure a Raspberry Pi or a disposable VM to boot a specific version of the SGI IRIX installer over the network on an SGI machine without a whole lot of fuss.
 
 # Table of Contents
 
@@ -45,18 +45,27 @@ booterizer is designed to help boot a specific version of the SGI IRIX installer
   * [Ansible fails to pull images](#ansible-fails-to-pull-images)
 * [License](#license)
 
+# TL;DR: Use a Raspberry Pi
+
+The new Raspberry Pi version of Booterizer consists of pre-built images that you can write to a SD card.
+This is a significantly easier and faster method than using Vagrant.
+
+Follow the [Raspberry Pi instructions](#new-raspberry-pi-sd-card-image).
+
 # Overview
 
 ## Supported IRIX Versions
 
 booterizer was designed for IRIX 6.5.30, the last version of IRIX for SGI. Use this as your first choice.
+booterizer also fully supports IRIX 6.5.22 for older SGI systems that can run 6.5. Use this for Indys and Challenge L servers.
+booterizer even works with IRIX 5.3 for classic SGI systems that cannot run 6.5.x (See [Callahan's Booterizer 5.3](https://github.com/callahan-44/booterizer))
 
-booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. 
+booterizer is not secure and may interfere with other network services (e.g. DHCP) so please don't leave it running long-term. I recommend only attaching the network interface to an isolated network for this purpose and then `vagrant halt` or `vagrant destroy` the VM when you are done installing.
 
-The booterizer container provides the following services:
+The booterizer VM provides the following services:
 
-* BOOTP server (via dnsmasq)
-* TFTP server (via dnsmasq)
+* BOOTP server (via isc-dhcp)
+* TFTP server (via tftpd-hpa)
 * RSH server (via rsh-server)
 
 NOTE: This fork no longer supports CD images. It may again in the future, if there is demand. If you must extract from CD media, see the original project at https://github.com/halfmanhalftaco/irixboot. This version will obtain the contents of the CD-ROMs for you automatically.
@@ -87,21 +96,306 @@ I suspect that most other hardware and OS versions released in those timeframes 
 * SGIDev chat on Discord: https://discord.gg/p2zZ7TZ
 
 
-# NEW: Booterizer via Systemd containers
+# NEW: Raspberry Pi SD Card Image
 ## Requirements
-* Physical system running a Debian-like OS, including Ubuntu
-* At least 2 interfaces
-* 1 interface connected directly to the SGI target
+* Raspberry Pi 4 (This is what I have. Let me know if others work.)
+* 16GB+ SD card
+* Booterizer Pi Image (http://booterizer.com)
+* Extraction software that supports xz
+* A tool like Etcher (https://www.balena.io/etcher) to write the image to the SD card
 
-
-## Booterizer Usage Instructions
-* git clone this repo
-* If you need to create and mount an XFS-formatted run ./irixvol_setup.sh
-* run ./setup.sh
+## Pi Image Usage Instructions
+* Extract the compressed image
+* Write it to a 16GB+ SD card using Etcher or a similar tool
+* Connect your SGI system via ethernet to your Pi
+* Boot your Pi
+* Log in with default, pi/raspberry
+```
+sudo -i
+cd /root/projects/github/booterizer
+```
+* Configure WiFi networking and connect to your network (use raspi-config)
+* Modify settings.yml for ONLY these values:
+  * irixversion = 6.5.30, 6.5.22, etc
+  * clientname = your SGI's hostname
+  * clientether = your SGI's MAC address
+```
+cd ansible/
+ansible-playbook -i inventory.yml rpi_booterizer.yml
+reboot
+```
 
 * Skip down to the "Booting" section below
 * You can find available partitioners and media by running /irix/display_results.sh 
 
+## Pi Image Build Instructions
+
+If you don't have precisely the same hardware as I used to create the image it may not work properly for you. 
+
+In this case, you can install Booterizer on whatever Pi you might have.
+
+* Get https://www.raspberrypi.org/downloads/raspbian/
+* Get Etcher https://www.balena.io/etcher/
+* Put the Rasbian image on sd card
+* Boot pi
+* Run raspi-config from the console
+  * Configure WiFi networking and connect to your network
+  * Enable ssh
+* Configure sshd to allow ssh as root
+  * Edit /etc/ssh/sshd_config
+  * Set `PermitRootLogin` to `yes`
+* Log into the Pi and become root
+
+```
+apt update ; apt install -y python3-pip sshpass wget curl git
+mkdir -p /root/projects/github
+cd /root/projects/github
+git clone https://github.com/unxmaal/booterizer.git
+cd /root/projects/github/booterizer
+```
+
+* Modify settings.yml
+  * to connect to your network
+  * to install 6.5.22
+    * Note: we're creating an image that has both 6.5.30 and 6.5.22. Adjust as desired.
+
+```
+cd ansible
+pip3 install -r requirements.tx
+reboot
+```
+
+* Log into the Pi and become root
+```
+cd /root/projects/github/booterizer/ansible
+ansible-playbook -i inventory.yml rpi_booterizer.yml
+```
+
+* When this completes, modify settings.yml to install 6.5.30
+* Run ansible-playbook again
+```
+ansible-playbook -i inventory.yml rpi_booterizer.yml
+```
+
+
+* NOTE: If you've connected your Pi to WiFi, clear your networking info from /etc/wpa_supplicant/wpa_supplicant.conf
+```
+apt-get clean -y ; apt-get autoclean -y
+dd if=/dev/zero of=/EMPTY bs=1M ;rm -f /EMPTY
+halt -p
+```
+
+* Use Apple-Pi Baker to copy the SD card image to a file
+
+
+# Vagrant VM
+
+## Requirements
+
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+* [Vagrant](https://www.vagrantup.com/downloads.html) 2.2.3 or higher
+  * `vagrant plugin install vagrant-guest_ansible`
+* Ansible/Python 2.7.6 or higher
+* VM host with TWO network interfaces
+  * I very much recommend using a host with two built-in interfaces, such as one WiFi and one Ethernet
+
+### Installation of Prerequisite software for macOS (Host)
+
+* macOS has Brew - which can install Vagrant and VirtualBox for you from the command line with one command.
+* Install Brew following directions at their website here: https://brew.sh/
+* If you have brew installed you can install Vagrant, VB, and Ansible (Which will also install Python as a dependency):
+
+```console
+brew cask install vagrant
+brew cask install virtualbox
+brew install ansible
+```
+
+* If you already have Python installed outside of Brew, instead of installing Ansible through Brew, install it through `pip`:
+
+```console
+sudo pip install ansible
+```
+
+### Installation of Prerequisite software for Ubuntu (Host)
+
+* Installing recent Vagrant must be done manually on Ubuntu Bionic/18.04 and older. Just using apt-get will install an older version we don't want to use. The procedure below will validate the package using its checksum.
+* We need to install VirtualBox (to run the virtual Linux server for the SGI installation media)
+* We need to install Vagrant to configure and kick of provisioning of the new VM
+* We need to install Ansible to provision the new VM
+
+```console
+sudo apt-get install virtualbox
+
+# Vagrant - Ubuntu 20.04 (Focal) and newer
+sudo apt-get install vagrant
+
+# Vagrant - Ubuntu 18.04 (Bionic) and older
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_x86_64.deb
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS
+wget -c https://releases.hashicorp.com/vagrant/2.2.3/vagrant_2.2.3_SHA256SUMS.sig
+gpg --verify vagrant_2.2.3_SHA256SUMS.sig vagrant_2.2.3_SHA256SUMS
+shasum -a 256 -c <(cat vagrant_2.2.3_SHA256SUMS | grep 64.deb) -s
+sudo dpkg -i vagrant_2.2.3_x86_64.deb
+rm vagrant_2.2.3*
+
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt update && sudo apt install ansible -y
+```
+
+## Verify Versions
+
+Verify your installed versions:
+
+```console
+vagrant -v
+ansible --version
+```
+
+You should have:
+
+* Ansible 2.7.6 or higher
+* Vagrant 2.2.3 or higher
+
+Having an exact version of VirtualBox is not critical- as long as you have the proper version of Vagrant, it will run VirtualBox for you.
+
+### Vagrant Plugins
+
+* Whichever host OS (macOS or Linux) you are using, install the Vagrant plugin with this command:
+
+```console
+vagrant plugin install vagrant-vbguest
+```
+
+This will install a plugin that will automatically update any VirtualBox VMs with the latest guest additions
+
+Now we can move on and start to configure the Vagrant file and start up the VM...
+
+## Vagrant Booterizer Setup
+
+By default, this Vagrant VM will fetch proper IRIX installation packages as per the settings in `settings.yml`.
+
+### Settings
+
+These settings are found in `settings.yml`. Edit them to suit your environment:
+
+Set this to the version of IRIX you are installing.
+
+```
+irixversion: "6.5.30"
+```
+
+Currently installmethod is only ftp/http. Choose ftp here and http will be used if available. CD is no longer supported.
+
+```
+installmethod: "ftp"
+```
+
+Pick your install mirror
+
+* the same files are in both locations
+* choose only one of these
+
+```
+installmirror: "https://sgi-irix.s3.amazonaws.com"
+```
+
+This is the new hostname for your SGI post-installation
+
+```
+clientname: "sgi"
+```
+
+Whatever domain you use at home, or make one up for the install
+
+```
+clientdomain: "devonshire.local"
+```
+
+Internal network your SGI will be on. Note this is the actual "network", in the technical subnetting sense of the term.
+
+```
+network: "192.168.0.0"
+```
+
+Internal network's netmask
+
+```
+netmask: "255.255.255.0"
+```
+
+booterizer's host IP. This is the VM's IP on its internal point to point link to the target SGI client machine.
+
+* this must be a unique, unused IP address in the subnet that your home/office router has created
+
+```
+hostip: "192.168.0.40"
+```
+
+The SGI client box's IP address
+
+* this must be a unique, unused IP address in the subnet that your home/office router has created
+* it cannot be the same as the Host IP above.
+
+```
+clientip: "192.168.0.41"
+```
+
+The SGI box's physical hardware address, from printenv at PROM
+
+```
+printenv eaddr
+```
+
+will return the SGI MAC address.
+
+* older PROMs use the command: `eaddr` to obtain this
+* if you cannot find the MAC address (some PROM do not show it - setup here and then watch the daemon.log file in the booterizer VM as you run the DHCP command to start the fx partitioner- you will see the real SGI MAC try and connect to your booterizer host. Copy it and re-configure)
+
+```
+clientether: "08:00:69:0e:af:65"
+```
+
+This is the name of the interface on your physical machine that's connected to your SGI box. In my case, it's the Ethernet adapter, which is en0.
+
+* A Macintosh will usually use en0.
+* By default the Linux kernel will usually assign this to eth0, however many distros have switched to [predictable naming](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
+* If you are unsure of what your distro uses or do not know the interface name, check the interfaces using `ip link`.
+
+```
+bridgenic: "en0"
+```
+
+### Networking overview
+
+The booterizer VM's fake network interfaces map to your physical host as follows:
+
+| Physical Host | booterizer |
+| --- | --- |
+| Home LAN-connected NIC | Adapter 1, NAT, eth0 |
+| SGI-connected NIC | Adapter 2, Bridged, eth1 |
+
+NOTE: This VM starts a BOOTP server that will listen to broadcast traffic on your network. It is configured to ignore anything but the target system but if you have another DHCP/BOOTP server on the LAN segment the queries from the SGI hardware may get answered by your network's existing DHCP server which will cause problems. You may want to temporarily disable DHCP/BOOTP if you are running it on your LAN, configure it to not reply to queries from the SGI system, or put SGI hardware on a separate LAN (my recommendation).
+
+* Note: This is usually not an issue, but it _may_ be, YMMV
+
+#### One possible setup
+
+![Image of a possible network setup for Booterizer](docs/booterizer_network_v1a.png?raw=true "Booterizer Network Setup")
+
+### IRIX media
+
+This VM will now be able to sync installation media from S3 using HTTP.
+
+Vagrant will automatically create a vagrant/irix directory on your host machine that is shared between it and the VM. It will then fetch the installation media archives only if they are missing from that directory.
+
+You can keep both 6.5.22 and 6.5.30 media on the same host for different installations on various SGI machines.
+
+Now that your configuration is complete, you're ready to start up the VM and set up the SGI.
+
+```console
+vagrant up
+```
 
 # Booting your SGI from Booterizer
 

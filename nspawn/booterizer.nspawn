@@ -7,9 +7,8 @@ Capability=CAP_NET_ADMIN
 
 [Files]
 BindReadOnly=/etc/localtime
-Bind=/irix:/irix
+Bind=/srv/irix:/irix
 
 [Network]
 Interface=enp0s25
 VirtualEthernet=yes
-
