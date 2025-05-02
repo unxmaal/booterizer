@@ -11,7 +11,7 @@ setup(){
 }
 
 make_irixvol(){
-    sudo dd if=/dev/zero of=/srv/irix.img bs=1M count=1024
+    sudo dd if=/dev/zero of=/srv/irix.img bs=1M count=15024
     sudo losetup -fP /srv/irix.img
     LOOPDEV=$(losetup -j /srv/irix.img | cut -d: -f1)
 
