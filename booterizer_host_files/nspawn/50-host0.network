@@ -1,9 +1,0 @@
-# nspawn/50-host0.network
-[Match]
-Name=host0
-
-[Network]
-Address=10.10.10.2/24
-Gateway=10.10.10.1
-DNS=8.8.8.8
-

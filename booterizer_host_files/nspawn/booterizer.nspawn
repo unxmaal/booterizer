@@ -4,11 +4,11 @@
 Boot=yes
 PrivateUsers=off
 Capability=CAP_NET_ADMIN
+Hostname=booterizer
 
 [Files]
 BindReadOnly=/etc/localtime
 Bind=/srv/irix:/irix
 
 [Network]
-Interface=enp0s25
-VirtualEthernet=yes
+Bridge=br0
