@@ -1,0 +1,6 @@
+# /etc/default/tftpd-hpa
+
+TFTP_USERNAME="sgi"
+TFTP_DIRECTORY="/srv/irix"
+TFTP_ADDRESS="172.16.1.1:69"
+TFTP_OPTIONS="--secure --verbose --create -vvvv"

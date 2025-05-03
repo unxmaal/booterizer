@@ -5,6 +5,8 @@ CONTAINER_NAME=booterizer
 CONTAINER_PATH=/var/lib/machines/$CONTAINER_NAME
 DEBIAN_VERSION=stable
 MIRROR_URL=http://deb.debian.org/debian
+HOSTDIR=booterizer_host_files
+CLIENTDIR=bootherizer_client_files
 
 # setup
 sudo add-apt-repository ppa:rmescandon/yq
@@ -14,7 +16,7 @@ sudo apt install -y yq debootstrap
 # Create the container rootfs
 if [ ! -d "$CONTAINER_PATH" ]; then
   echo "Creating container rootfs with debootstrap..."
-  sudo debootstrap --arch=amd64 --include=dbus,rsh-server,dnsmasq,mksh,xfsprogs,rsync,tcpdump,git,curl $DEBIAN_VERSION "$CONTAINER_PATH" "$MIRROR_URL"
+  sudo debootstrap --arch=amd64 --include=dbus,rsh-server,isc-dhcp-server,tftpd-hpa,mksh,xfsprogs,rsync,tcpdump,git,curl $DEBIAN_VERSION "$CONTAINER_PATH" "$MIRROR_URL"
 
 else
   echo "Container rootfs already exists. Skipping debootstrap."
@@ -23,14 +25,20 @@ fi
 # Copy .nspawn config
 echo "Copying container config..."
 sudo mkdir -p /etc/systemd/nspawn
-sudo cp nspawn/booterizer.nspawn /etc/systemd/nspawn/booterizer.nspawn
+sudo cp "${HOSTDIR}/nspawn/booterizer.nspawn" /etc/systemd/nspawn/booterizer.nspawn
+
+# Copy systemd/network config
+echo "Copying host bridge networking config..."
+sudo cp "${HOSTDIR}/network/br0.netdev" /etc/systemd/network/.
+sudo cp "${HOSTDIR}/network/enp0s25.network" /etc/systemd/network/.
+
 
 # Inject static network config into container
 echo "Injecting host0 and enp0s25 network configs..."
 sudo mkdir -p "${CONTAINER_PATH}/etc/systemd/network"
-sudo cp nspawn/50-host0.network "${CONTAINER_PATH}/etc/systemd/network/50-host0.network"
-sudo cp nspawn/50-enp0s25.network "${CONTAINER_PATH}/etc/systemd/network/50-enp0s25.network"
-sudo cp -Ra booterizer_sysd_files/etc/* ${CONTAINER_PATH}/etc/. 
+sudo cp "${CLIENTDIR}/etc/systemd/network/host0.network" "${CONTAINER_PATH}/etc/systemd/network/host0.network"
+sudo cp "${CLIENTDIR}/etc/systemd/network/enp0s25.network" "${CONTAINER_PATH}/etc/systemd/network/enp0s25.network"
+sudo cp -Ra ${CLIENTDIR}/etc/* ${CONTAINER_PATH}/etc/. 
 
 # Enable systemd-networkd inside container
 if ! sudo test -L "$CONTAINER_PATH/etc/systemd/system/multi-user.target.wants/systemd-networkd.service"; then

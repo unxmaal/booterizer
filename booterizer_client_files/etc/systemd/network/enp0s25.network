@@ -1,0 +1,8 @@
+[Match]
+Name=enp0s25
+
+[Network]
+Address=172.16.1.1/24
+LinkLocalAddressing=no
+IPv6AcceptRA=no
+DHCP=no

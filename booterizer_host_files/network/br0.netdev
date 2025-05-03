@@ -1,0 +1,4 @@
+# /etc/systemd/network/br0.netdev
+[NetDev]
+Name=br0
+Kind=bridge

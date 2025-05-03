@@ -1,0 +1,5 @@
+# /etc/systemd/network/enp0s25.network
+[Match]
+Name=enp0s25
+[Network]
+Bridge=br0
