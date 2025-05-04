@@ -7,15 +7,15 @@
       name: settings
       file: ../settings.yml
   - import_role:
-    name: create_xfsvol
+      name: create_xfsvol
   - import_role:
-     name: nspawn_netbridge
+      name: nspawn_netbridge
   - import_role:
-     name: nspawn_setup
+      name: nspawn_setup
   - import_role:
-     name: nspawn_configure
+      name: nspawn_configure
   - import_role:
-     name: nspawn_start
+      name: nspawn_start
 
 - name: run fetch_files role
   hosts: all
