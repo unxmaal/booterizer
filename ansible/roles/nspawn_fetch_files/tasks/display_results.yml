@@ -1,0 +1,10 @@
+- name: Copy file for pi
+  copy:
+    src: files/display_results.sh
+    dest: /irix/display_results.sh
+    owner: root
+    group: root
+    mode: 0744
+
+- name: Display results
+  command: /irix/display_results.sh

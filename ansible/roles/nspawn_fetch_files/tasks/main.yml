@@ -1,0 +1,13 @@
+
+# Tune OS
+#- import_tasks: tune_os.yml
+
+#-------- Setup Media
+- import_tasks: setup_media.yml
+
+#--------- Generate selections
+- import_tasks: generate_selections.yml
+#--------- Copy commands file
+- import_tasks: copy_inst_commands.yml
+#--------- Display  useful info
+- import_tasks: display_results.yml

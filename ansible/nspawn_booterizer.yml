@@ -37,5 +37,5 @@
       file: ../irix.5.3.yml
     when: settings['booterizer']['irixversion'] == "5.3"
   - import_role:
-     name: fetch_files
+     name: nspawn_fetch_files
     become: true

@@ -1,0 +1,11 @@
+- name: Adjust pmtu
+  sysctl:
+    name: net.ipv4.ip_no_pmtu_disc
+    value: '1'
+    state: present
+- name: Adjust port range
+  sysctl:
+    name: net.ipv4.ip_local_port_range
+    value: "2048 32767"
+    state: present
+

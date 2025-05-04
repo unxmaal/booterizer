@@ -1,13 +1,7 @@
-- name: Generate isc-dhcp-server config dir
-  file:
-    path: "{{ container_path }}/etc/dhcpd"
-    owner: root
-    group: root
-
 - name: Generate isc-dhcp-server config
   template:
     src: templates/dhcpd.conf.j2
-    dest: "{{ container_path }}/etc/dhcpd/dhcpd.conf"
+    dest: "{{ container_path }}/etc/dhcp/dhcpd.conf"
     owner: root
     group: root
 
@@ -29,7 +23,7 @@
 - name: generate .rhosts
   template:
     src: templates/rhosts.j2
-    dest: "{{ container_path }}/irix/.rhosts"
+    dest: "/srv/irix/.rhosts"
     owner: root
     group: root
     mode: 0600
