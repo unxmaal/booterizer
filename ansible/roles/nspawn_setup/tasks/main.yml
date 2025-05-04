@@ -1,0 +1,47 @@
+---
+
+- name: Ensure required packages are installed
+  become: true
+  ansible.builtin.package:
+    name: debootstrap
+    state: present
+
+- name: Bootstrap Debian container if not already present
+  become: true
+  ansible.builtin.command: >
+    debootstrap
+    --arch={{ debootstrap_arch }}
+    --include={{ debootstrap_packages }}
+    {{ debian_version }}
+    {{ container_path }}
+    {{ mirror_url }}
+  args:
+    creates: "{{ container_path }}"
+
+- name: Ensure systemd-nspawn config directory exists
+  become: true
+  ansible.builtin.file:
+    path: /etc/systemd/nspawn
+    state: directory
+    mode: '0755'
+
+- name: Create .nspawn config for the container
+  become: true
+  ansible.builtin.copy:
+    dest: "/etc/systemd/nspawn/{{ container_name }}.nspawn"
+    content: |
+      [Exec]
+      Boot=yes
+      PrivateUsers=off
+      Capability=CAP_NET_ADMIN
+      Hostname=booterizer
+
+      [Files]
+      BindReadOnly=/etc/localtime
+      Bind=/srv/irix:/irix
+
+      [Network]
+      Bridge=br0
+    mode: '0644'
+
+

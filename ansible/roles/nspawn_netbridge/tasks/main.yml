@@ -1,0 +1,79 @@
+- name: Ensure bridge-utils is installed (for Debian-based systems)
+  become: true
+  ansible.builtin.package:
+    name: bridge-utils
+    state: present
+
+- name: Ensure networkd is the active backend (Debian systems only)
+  become: true
+  ansible.builtin.systemd:
+    name: systemd-networkd
+    enabled: true
+    state: started
+
+- name: Configure bridge interface
+  become: true
+  ansible.builtin.copy:
+    dest: "/etc/systemd/network/{{ bridge_name }}.netdev"
+    content: |
+      [NetDev]
+      Name={{ bridge_name }}
+      Kind=bridge
+    mode: '0644'
+
+- name: Configure bridged Ethernet interface
+  become: true
+  ansible.builtin.copy:
+    dest: "/etc/systemd/network/{{ bridgenic }}.network"
+    content: |
+      [Match]
+      Name={{ bridgenic }}
+
+      [Network]
+      Bridge={{ bridge_name }}
+    mode: '0644'
+
+- name: Reload systemd-networkd configs
+  become: true
+  ansible.builtin.command: systemctl restart systemd-networkd
+
+- name: Enable IP forwarding
+  become: true
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Set up NAT masquerading for container to access internet via uplinknic
+  become: true
+  ansible.builtin.iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: "{{ uplinknic }}"
+    source: "{{ bridge_address }}/24"
+    jump: MASQUERADE
+    comment: "Masquerade traffic from container"
+    state: present
+
+- name: Allow forwarding from bridge to uplinknic
+  become: true
+  ansible.builtin.iptables:
+    table: filter
+    chain: FORWARD
+    in_interface: "{{ bridge_name }}"
+    out_interface: "{{ uplinknic }}"
+    jump: ACCEPT
+    state: present
+
+- name: Allow returning traffic from uplinknic to bridge
+  become: true
+  ansible.builtin.iptables:
+    table: filter
+    chain: FORWARD
+    in_interface: "{{ uplinknic }}"
+    out_interface: "{{ bridge_name }}"
+    jump: ACCEPT
+    ctstate: ESTABLISHED,RELATED
+    state: present

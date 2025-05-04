@@ -1,0 +1,50 @@
+- name: Ensure xfsprogs is installed
+  become: true
+  ansible.builtin.package:
+    name: xfsprogs
+    state: present
+
+- name: Ensure mount directory exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ irix_mount_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Create empty image file if not already present
+  become: true
+  ansible.builtin.command: >
+    dd if=/dev/zero of={{ irix_image_file }} bs=1M count={{ irix_image_size_mb }}
+  args:
+    creates: "{{ irix_image_file }}"
+
+- name: Set up loop device for image file
+  become: true
+  ansible.builtin.command: losetup -fP {{ irix_image_file }}
+  register: losetup_result
+  changed_when: "'associated' not in losetup_result.stdout"
+
+- name: Find loop device associated with image file
+  become: true
+  ansible.builtin.command: losetup -j {{ irix_image_file }}
+  register: loop_info
+  changed_when: false
+
+- name: Set loop device fact
+  set_fact:
+    irix_loop_device: "{{ loop_info.stdout_lines[0].split(':')[0] }}"
+
+- name: Format loop device with XFS (if not already formatted)
+  become: true
+  ansible.builtin.command: mkfs.xfs {{ irix_loop_device }}
+  args:
+    creates: "/dev/disk/by-uuid"
+
+- name: Mount loop device to {{ irix_mount_dir }}
+  become: true
+  ansible.posix.mount:
+    path: "{{ irix_mount_dir }}"
+    src: "{{ irix_loop_device }}"
+    fstype: xfs
+    opts: defaults
+    state: mounted

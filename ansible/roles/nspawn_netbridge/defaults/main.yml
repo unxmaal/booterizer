@@ -1,0 +1,6 @@
+# These should be overridden in settings.yml
+uplinknic: wlp3s0
+bridgenic: enp0s25
+bridge_name: br0
+bridge_address: 10.10.10.1
+bridge_netmask: 255.255.255.0

@@ -1,0 +1,2 @@
+container_name: booterizer
+container_path: "/var/lib/machines/{{ container_name }}"

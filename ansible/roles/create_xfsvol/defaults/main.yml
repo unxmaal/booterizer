@@ -1,0 +1,3 @@
+irix_mount_dir: /srv/irix
+irix_image_file: /srv/irix.img
+irix_image_size_mb: 15024

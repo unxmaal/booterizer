@@ -1,0 +1,11 @@
+- name: Enable container to start at boot
+  become: true
+  ansible.builtin.systemd:
+    name: systemd-nspawn@{{ container_name }}
+    enabled: true
+
+- name: Start container if not already running
+  become: true
+  ansible.builtin.systemd:
+    name: systemd-nspawn@{{ container_name }}
+    state: started

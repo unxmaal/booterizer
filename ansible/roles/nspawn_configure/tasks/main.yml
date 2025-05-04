@@ -1,0 +1,54 @@
+- name: Generate isc-dhcp-server config
+  template:
+    src: templates/dhcpd.conf.j2
+    dest: "{{ container_path }}/etc/dhcpd/dhcpd.conf"
+    owner: root
+    group: root
+
+- name: Configure tftpd-hpa
+  copy:
+    src: files/tftpd-hpa
+    dest: /etc/default/tftpd-hpa
+    owner: root
+    group: root
+
+- name: generate hosts
+  template:
+    src: templates/hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0744
+
+- name: generate .rhosts
+  template:
+    src: templates/rhosts.j2
+    dest: /irix/.rhosts
+    owner: root
+    group: root
+    mode: 0600
+
+- name: generate hosts.equiv
+  template:
+    src: templates/hosts.equiv.j2
+    dest: /etc/hosts.equiv
+    owner: root
+    group: root
+    mode: 0744
+
+- name: generate dhcpd.conf
+  template:
+    src: templates/dhcpd.conf.j2
+    dest: /etc/dhcp/dhcpd.conf
+    owner: root
+    group: root
+    mode: 0744
+  when: rpi is undefined
+
+# - name: Add the guest user
+#   user:
+#     name: guest
+#     shell: /bin/ksh
+#     home: /irix
+
+
