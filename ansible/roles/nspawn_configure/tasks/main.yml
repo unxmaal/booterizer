@@ -8,7 +8,7 @@
 - name: Create systemd unit for isc-dhcp-server inside container
   become: true
   ansible.builtin.copy:
-    dest: "{{ container_root }}/etc/systemd/system/isc-dhcp-server.service"
+    dest: "{{ container_path }}/etc/systemd/system/isc-dhcp-server.service"
     mode: '0644'
     content: |
       [Unit]
@@ -26,8 +26,8 @@
 - name: Enable isc-dhcp-server in container
   become: true
   ansible.builtin.file:
-    src: "{{ container_root }}/etc/systemd/system/isc-dhcp-server.service"
-    dest: "{{ container_root }}/etc/systemd/system/multi-user.target.wants/isc-dhcp-server.service"
+    src: "{{ container_path }}/etc/systemd/system/isc-dhcp-server.service"
+    dest: "{{ container_path }}/etc/systemd/system/multi-user.target.wants/isc-dhcp-server.service"
     state: link
     force: true
 
@@ -42,7 +42,7 @@
 - name: Create systemd unit for tftpd-hpa inside container
   become: true
   ansible.builtin.copy:
-    dest: "{{ container_root }}/etc/systemd/system/tftpd-hpa.service"
+    dest: "{{ container_path }}/etc/systemd/system/tftpd-hpa.service"
     mode: '0644'
     content: |
       [Unit]
@@ -60,8 +60,8 @@
 - name: Enable tftpd-hpa in container
   become: true
   ansible.builtin.file:
-    src: "{{ container_root }}/etc/systemd/system/tftpd-hpa.service"
-    dest: "{{ container_root }}/etc/systemd/system/multi-user.target.wants/tftpd-hpa.service"
+    src: "{{ container_path }}/etc/systemd/system/tftpd-hpa.service"
+    dest: "{{ container_path }}/etc/systemd/system/multi-user.target.wants/tftpd-hpa.service"
     state: link
     force: true
 
@@ -98,7 +98,7 @@
 - name: Configure systemd-networkd inside container
   become: true
   ansible.builtin.copy:
-    dest: "{{ container_root }}/etc/systemd/network/20-host0.network"
+    dest: "{{ container_path }}/etc/systemd/network/20-host0.network"
     content: |
       [Match]
       Name=host0
@@ -112,14 +112,14 @@
 - name: Enable systemd-networkd in the container
   become: true
   ansible.builtin.file:
-    src: "{{ container_root }}/lib/systemd/system/systemd-networkd.service"
-    dest: "{{ container_root }}/etc/systemd/system/multi-user.target.wants/systemd-networkd.service"
+    src: "{{ container_path }}/lib/systemd/system/systemd-networkd.service"
+    dest: "{{ container_path }}/etc/systemd/system/multi-user.target.wants/systemd-networkd.service"
     state: link
 
 - name: Enable systemd-resolved in the container
   become: true
   ansible.builtin.file:
-    src: "{{ container_root }}/lib/systemd/system/systemd-resolved.service"
-    dest: "{{ container_root }}/etc/systemd/system/multi-user.target.wants/systemd-resolved.service"
+    src: "{{ container_path }}/lib/systemd/system/systemd-resolved.service"
+    dest: "{{ container_path }}/etc/systemd/system/multi-user.target.wants/systemd-resolved.service"
     state: link
 
