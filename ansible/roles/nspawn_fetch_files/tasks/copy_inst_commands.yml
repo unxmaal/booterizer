@@ -1,7 +1,7 @@
 - name: Copy inst commands file
   copy:
     src: files/commands
-    dest: /irix/commands
+    dest: /srv/irix/commands
     owner: vagrant
     group: vagrant
     mode: 0744
@@ -9,7 +9,7 @@
 - name: Copy inst commands file for pi
   copy:
     src: files/commands
-    dest: /irix/commands
+    dest: /srv/irix/commands
     owner: root
     group: root
     mode: 0744

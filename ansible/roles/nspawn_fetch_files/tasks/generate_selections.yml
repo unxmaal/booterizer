@@ -1,7 +1,7 @@
 - name: Generate selections for pi
   template:
     src: templates/selections.j2
-    dest: /irix/selections
+    dest: /srv/irix/selections
     owner: root
     group: root
     mode: 0744

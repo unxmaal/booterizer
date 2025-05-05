@@ -1,10 +1,15 @@
-- name: Copy file for pi
+- name: Copy display_results
   copy:
     src: files/display_results.sh
-    dest: /irix/display_results.sh
+    dest: /srv/irix/display_results.sh
     owner: root
     group: root
-    mode: 0744
+    mode: 0755
+
+- name: Get results
+  command: /srv/irix/display_results.sh
+  register: cmd_output
 
 - name: Display results
-  command: /irix/display_results.sh
+  debug:
+    var: cmd_output.stdout_lines
