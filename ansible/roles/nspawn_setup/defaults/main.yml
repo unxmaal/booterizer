@@ -3,4 +3,4 @@ container_path: "/var/lib/machines/{{ container_name }}"
 debian_version: stable
 mirror_url: "http://deb.debian.org/debian"
 debootstrap_arch: amd64
-debootstrap_packages: "dbus,rsh-server,isc-dhcp-server,tftpd-hpa,mksh,xfsprogs,rsync,tcpdump,git,curl"
+debootstrap_packages: "dbus,rsh-server,isc-dhcp-server,tftpd-hpa,mksh,xfsprogs,rsync,tcpdump,git,curl,systemd-resolved"
