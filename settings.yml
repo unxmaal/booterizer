@@ -11,6 +11,7 @@ booterizer:
   clientip:       "10.10.10.100"
   clientether:    "08:00:69:0c:9d:5f"
   bridgenic:      "host0"
-  uplinknic:      "host0"
+  hostether:      "enp0s25"
+  uplinknic:      "wlp3s0"
   myuser:         "testuser"
   myshell: "/usr/nekoware/bin/bash"

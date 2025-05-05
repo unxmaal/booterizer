@@ -24,10 +24,10 @@
 - name: Configure bridged Ethernet interface
   become: true
   ansible.builtin.copy:
-    dest: "/etc/systemd/network/{{ bridgenic }}.network"
+    dest: "/etc/systemd/network/{{ hostether }}.network"
     content: |
       [Match]
-      Name={{ bridgenic }}
+      Name={{ hostether }}
 
       [Network]
       Bridge={{ bridge_name }}
