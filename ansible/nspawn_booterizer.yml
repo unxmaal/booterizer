@@ -17,25 +17,25 @@
   - import_role:
       name: nspawn_start
 
-- name: run fetch_files role
-  hosts: all
-  become: yes
-  tasks:
-  - include_vars:
-      name: settings
-      file: ../settings.yml
-  - include_vars:
-      name: ftpurls
-      file: ../irix.6.5.30.yml
-    when: settings['booterizer']['irixversion'] == "6.5.30"
-  - include_vars:
-      name: ftpurls
-      file: ../irix.6.5.22.yml
-    when: settings['booterizer']['irixversion'] == "6.5.22"
-  - include_vars:
-      name: ftpurls
-      file: ../irix.5.3.yml
-    when: settings['booterizer']['irixversion'] == "5.3"
-  - import_role:
-     name: nspawn_fetch_files
-    become: true
+        #- name: run fetch_files role
+        #  hosts: all
+        #  become: yes
+        #  tasks:
+        #  - include_vars:
+        #      name: settings
+        #      file: ../settings.yml
+        #  - include_vars:
+        #      name: ftpurls
+        #      file: ../irix.6.5.30.yml
+        #    when: settings['booterizer']['irixversion'] == "6.5.30"
+        #  - include_vars:
+        #      name: ftpurls
+        #      file: ../irix.6.5.22.yml
+        #    when: settings['booterizer']['irixversion'] == "6.5.22"
+        #  - include_vars:
+        #      name: ftpurls
+        #      file: ../irix.5.3.yml
+        #    when: settings['booterizer']['irixversion'] == "5.3"
+        #  - import_role:
+        #     name: nspawn_fetch_files
+        #    become: true

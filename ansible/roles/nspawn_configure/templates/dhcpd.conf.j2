@@ -1,4 +1,4 @@
-INTERFACES="{{ bridgenic }}";
+INTERFACESv4="host0";
 allow booting;
 allow bootp;
 
@@ -8,5 +8,7 @@ host {{ clientname }} {
 	hardware ethernet {{ clientether }};
 	fixed-address {{ clientip }} ;
 	option domain-name-servers {{ hostip }};
+        option routers {{ routerip }};
 	option domain-name "{{ clientdomain }}";
+        next-server {{ hostip }};
 	}

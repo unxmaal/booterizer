@@ -22,6 +22,8 @@ clientether: "{{ settings['booterizer']['clientether'] }}"
 # This is the name of the interface on your physical machine that's connected to your SGI box
 #   In my case, it's the ethernet adapter, which is en0 
 bridgenic: "{{ settings['booterizer']['bridgenic'] }}"
+# router ip
+routerip: "{{ settings['booterizer']['routerip'] }}"
 # Your user account for your SGI box
 myuser: "{{ settings['booterizer']['myuser'] }}"
 # Your desired shell 

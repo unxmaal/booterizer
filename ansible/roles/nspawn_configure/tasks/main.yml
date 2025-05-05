@@ -5,6 +5,15 @@
     owner: root
     group: root
 
+- name: Create default for isc-dhcp-server
+  become: true
+  ansible.builtin.copy:
+    dest: "{{ container_path }}/etc/default/isc-dhcp-server"
+    mode: '0644'
+    content: |
+      INTERFACESv4="{{ bridgenic }}"
+      INTERFACESv6=""
+
 - name: Create systemd unit for isc-dhcp-server inside container
   become: true
   ansible.builtin.copy:
