@@ -24,6 +24,8 @@ clientether: "{{ settings['booterizer']['clientether'] }}"
 bridgenic: "{{ settings['booterizer']['bridgenic'] }}"
 # router ip
 routerip: "{{ settings['booterizer']['routerip'] }}"
+# host ethernet nic
+hostether: "{{ settings['booterizer']['hostether'] }}"
 # Your user account for your SGI box
 myuser: "{{ settings['booterizer']['myuser'] }}"
 # Your desired shell 
