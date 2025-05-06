@@ -1,17 +1,22 @@
 booterizer:
+  bridgenic:      "host0"
+  clientip:       "10.10.10.100"
+  hostip:         "10.10.10.2"
+  installmethod:  "ftp"
   installmirror:  "https://sgi-irix.s3.amazonaws.com"
   irixversion:    "6.5.30"
-  installmethod:  "ftp"
+  myshell:        "/usr/nekoware/bin/bash"
+  myuser:         "testuser"
+  netmask:        "255.255.255.0"
+  network:        "10.10.10.0" 
+  routerip:       "10.10.10.1"
+  # Confirm the following settings:
+  # sgi hostname
   clientname:     "sgi"
   clientdomain:   "home.local"
-  network:        "10.10.10.0" 
-  netmask:        "255.255.255.0"
-  routerip:       "10.10.10.1"
-  hostip:         "10.10.10.2"
-  clientip:       "10.10.10.100"
+  # sgi MAC address
   clientether:    "08:00:69:0c:9d:5f"
-  bridgenic:      "host0"
+  # host's ethernet interface name
   hostether:      "enp0s25"
+  # host's internet-connected interface name
   uplinknic:      "wlp3s0"
-  myuser:         "testuser"
-  myshell: "/usr/nekoware/bin/bash"
