@@ -46,5 +46,5 @@
     path: "{{ irix_mount_dir }}"
     src: "{{ irix_loop_device }}"
     fstype: xfs
-    opts: defaults
+    opts: defaults,noauto,x-systemd.automount,x-systemd.device-timeout=10
     state: mounted

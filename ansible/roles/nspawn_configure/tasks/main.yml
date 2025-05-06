@@ -118,22 +118,22 @@
       DNS=8.8.8.8
     mode: '0644'
 
-- name: Configure bridgenic inside container
-  become: true
-  ansible.builtin.copy:
-    dest: "{{ container_path }}/etc/systemd/network/20-{{ bridgenic }}.network"
-    mode: '0644'
-    content: |
-      [Match]
-      Name={{ bridgenic }}
-
-      [Link]
-      RequiredForOnline=no
-
-      [Network]
-      ConfigureWithoutCarrier=yes
-      LinkLocalAddressing=no
-      DHCP=no
+      #- name: Configure bridgenic inside container
+      #  become: true
+      #  ansible.builtin.copy:
+      #    dest: "{{ container_path }}/etc/systemd/network/20-{{ bridgenic }}.network"
+      #    mode: '0644'
+      #    content: |
+      #      [Match]
+      #      Name={{ bridgenic }}
+      #
+      #      [Link]
+      #      RequiredForOnline=no
+      #
+      #      [Network]
+      #      ConfigureWithoutCarrier=yes
+      #      LinkLocalAddressing=no
+      #      DHCP=no
 
 - name: Enable systemd-networkd in the container
   become: true
