@@ -1,12 +1,12 @@
-version: "3.8"
-
 services:
-  sgi-booter:
+  booterizer:
     build: .
-    container_name: sgi-booter
+    image: booterizer:latest
+    container_name: booterizer
     network_mode: "host"
     cap_add:
       - NET_ADMIN
     volumes:
       - /srv/irix:/srv/irix:rw
+      - ./files/hosts:/etc/hosts:ro
     restart: unless-stopped
