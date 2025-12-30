@@ -1,0 +1,11 @@
+service shell
+{
+    socket_type     = stream
+    protocol        = tcp
+    wait            = no
+    user            = root
+    server          = /usr/sbin/in.rshd
+    server_args     = -L
+    log_on_failure  += USERID
+    disable         = no
+}

@@ -1,12 +1,30 @@
+# Booterizer Docker Compose
+#
+# Provides DHCP/BOOTP, TFTP, and RSH services for bootstrapping IRIX
+# on SGI hardware via direct ethernet cable.
+#
+# Prerequisites:
+#   1. Run setup-host.sh to configure your network interface
+#   2. Place IRIX installation media in /srv/irix on the host
+#   3. Update files/dhcpd.conf with your SGI's MAC address
+#   4. Update files/default_isc-dhcp-server with your interface name
+#
+# Usage:
+#   docker-compose up -d          # Start services
+#   docker-compose logs -f        # View logs
+#   docker-compose down           # Stop services
+
 version: "3.8"
 
 services:
-  sgi-booter:
+  booterizer:
     build: .
-    container_name: sgi-booter
+    container_name: booterizer
+    # Host network mode required for BOOTP (needs raw L2 access)
     network_mode: "host"
     cap_add:
       - NET_ADMIN
     volumes:
+      # IRIX installation media - must be populated before starting
       - /srv/irix:/srv/irix:rw
     restart: unless-stopped

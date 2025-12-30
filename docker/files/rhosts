@@ -1,2 +1,7 @@
-sgi.home.local guest
+# .rhosts - RSH trust file
+# Allows SGI inst to connect and fetch files
+# SECURITY: This is intentionally permissive for isolated direct-cable setup
+sgi.local guest
+sgi guest
+192.168.42.2 guest
 + +

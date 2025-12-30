@@ -1,2 +1,5 @@
 # /etc/default/isc-dhcp-server
-INTERFACESv4="enp0s25"
+# UPDATE THIS to match your ethernet interface name
+# Find your interface with: ip link show
+# Common names: eth0, enp0s25, eno1, enp3s0
+INTERFACESv4="eth0"
