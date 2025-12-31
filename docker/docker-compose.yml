@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Booterizer Docker Compose
 #
 # Provides DHCP/BOOTP, TFTP, and RSH services for bootstrapping IRIX
@@ -25,15 +24,9 @@ version: "3.8"
 services:
   booterizer:
     build: .
-    container_name: booterizer
-    # Host network mode required for BOOTP (needs raw L2 access)
-=======
-services:
-  booterizer:
-    build: .
     image: booterizer:latest
     container_name: booterizer
->>>>>>> 5454b95386bf41e789e4e38206cb817937e145b2
+    # Host network mode required for BOOTP (needs raw L2 access)
     network_mode: "host"
     cap_add:
       - NET_ADMIN
@@ -57,5 +50,4 @@ services:
     volumes:
       # IRIX installation media - must be populated before starting
       - /srv/irix:/srv/irix:rw
-      - ./files/hosts:/etc/hosts:ro
     restart: unless-stopped

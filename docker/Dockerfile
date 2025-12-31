@@ -44,11 +44,7 @@ RUN mkdir -p /srv/irix /var/log/supervisor /run/dhcp && \
 
 # Copy static configuration files (not templated)
 COPY files/default_tftpd-hpa /etc/default/tftpd-hpa
-COPY files/hosts.equiv /etc/hosts.equiv
-COPY files/rhosts /srv/irix/.rhosts
-COPY files/inetd.conf /etc/inetd.conf
 COPY files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY files/hosts /etc/hosts
 
 # xinetd configuration for RSH (static)
 COPY files/xinetd.conf /etc/xinetd.conf
