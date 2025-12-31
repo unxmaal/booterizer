@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # /etc/hosts for booterizer container
 # Note: With host network mode, container uses host's /etc/hosts
 # This file may be used if bind-mounted into container
@@ -5,3 +6,8 @@
 127.0.1.1	booterizer.local	booterizer
 192.168.42.1	booterizer.local	booterizer
 192.168.42.2	sgi.local	sgi
+=======
+127.0.0.1	localhost
+127.0.1.1	booterizer.home.local	booterizer
+172.16.1.2      sgi.home.local sgi
+>>>>>>> 5454b95386bf41e789e4e38206cb817937e145b2
