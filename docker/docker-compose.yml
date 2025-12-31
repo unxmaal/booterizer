@@ -6,13 +6,18 @@
 # Prerequisites:
 #   1. Run setup-host.sh to configure your network interface
 #   2. Place IRIX installation media in /srv/irix on the host
-#   3. Update files/dhcpd.conf with your SGI's MAC address
-#   4. Update files/default_isc-dhcp-server with your interface name
 #
 # Usage:
-#   docker-compose up -d          # Start services
-#   docker-compose logs -f        # View logs
-#   docker-compose down           # Stop services
+#   # Set your SGI's MAC address and start:
+#   SGI_MAC=08:00:69:xx:xx:xx docker-compose up -d
+#
+#   # Or create a .env file with your settings
+#
+#   # View logs:
+#   docker-compose logs -f
+#
+#   # Stop:
+#   docker-compose down
 
 version: "3.8"
 
@@ -24,6 +29,23 @@ services:
     network_mode: "host"
     cap_add:
       - NET_ADMIN
+    environment:
+      # REQUIRED: Set this to your SGI's MAC address
+      # Find it on SGI PROM with: printenv eaddr
+      - SGI_MAC=${SGI_MAC:-08:00:69:00:00:00}
+
+      # Network configuration (defaults work for most setups)
+      # Using 172.16.42.0/24 to avoid conflicts with common home networks
+      - SGI_HOSTNAME=${SGI_HOSTNAME:-sgi}
+      - SGI_IP=${SGI_IP:-172.16.42.2}
+      - HOST_IP=${HOST_IP:-172.16.42.1}
+      - HOST_INTERFACE=${HOST_INTERFACE:-eth0}
+      - NETWORK=${NETWORK:-172.16.42.0}
+      - NETMASK=${NETMASK:-255.255.255.0}
+      - DOMAIN=${DOMAIN:-local}
+
+      # IRIX version determines boot image path
+      - IRIX_VERSION=${IRIX_VERSION:-6.5.30}
     volumes:
       # IRIX installation media - must be populated before starting
       - /srv/irix:/srv/irix:rw

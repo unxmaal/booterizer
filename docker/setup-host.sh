@@ -11,7 +11,7 @@
 set -e
 
 INTERFACE="${1:-}"
-HOST_IP="${2:-192.168.42.1}"
+HOST_IP="${2:-172.16.42.1}"
 NETMASK="255.255.255.0"
 
 # Colors for output
