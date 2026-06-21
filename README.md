@@ -161,7 +161,7 @@ cd /root/projects/github/booterizer
 
 ```
 cd ansible
-pip3 install -r requirements.tx
+pip3 install -r requirements.txt
 reboot
 ```
 
